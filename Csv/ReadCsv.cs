@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Linq;
-using BigRogue.Persistent;
 
 namespace BigRogue.Util {
 
+    /// <summary>
+    /// 从文件中来的数据记录
+    /// </summary>
+    public interface IRecord {
+
+        int id { get; }
+
+        bool isEmpty();
+
+        void InitFromLine(string s);
+        
+    }
     /// <summary>
     /// 逗号分隔的行列表,会忽略//开头的行,字符串中间的//往后的内容也会被忽略
     /// </summary>

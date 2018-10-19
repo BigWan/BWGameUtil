@@ -1,0 +1,10 @@
+{
+	"name":"com.unity.bwpackage",
+	"author":"bigwan",
+	"displayName": "BW Personal Code",
+	"version": "0.0.1",
+    "unity": "2017.1",
+    "description": "个人代码合集",
+    "category": "Controllers",
+    "dependencies": {    }
+}

@@ -1,0 +1,6 @@
+{
+    "name": "bwpersonal-editor",
+    "references": [  ],
+    "includePlatforms": [ "Editor" ],
+    "allowUnsafeCode": false
+}

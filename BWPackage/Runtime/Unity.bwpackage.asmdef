@@ -1,0 +1,6 @@
+{
+    "name": "bwpackage-runtime",
+    "references": [  ],
+    "includePlatforms": [ "Editor" ],
+    "allowUnsafeCode": false
+}

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace BigRogue.Util {
+namespace BW.Core {
     public class UnitySingleton<T> : MonoBehaviour where T : Component {
 
         private static T s_instance;

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Linq;
 
-namespace BigRogue.Util {
+namespace BW.Core {
 
     /// <summary>
     /// 从文件中来的数据记录

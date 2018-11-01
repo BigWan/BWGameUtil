@@ -71,7 +71,6 @@
     <Compile Include="Assets\Scripts\StateMachine\StateFunc.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\TimerComponent.cs" />
-    <Compile Include="Assets\Scripts\UI\AsyncPage.cs" />
     <Compile Include="Assets\Scripts\UI\IPage.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UI\Page.cs" />

@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EditorCode\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\GameDebug.cs" />
     <Compile Include="Assets\Scripts\Pool.cs" />
     <Compile Include="Assets\Scripts\Poolable.cs" />

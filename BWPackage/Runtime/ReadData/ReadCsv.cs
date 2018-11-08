@@ -13,7 +13,7 @@ namespace BW.Core {
 
         int id { get; }
 
-        bool isEmpty();
+        bool IsEmpty();
 
         void InitFromLine(string s);
         

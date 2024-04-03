@@ -1,0 +1,12 @@
+{
+  "name": "com.bwgamecode.ui",
+  "author": "bigwan",
+  "displayName": "简单的UI框架",
+  "version": "0.0.1",
+  "unity": "2017.1",
+  "description": "UI框架",
+  "category": "Controllers",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.0"
+  }
+}

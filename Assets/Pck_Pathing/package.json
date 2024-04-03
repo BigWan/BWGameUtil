@@ -1,0 +1,10 @@
+{
+  "name": "com.bwgamecode.pathing",
+  "author": "bigwan",
+  "displayName": "网格寻路算法",
+  "version": "0.0.1",
+  "unity": "2017.1",
+  "description": "一个a星寻路算法",
+  "category": "Controllers",
+  "dependencies": {}
+}

@@ -80,7 +80,7 @@ namespace BW.GameCode.UI
             float curHeight = m_startPosY;
             for (int i = actives.Count - 1; i >= 0; i--) {
                 actives[i].Rect.DOKill();
-                actives[i].Rect.DOAnchorPosY(curHeight, 0.3f);
+                //actives[i].Rect.dop.(curHeight, 0.3f);
                 //Debug.Log(curHeight);
                 curHeight += actives[i].Height;
             }

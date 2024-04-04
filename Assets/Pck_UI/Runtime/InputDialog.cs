@@ -10,16 +10,16 @@ namespace BW.GameCode.UI
         Number,
     }
 
-    public struct InputDialogResult
-    {
-        public InputDialogResult(MessageBoxButton result, string value) {
-            this.button = result;
-            this.value = value;
-        }
+    //public struct InputDialogResult
+    //{
+    //    public InputDialogResult(MessageBoxButton result, string value) {
+    //        this.button = result;
+    //        this.Value = value;
+    //    }
 
-        public string value { get; }
-        public MessageBoxButton button { get; }
-    }
+    //    public string Value { get; }
+    //    public MessageBoxButton button { get; }
+    //}
 
     //public class InputDialog : CommonDialog
     //{

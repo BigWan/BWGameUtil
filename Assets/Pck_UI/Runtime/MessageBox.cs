@@ -8,36 +8,32 @@ using Cysharp.Threading.Tasks;
 
 namespace BW.GameCode.UI
 {
-    /// <summary>
-    /// 需要玩家操作的,强烈的警告意味
-    /// </summary>
+
     public class MessageBox : SimpleSingleton<MessageBox>
     {
-        [SerializeField] BaseMessageBoxDialog m_dialogPrefab;
-        [SerializeField] Transform m_dialogParent;
+        [SerializeField] BaseMessageBoxWindow m_msgBoxDialog;
+        [SerializeField] Transform m_dialogGroup;
 
         [SerializeField] int m_cacheCount = 5;
 
-        Queue<BaseMessageBoxDialog> mCaches = new Queue<BaseMessageBoxDialog>();
+        Queue<BaseMessageBoxWindow> mCaches = new Queue<BaseMessageBoxWindow>();
 
-        protected override void OnAwake() {
-            base.OnAwake();
-        }
 
-        BaseMessageBoxDialog CreateDialog() {
-            BaseMessageBoxDialog obj;
+
+        BaseMessageBoxWindow CreateDialog() {
+            BaseMessageBoxWindow obj;
             if (mCaches.Count > 0) {
                 obj = mCaches.Dequeue();
             } else {
-                obj = Instantiate<BaseMessageBoxDialog>(m_dialogPrefab, m_dialogParent);
-                obj.Event_OnClose += () => OnDialogDeactive(obj);
+                obj = Instantiate<BaseMessageBoxWindow>(m_msgBoxDialog, m_dialogGroup);
+                //obj.Event_OnClose += () => OnDialogDeactive(obj);
                 //obj.Callback_OnDeactive.AddListener(()=>OnDialogDeactive(obj));rtff
             }
             obj.gameObject.name = "Actived";
             return obj;
         }
 
-        private void OnDialogDeactive(BaseMessageBoxDialog ui) {
+        private void RecycleDialog(BaseMessageBoxWindow ui) {
             if (mCaches.Count > m_cacheCount) {
                 Destroy(ui.gameObject);
             } else {
@@ -46,10 +42,10 @@ namespace BW.GameCode.UI
             }
         }
 
-        public async UniTask<MessageBoxButton> Show(string title, string content, MessageBoxButtonType btnType = MessageBoxButtonType.Yes) {
+        public async UniTask<MessageBoxButton> Show(string title, string content, MessageBoxButtonStyle btnType = MessageBoxButtonStyle.Yes) {
             var dialog = CreateDialog();
-            var result = await dialog.Show(content, title, btnType);
-            dialog.Close();
+            var result = await dialog.Show(content, title, btnType);            
+            RecycleDialog(dialog);
             return result;
         }
     }

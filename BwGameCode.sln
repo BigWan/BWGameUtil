@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bw.bwgamecode.ui", "bw.bwga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bw.bwgamecode.pathing", "bw.bwgamecode.pathing.csproj", "{20D697D3-67CA-1E51-B22B-AE69EC63D9CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{F9F53AEC-247C-D2AF-FC7C-BD6443EB0BA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTween.Modules", "DOTween.Modules.csproj", "{35940D2E-42F3-E911-480B-893B86C7CB9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bw.bwgamecode.singleton", "bw.bwgamecode.singleton.csproj", "{2BC97B28-B705-6477-FB5E-114D05F0DFE4}"
 EndProject
@@ -33,10 +33,10 @@ Global
 		{20D697D3-67CA-1E51-B22B-AE69EC63D9CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20D697D3-67CA-1E51-B22B-AE69EC63D9CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20D697D3-67CA-1E51-B22B-AE69EC63D9CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9F53AEC-247C-D2AF-FC7C-BD6443EB0BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9F53AEC-247C-D2AF-FC7C-BD6443EB0BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9F53AEC-247C-D2AF-FC7C-BD6443EB0BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9F53AEC-247C-D2AF-FC7C-BD6443EB0BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35940D2E-42F3-E911-480B-893B86C7CB9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35940D2E-42F3-E911-480B-893B86C7CB9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35940D2E-42F3-E911-480B-893B86C7CB9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35940D2E-42F3-E911-480B-893B86C7CB9D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BC97B28-B705-6477-FB5E-114D05F0DFE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BC97B28-B705-6477-FB5E-114D05F0DFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BC97B28-B705-6477-FB5E-114D05F0DFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU

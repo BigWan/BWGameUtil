@@ -8,22 +8,22 @@ namespace BW.GameCode.Singleton
     /// </summary>
     public abstract class SimpleSingleton<T> : MonoBehaviour where T : SimpleSingleton<T> {
 
-        public static T instance { get; protected set; }
+        public static T I { get; protected set; }
 
         /// <summary> 单例是否存在 </summary>
-        public static bool exists {
-            get { return instance != null; }
+        public static bool Exist {
+            get { return I != null; }
         }
 
         protected virtual void OnAwake() { }
         protected void Awake() {
-            if (exists) Destroy(gameObject);
-            instance = this as T;
+            if (Exist) Destroy(gameObject);
+            I = this as T;
         }
 
 
         protected virtual void OnDestroy() {
-            if (instance == this) instance = null;
+            if (I == this) I = null;
         }
 
     }

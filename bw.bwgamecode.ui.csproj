@@ -56,16 +56,17 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Pck_UI\Runtime\APanelUI.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\MessageBox.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\InputDialog.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\BaseUI.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\UIManager.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\InputBox\InputWindow.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\InfoBar.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\InfoLine.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\BaseMessageBoxWindow.cs" />
-    <Compile Include="Assets\Pck_UI\SimpleMessageBoxDialog.cs" />
+    <Compile Include="Assets\Pck_UI\Scenes\SimpleMessageBoxDialog.cs" />
     <Compile Include="Assets\Pck_UI\Scenes\Controller.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\InputBox\InputBox.cs" />
+    <Compile Include="Assets\Pck_UI\Scenes\SimpleInputDialog.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\MessageBox\MessageBoxWindow.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\MessageBox\MessageBox.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\UIManager\UIManager.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\UIManager\BaseUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Pck_UI\ui.asmdef" />

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace BW.GameCode.UI
 {
     [DisallowMultipleComponent]
-    public class SimpleMessageBoxDialog : BaseMessageBoxWindow
+    public class SimpleMessageBoxDialog : MessageBoxWindow
     {
         [Space(20)]
         [Header("Dialog Controllers")]
@@ -20,9 +20,10 @@ namespace BW.GameCode.UI
         protected override string Title { get => m_titleText.text; set => m_titleText.SetText(value); }
         protected override string Content { get => m_contentText.text; set => m_contentText.SetText(value); }
 
-        public override void SetupButton(MessageBoxButtonStyle btnType) {
-            m_noButton.gameObject.SetActive(btnType == MessageBoxButtonStyle.YesNo);
-            m_cancelButton.gameObject.SetActive(btnType == MessageBoxButtonStyle.YesNoCancel);
+        protected override void DisplayButtons(MessageBoxButton btnType) {
+            m_yesButton.gameObject.SetActive(btnType.HasFlag(MessageBoxButton.Yes));
+            m_noButton.gameObject.SetActive(btnType.HasFlag(MessageBoxButton.No));
+            m_cancelButton.gameObject.SetActive(btnType.HasFlag(MessageBoxButton.Cancel));
         }
 
         protected void Awake() {
@@ -30,7 +31,5 @@ namespace BW.GameCode.UI
             m_cancelButton.onClick.AddListener(OnCancelButtonClick);
             m_noButton.onClick.AddListener(OnNoButtonClick);
         }
-
-       
     }
 }

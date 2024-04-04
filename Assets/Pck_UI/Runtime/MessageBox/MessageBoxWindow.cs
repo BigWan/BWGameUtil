@@ -5,22 +5,17 @@ using DG.Tweening;
 using UnityEngine;
 namespace BW.GameCode.UI
 {
-    public enum MessageBoxButtonStyle
-    {
-        Yes,// 是
-        YesNo,// 是+否
-        YesNoCancel,// 是+否+取消
-    }
-
+    [System.Flags]
     public enum MessageBoxButton
     {
-        Invalid,
-        No,
-        Yes,
-        Cancel,
+        Invalid = 0,
+        No = 1,
+        Yes = 2,
+        Cancel = 4,
     }
 
-    public abstract class BaseMessageBoxWindow : MonoBehaviour
+    [DisallowMultipleComponent]
+    public abstract class MessageBoxWindow : MonoBehaviour
     {
         [SerializeField] CanvasGroup m_body;
         protected abstract string Title { get; set; }
@@ -28,11 +23,11 @@ namespace BW.GameCode.UI
 
         UniTaskCompletionSource<MessageBoxButton> clickResult;
 
-        public async UniTask<MessageBoxButton> Show(string content, string title, MessageBoxButtonStyle btnType = MessageBoxButtonStyle.Yes) {
+        public async UniTask<MessageBoxButton> Show(string content, string title, MessageBoxButton btnType = MessageBoxButton.Yes) {
             Title = title;
             Content = content;
             clickResult = new UniTaskCompletionSource<MessageBoxButton>();
-            SetupButton(btnType);
+            DisplayButtons(btnType);
             SetBodyVisible(true);
             await PlayShowAnimation();
             SetBodyInteractable(true);
@@ -75,6 +70,6 @@ namespace BW.GameCode.UI
             clickResult.TrySetResult(MessageBoxButton.Cancel);
         }
 
-        public abstract void SetupButton(MessageBoxButtonStyle btnType);
+        protected abstract void DisplayButtons(MessageBoxButton btnType);
     }
 }

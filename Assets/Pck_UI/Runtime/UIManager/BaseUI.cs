@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 namespace BW.GameCode.UI
 {
+
+
+
     /// <summary>
     /// 最基础的UI组件,可以打开,关闭,以及一些回调
     /// </summary>
@@ -39,7 +42,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        protected  void SetBodyVisible(bool value) {
+        protected void SetBodyVisible(bool value) {
             if (!gameObject.activeSelf) {
                 gameObject.SetActive(true);
             }
@@ -47,7 +50,7 @@ namespace BW.GameCode.UI
             m_body.blocksRaycasts = value;
         }
 
-        protected  void SetBodyInteractable(bool value) {
+        protected void SetBodyInteractable(bool value) {
             m_body.interactable = value;    // 所有控件aviable
         }
 

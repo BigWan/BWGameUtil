@@ -17,8 +17,10 @@ namespace BW.GameCode.Singleton
 
         protected virtual void OnAwake() { }
         protected void Awake() {
-            if (Exist) Destroy(gameObject);
-            I = this as T;
+            if (Exist) 
+                Destroy(gameObject);
+            else
+                I = this as T;
         }
 
 

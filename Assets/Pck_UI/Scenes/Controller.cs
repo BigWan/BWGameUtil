@@ -13,17 +13,31 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("a")) {
-            ShowAMessagebox();
+        if (Input.GetKeyDown(KeyCode.A)) {
+            ShowAMessagebox(MessageBoxButton.Yes);
         }
-        
+        if (Input.GetKeyDown(KeyCode.B)) {
+            ShowAMessagebox(MessageBoxButton.No);
+        }
+        if (Input.GetKeyDown(KeyCode.C)) {
+            ShowAMessagebox(MessageBoxButton.Yes | MessageBoxButton.No);
+        }
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            ShowInputbox();
+        }
     }
 
 
-    void ShowAMessagebox() {
+    async void ShowAMessagebox(MessageBoxButton type) {
 
-        var msg = MessageBox.I.Show("请选择一个选项", "adfadfasdfasdfasdf", MessageBoxButtonStyle.Yes);
-        Debug.Log(msg);
+        var msg = await MessageBox.I.Show("请选择一个选项", "adfadfasdfasdfasdf", type);
+        Debug.Log(msg.ToString());
 
+    }
+
+
+    async void ShowInputbox() {
+        var result = await InputBox.Show("cesi", "ceshi", "input your name", 30, true);
+        Debug.Log(result.InputValue);
     }
 }

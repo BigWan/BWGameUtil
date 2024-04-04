@@ -11,21 +11,21 @@ namespace BW.GameCode.UI
 
     public class MessageBox : SimpleSingleton<MessageBox>
     {
-        [SerializeField] BaseMessageBoxWindow m_msgBoxDialog;
+        [SerializeField] MessageBoxWindow m_msgBoxDialog;
         [SerializeField] Transform m_dialogGroup;
 
         [SerializeField] int m_cacheCount = 5;
 
-        Queue<BaseMessageBoxWindow> mCaches = new Queue<BaseMessageBoxWindow>();
+        Queue<MessageBoxWindow> mCaches = new Queue<MessageBoxWindow>();
 
 
 
-        BaseMessageBoxWindow CreateDialog() {
-            BaseMessageBoxWindow obj;
+        MessageBoxWindow CreateDialog() {
+            MessageBoxWindow obj;
             if (mCaches.Count > 0) {
                 obj = mCaches.Dequeue();
             } else {
-                obj = Instantiate<BaseMessageBoxWindow>(m_msgBoxDialog, m_dialogGroup);
+                obj = Instantiate<MessageBoxWindow>(m_msgBoxDialog, m_dialogGroup);
                 //obj.Event_OnClose += () => OnDialogDeactive(obj);
                 //obj.Callback_OnDeactive.AddListener(()=>OnDialogDeactive(obj));rtff
             }
@@ -33,7 +33,7 @@ namespace BW.GameCode.UI
             return obj;
         }
 
-        private void RecycleDialog(BaseMessageBoxWindow ui) {
+        private void RecycleDialog(MessageBoxWindow ui) {
             if (mCaches.Count > m_cacheCount) {
                 Destroy(ui.gameObject);
             } else {
@@ -42,7 +42,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        public async UniTask<MessageBoxButton> Show(string title, string content, MessageBoxButtonStyle btnType = MessageBoxButtonStyle.Yes) {
+        public async UniTask<MessageBoxButton> Show(string title, string content, MessageBoxButton btnType = MessageBoxButton.Yes) {
             var dialog = CreateDialog();
             var result = await dialog.Show(content, title, btnType);            
             RecycleDialog(dialog);

@@ -1,5 +1,4 @@
-﻿
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 
 using System;
 using System.Collections.Generic;
@@ -11,9 +10,6 @@ using Object = UnityEngine.Object;
 
 namespace BW.GameCode.UI
 {
-
-
-
     /// <summary>
     /// 管理场景中的常驻UI
     /// 改进UI系统
@@ -62,7 +58,7 @@ namespace BW.GameCode.UI
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        static async UniTask<T> LoadUI<T>() where T : BaseUI {
+        static async UniTask<T> InstanceUI<T>() where T : BaseUI {
             var uiType = typeof(T);
             if (cacheUIs.TryGetValue(uiType, out var ui)) {
                 cacheUIs.Remove(uiType);
@@ -71,11 +67,10 @@ namespace BW.GameCode.UI
                 var path = Path.Combine(UIResourcesFolder, uiType.Name);
                 var t = await Resources.LoadAsync<T>(path) as T;
                 if (t == null) {
-                    Debug.Log($"UI bucunzai  {path}");
-                    return default;
+                    throw new UIException($"UI 不存在 {typeof(T).Name}");
                 }
-                Object.Instantiate(t, UICanvas.GetLayer(t.UILayer));
-                return t;
+                var ui2 = Object.Instantiate(t, UICanvas.GetLayer(t.UILayer));
+                return ui2;
             }
         }
 
@@ -93,16 +88,11 @@ namespace BW.GameCode.UI
             T ui = GetOpenedUI<T>();
             if (ui != null) {
                 return ui;
-            }
-
-            ui = await LoadUI<T>();
-            if (ui == null) {
-                throw new UIException($"UI 不存在 {typeof(T).Name}");
             } else {
+                ui = await InstanceUI<T>();
                 instance.Add(ui);
+                return ui;
             }
-
-            return ui;
         }
 
         static async UniTask Show<T>(T ui) where T : BaseUI {
@@ -126,8 +116,8 @@ namespace BW.GameCode.UI
         static async UniTask Close(BaseUI ui) {
             //实例存在对象,直接显示对象
             Debug.Assert(ui != null);
-            instance.Remove(ui);
             await ui.Close();
+            instance.Remove(ui);
             if (ui.AutoDestroy) {
                 Object.Destroy(ui.gameObject);  // 删除UI
             } else {

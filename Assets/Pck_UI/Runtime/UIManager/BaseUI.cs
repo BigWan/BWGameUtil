@@ -4,6 +4,9 @@ using System;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Threading.Tasks;
+using System.Threading;
+
 namespace BW.GameCode.UI
 {
     /// <summary>
@@ -27,6 +30,8 @@ namespace BW.GameCode.UI
         public event Action Event_OnClose;
         public event Action Event_OnDeactive;
         public event Action Event_OnRefresh;
+
+        CancellationTokenSource cts = new CancellationTokenSource();
 
         protected sealed override void Awake() {
             OnAwake();
@@ -57,11 +62,11 @@ namespace BW.GameCode.UI
             Debug.Log($"[UI]SetBodyInteractable{value}");
         }
 
-        protected virtual async UniTask PlayShowAnimation() {
+        protected virtual async UniTask PlayShowAnimation(CancellationToken ct) {
             await UniTask.CompletedTask;
         }
 
-        protected virtual async UniTask PlayHideAnimation() {
+        protected virtual async UniTask PlayHideAnimation(CancellationToken ct) {
             await UniTask.CompletedTask;
         }
 
@@ -69,22 +74,26 @@ namespace BW.GameCode.UI
         /// 刷新数据
         /// </summary>
         /// <returns></returns>
-        protected virtual async UniTask OnRefresh() {
+        protected virtual async UniTask OnRefresh(CancellationToken ct) {
             await UniTask.CompletedTask;
         }
 
         public async UniTask Show() {
             Debug.Log($"UI <{this.name}> is Showing");
+            cts.Cancel();
+            cts = new CancellationTokenSource();
+            try {
+                IsShow = true;
+                SetBodyVisible(true);
+                OnActive();
+                Event_OnActive?.Invoke();
+                await OnRefresh(cts.Token);
+                await PlayShowAnimation(cts.Token);
+                OnShow();
+                SetBodyInteractable(true);
+                Event_OnShow?.Invoke();
+            } finally { }
 
-            IsShow = true;
-            SetBodyVisible(true);
-            OnActive();
-            Event_OnActive?.Invoke();
-            await OnRefresh();
-            await PlayShowAnimation();
-            OnShow();
-            SetBodyInteractable(true);
-            Event_OnShow?.Invoke();
         }
 
         /// <summary>
@@ -93,18 +102,25 @@ namespace BW.GameCode.UI
         /// <param name="deactiveCallback"> UI完全关闭后的回调</param>
         public async UniTask Close() {
             Debug.Log($"UI <{this.name}> is Closing");
+            cts.Cancel();
+            cts = new CancellationTokenSource();
+            try {
+                IsShow = false;
+                SetBodyInteractable(false);
+                OnClose();
+                Event_OnClose?.Invoke();
+                // 先播放动画后设置
+                await PlayHideAnimation(cts.Token);
+                SetBodyVisible(false);
+                //canvasGroup.alpha = 0;
 
-            IsShow = false;
-            SetBodyInteractable(false);
-            OnClose();
-            Event_OnClose?.Invoke();
-            // 先播放动画后设置
-            await PlayHideAnimation();
-            SetBodyVisible(false);
-            //canvasGroup.alpha = 0;
-
-            OnDeactive();
-            Event_OnDeactive?.Invoke();
+                OnDeactive();
+                Event_OnDeactive?.Invoke();
+            } catch (OperationCanceledException ex) {
+                if (ex.CancellationToken == cts.Token) {
+                    Debug.Log("[UI] Close Break");
+                }
+            }
         }
 
         public override bool IsActive() => base.IsActive() && IsShow && m_body.alpha > 0;

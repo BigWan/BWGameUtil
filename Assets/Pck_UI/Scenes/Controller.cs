@@ -25,6 +25,12 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) {
             ShowInputbox();
         }
+        if (Input.GetKeyDown(KeyCode.M)) {
+            UIManager.Show<TEstPanel>();
+        }
+        if (Input.GetKeyDown(KeyCode.N)) {
+            UIManager.Close<TEstPanel>();
+        }
     }
 
 

@@ -67,6 +67,10 @@
     <Compile Include="Assets\Pck_UI\Runtime\MessageBox\MessageBox.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\UIManager\UIManager.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\UIManager\BaseUI.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\UIManager\GameUICanvas.cs" />
+    <Compile Include="Assets\Pck_UI\Scenes\TEstPanel.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\UIManager\GameUILayer.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\UIManager\UIException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Pck_UI\ui.asmdef" />

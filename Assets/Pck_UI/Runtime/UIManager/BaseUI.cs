@@ -6,19 +6,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 namespace BW.GameCode.UI
 {
-
-
-
     /// <summary>
     /// 最基础的UI组件,可以打开,关闭,以及一些回调
     /// </summary>
     [RequireComponent(typeof(CanvasGroup))]
     [DisallowMultipleComponent]
-    public class BaseUI : UIBehaviour
+    public abstract class BaseUI : UIBehaviour
     {
         [Header("Body Canvas")]
         [SerializeField] CanvasGroup m_body = default; // 不要Fade这个CanvasGroup,因为UI会直接设置他的值
-
+        [SerializeField] GameUILayer m_layer;
+        [Header("关闭时自动摧毁")]
+        [SerializeField] bool m_autoDestroy = false;
+        public bool AutoDestroy => m_autoDestroy;
+        public GameUILayer UILayer => m_layer;
         public bool IsShow { get; private set; }
 
         public event Action Event_OnActive;
@@ -29,8 +30,8 @@ namespace BW.GameCode.UI
 
         protected sealed override void Awake() {
             OnAwake();
-            SetBodyVisible(false);
-            SetBodyInteractable(false);
+            //SetBodyVisible(false);
+            //SetBodyInteractable(false);
         }
 
         protected virtual void OnAwake() {
@@ -48,17 +49,19 @@ namespace BW.GameCode.UI
             }
             m_body.alpha = value ? 1 : 0;
             m_body.blocksRaycasts = value;
+            Debug.Log($"[UI]SetBodyVisible{value}");
         }
 
         protected void SetBodyInteractable(bool value) {
             m_body.interactable = value;    // 所有控件aviable
+            Debug.Log($"[UI]SetBodyInteractable{value}");
         }
 
-        protected async UniTask PlayShowAnimation() {
+        protected virtual async UniTask PlayShowAnimation() {
             await UniTask.CompletedTask;
         }
 
-        protected async UniTask PlayHideAnimation() {
+        protected virtual async UniTask PlayHideAnimation() {
             await UniTask.CompletedTask;
         }
 

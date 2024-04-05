@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,24 +53,17 @@
     <UnityVersion>2020.3.20f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\Pck_UI\Runtime\InputBox\InputBox.cs" />
-    <Compile Include="Assets\Pck_UI\Scenes\Controller.cs" />
-    <Compile Include="Assets\Pck_UI\Scenes\SimpleInputDialog.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\MessageBox\MessageBox.cs" />
-    <Compile Include="Assets\Pck_UI\Scenes\SimpleMessageBoxDialog.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\InputBox\InputWindow.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\UIManager\UIManager.cs" />
-    <Compile Include="Assets\Pck_UI\Scenes\TEstPanel.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\InfoBar.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\UIManager\BaseUI.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\UIManager\GameUILayer.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\UIPanelSoundSFX.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\InputDialog.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\APanelUI.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\MessageBox2.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\SimplgeMessageDialog.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\InfoLine.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\MessageBox\MessageBoxWindow.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\UIManager\GameUICanvas.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\UIManager\UIException.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\BaseUI.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\UIManager.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\InfoBar.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\InputBox.cs" />
+    <Compile Include="Assets\Pck_UI\Runtime\MessageBoxDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Pck_UI\ui.asmdef" />

@@ -26,10 +26,14 @@ namespace BW.GameCode.UI
     public class InputBoxArgument
     {
         public string Title;
-        public string Text;
+        public string Text = default;
+        /// <summary>
+        /// 输入框是否可以取消
+        /// </summary>
+        public bool cancelAble = true;  
         public ContentType ContentType = ContentType.Standard;
         public int CharacterLimit = 30;
-        public CheckInputValueDelegate Checker;
+        public CheckInputValueDelegate Checker = default;
     }
 
     public delegate bool CheckInputValueDelegate(string value);
@@ -137,8 +141,6 @@ namespace BW.GameCode.UI
         }
 
         protected abstract void DisplayButtons(MessageBoxButton btnType);
-
-
 
         protected void OnShow() {
             if (m_input != null) {

@@ -13,28 +13,27 @@ namespace BW.GameCode.UI
     /// </summary>
     public class InputBox : SimpleSingleton<InputBox>
     {
-        [SerializeField] InputDialog m_uiPrefab;
+        [SerializeField] InputDialog m_dialogPrefab;
         [SerializeField] Transform m_dialogParent;
 
         [SerializeField] int m_cacheCount = 5;
 
-        Queue<InputDialog> mCaches = new Queue<InputDialog>();
+        static Queue<InputDialog> mCaches = new Queue<InputDialog>();
 
-        InputDialog CreateDialog() {
+        static InputDialog CreateDialog() {
             InputDialog obj;
             if (mCaches.Count > 0) {
                 obj = mCaches.Dequeue();
             } else {
-                obj = Instantiate<InputDialog>(m_uiPrefab, m_dialogParent);
+                obj = Instantiate<InputDialog>(I.m_dialogPrefab, I.m_dialogParent);
                 obj.Event_OnHide += () => RecycleDialog(obj);
-                //obj.Callback_OnDeactive.AddListener(()=>OnDialogDeactive(obj));
             }
             obj.gameObject.name = "Actived";
             return obj;
         }
 
-        private void RecycleDialog(InputDialog ui) {
-            if (mCaches.Count > m_cacheCount) {
+        private static void RecycleDialog(InputDialog ui) {
+            if (mCaches.Count > I.m_cacheCount) {
                 Destroy(ui.gameObject);
             } else {
                 ui.gameObject.name = "Cached";
@@ -42,35 +41,9 @@ namespace BW.GameCode.UI
             }
         }
 
-        public static void Show(string title, string content, string placeholder = "", int characterLimit = 0, bool showCancelButton = true,
-            Action<bool, string> callback = default,// bool =true 表示confirm
-            CheckInputValueDelegate checkFunc = default) {
-            I.ShowInternal(title, content, placeholder, characterLimit, showCancelButton, callback, checkFunc);
-        }
-
-        void ShowInternal(string title, string content, string placeholder = "", int characterLimit = 0, bool showCancelButton = true,
-           Action<bool, string> callback = default,// bool =true 表示confirm
-           CheckInputValueDelegate checkFunc = default) {
+        public static void Show(InputBoxArgument args, Action<InputResult> callback) {
             var dialog = CreateDialog();
-            dialog.Caption = title;
-            dialog.Content = content;
-            dialog.PlaceHolder = placeholder;
-            dialog.CharacterLimit = characterLimit;
-            dialog.ContentType = TMPro.TMP_InputField.ContentType.Standard;
-            dialog.checkFunc = checkFunc;
-            dialog.SetCancelButtonActive(showCancelButton);
-            StartCoroutine(ProcessInput(dialog, callback));
-        }
-
-        IEnumerator ProcessInput(InputDialog dialog, Action<bool, string> callback) {
-            dialog.Show();
-            while (dialog.Result == InputResult.None) {
-                yield return null;
-            }
-            var result = dialog.InputValue;
-            bool confirm = dialog.Result == InputResult.Confirm;
-            dialog.Close();
-            callback?.Invoke(confirm, result);
+            dialog.Show(args, callback);
         }
     }
 }

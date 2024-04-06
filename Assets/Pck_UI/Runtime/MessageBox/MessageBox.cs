@@ -18,12 +18,12 @@ namespace BW.GameCode.UI
     /// <summary>
     /// 需要玩家操作的,强烈的警告意味
     /// </summary>
-    public class MessageBox2 : MonoBehaviour
+    public class MessageBox : MonoBehaviour
     {
         static string msgboxWindowPrefab = "";
         static string msgboxCanvasObject = "";
 
-        public static MessageBox2 Instance { get; private set; }
+        public static MessageBox Instance { get; private set; }
 
         [SerializeField] MessageBoxDialog m_dialogPrefab;
         [SerializeField] Transform m_dialogParent;

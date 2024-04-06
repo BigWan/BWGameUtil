@@ -8,17 +8,10 @@ using UnityEngine;
 
 namespace BW.GameCode.UI
 {
-    public enum InputResult
-    {
-        None,
-        Confirm,
-        Cancel,
-    }
-
     /// <summary>
     /// 输入框
     /// </summary>
-    public sealed class InputBox : SimpleSingleton<InputBox>
+    public class InputBox : SimpleSingleton<InputBox>
     {
         [SerializeField] InputDialog m_uiPrefab;
         [SerializeField] Transform m_dialogParent;
@@ -33,17 +26,15 @@ namespace BW.GameCode.UI
                 obj = mCaches.Dequeue();
             } else {
                 obj = Instantiate<InputDialog>(m_uiPrefab, m_dialogParent);
-                obj.Event_OnClose += ()=>OnDialogDeactive(obj);
+                obj.Event_OnHide += () => RecycleDialog(obj);
                 //obj.Callback_OnDeactive.AddListener(()=>OnDialogDeactive(obj));
             }
             obj.gameObject.name = "Actived";
             return obj;
         }
 
-
-
-        private void OnDialogDeactive(InputDialog ui) {
-            if (mCaches.Count > m_cacheCount) {                
+        private void RecycleDialog(InputDialog ui) {
+            if (mCaches.Count > m_cacheCount) {
                 Destroy(ui.gameObject);
             } else {
                 ui.gameObject.name = "Cached";
@@ -51,7 +42,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        public static void Show(string title, string content, string placeholder = "",int characterLimit = 0, bool showCancelButton = true,
+        public static void Show(string title, string content, string placeholder = "", int characterLimit = 0, bool showCancelButton = true,
             Action<bool, string> callback = default,// bool =true 表示confirm
             CheckInputValueDelegate checkFunc = default) {
             I.ShowInternal(title, content, placeholder, characterLimit, showCancelButton, callback, checkFunc);
@@ -66,7 +57,7 @@ namespace BW.GameCode.UI
             dialog.PlaceHolder = placeholder;
             dialog.CharacterLimit = characterLimit;
             dialog.ContentType = TMPro.TMP_InputField.ContentType.Standard;
-            dialog.CheckFunc = checkFunc;
+            dialog.checkFunc = checkFunc;
             dialog.SetCancelButtonActive(showCancelButton);
             StartCoroutine(ProcessInput(dialog, callback));
         }

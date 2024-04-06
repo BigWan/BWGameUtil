@@ -43,8 +43,8 @@ namespace BW.GameCode.UI
             Result = null;
             DisplayButtons(btnType);
             SetBodyVisible(true);
-            SetBodyInteractable(true);
             yield return FadeInProcess();
+            SetBodyInteractable(true);
             yield return new WaitUntil(() => Result != null);
             SetBodyInteractable(false);
             callback?.Invoke(Result.Value);

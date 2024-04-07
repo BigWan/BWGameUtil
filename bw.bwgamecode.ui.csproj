@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Pck_UI\Runtime\InputBox\InputDialog.cs" />
-    <Compile Include="Assets\Pck_UI\Runtime\UIManager\APanelUI.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\MessageBox\MessageBox.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\MessageBox\SimplgeMessageDialog.cs" />
     <Compile Include="Assets\Pck_UI\Runtime\InfoBar\InfoLine.cs" />

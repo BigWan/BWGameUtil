@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using UnityEngine;
 
 namespace BW.GameCode.UI
 {
+
+    public enum UIPanelType
+    {
+        Back,       // 场景UI,背景UI
+        Page,       // 大的页面,Page控制弹窗,关闭Page的时候,这个Page的所有弹窗都会消失
+        Popup,      // 整体的弹窗,弹窗会遮盖底层UI的交互
+        Top         // 顶层UI
+    }
     public interface IUIManager
     {
-        void OnUIActive(APanelUI ui);
+        void OnUIActive(BaseUI ui);
 
-        void OnUIDeactive(APanelUI ui);
+        void OnUIDeactive(BaseUI ui);
     }
 
     public interface IUIData { }
@@ -21,6 +30,14 @@ namespace BW.GameCode.UI
         public IUIData Data { get; set; }
     }
 
+    public class GameUICanvas : MonoBehaviour
+    {
+        [SerializeField] Transform m_topLayer;
+        [SerializeField] Transform m_backLayer;
+        [SerializeField] Transform m_panelLayer;
+        [SerializeField] Transform m_popupLayer;
+    }
+
     /// <summary>
     /// 管理场景中的常驻UI
     /// 改进UI系统
@@ -29,37 +46,71 @@ namespace BW.GameCode.UI
     /// </summary>
     public class UIManager : MonoBehaviour, IUIManager
     {
-        [SerializeField] List<APanelUI> m_allUIs = default;
-        [Header("RootUI,Root ui会在其他UI 都关闭时默认打开,默认的UI")]
-        [SerializeField] APanelUI m_rootUI = default;
-        [SerializeField] bool mDisplayLog = false;
+        // 打开的UI
+        Dictionary<Type, BaseUI> minstances = new Dictionary<Type, BaseUI>();
 
-        Dictionary<Type, BaseUI> instance = new Dictionary<Type, BaseUI>();
-        Stack<UIStackItem> activeUI2s = new Stack<UIStackItem>();
-        HashSet<APanelUI> activeUIs = new HashSet<APanelUI>(); // TODO:独立UI和群组UI需要隔离开,有些UI打开时还需要调整UI层级顺序
+        // panel
+        Stack<UIStackItem> panelStack = new Stack<UIStackItem>();
+        BaseUI currentPanel;
+        // cached
+        Dictionary<Type, BaseUI> cachedUI = new Dictionary<Type, BaseUI>();
 
+        static GameUICanvas GameCanvas;
 
-        
-
-
-        APanelUI currentUI;
         public static UIManager I { get; private set; }
 
+        public static string UI_RES_PATH = "UI/WINDOWS";
 
 
 
-
-        void Awake() {
-            if (I == null) {
-                I = this;
-            } else {
-                Destroy(this.gameObject);
-                Debug.LogWarning("场景中已经存在一个UI管理器,无法在次初始化.");
+        /// <summary>
+        /// 加载一个UI资源
+        /// </summary>
+         T InstantiateUI<T>() where T : BaseUI {
+            var uiPath = GetUIPath(typeof(T));
+            var res = Resources.Load(uiPath) as T;
+            if (res == null) {
+                throw new FileNotFoundException(uiPath);
             }
 
-            foreach (var ui in m_allUIs) {
-                ui.RegUI(this);
+            var ins = Instantiate<T>(res, GameCanvas.transform);
+            if (ins == null) {
+                throw new NullReferenceException($"实例化UI为空{uiPath}/{typeof(T)}");
             }
+            return ins;
+        }
+
+        /// <summary>
+        /// 获取UI实例,已经打开的UI会直接返回实例,缓存的UI则返回缓存的,未加载的UI执行加载
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetUIInstance<T>() where T : BaseUI {
+            var uiType = typeof(T);
+            // 实例已经打开
+            if (minstances.TryGetValue(uiType, out var ui)) {
+                return ui as T;
+            }
+            // 在缓存中
+            if (cachedUI.TryGetValue(uiType, out ui)) {
+                cachedUI[uiType] = null; // 从缓存中取出实例
+                return ui as T;
+            }
+            // 啥都不在,重新实例化一个新的UI
+            return InstantiateUI<T>();
+        }
+
+        public void ShowUI<T>() where T : BaseUI { 
+            var ui = GetUIInstance<T>();
+            if (ui.isPanel) {
+
+            }
+            ui.Show();
+        }
+
+
+        string GetUIPath(Type uiType) {
+            return Path.Combine(UI_RES_PATH, uiType.Name);
         }
 
         void OnDestroy() {
@@ -68,7 +119,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        public T GetUI<T>() where T : APanelUI {
+        public T GetUI<T>() where T : BaseUI {
             for (int i = 0; i < m_allUIs.Count; i++) {
                 if (m_allUIs[i] is T) {
                     return m_allUIs[i] as T;
@@ -77,11 +128,11 @@ namespace BW.GameCode.UI
             return default;
         }
 
-        public static T Show<T>(Action<T> initAction = default) where T : APanelUI {
+        public static T Show<T>(Action<T> initAction = default) where T : BaseUI {
             return I.GetAndShow<T>(initAction);
         }
 
-        public static void Close<T>() where T : APanelUI {
+        public static void Close<T>() where T : BaseUI {
             foreach (var ui in I.activeUIs) {
                 if (ui is T) {
                     ui.Close();
@@ -97,7 +148,7 @@ namespace BW.GameCode.UI
             //}
         }
 
-        public T GetAndShow<T>(Action<T> initAction = default) where T : APanelUI {
+        public T GetAndShow<T>(Action<T> initAction = default) where T : BaseUI {
             var ui = GetUI<T>();
 
             if (ui != null) {
@@ -114,7 +165,7 @@ namespace BW.GameCode.UI
         }
 
         // TODO:A显示,通知B 关,B关通知A显示,会出现死循环
-        void IUIManager.OnUIActive(APanelUI ui) {
+        void IUIManager.OnUIActive(BaseUI ui) {
             activeUIs.Add(ui);
             // 如果是独立UI 无所谓
             if (ui.IsMainUI) {
@@ -128,7 +179,7 @@ namespace BW.GameCode.UI
             currentUI = ui;
         }
 
-        void IUIManager.OnUIDeactive(APanelUI ui) {
+        void IUIManager.OnUIDeactive(BaseUI ui) {
             Log($"IUIManager.OnUIDeactive {ui.name} ");
 
             activeUIs.Remove(ui);
@@ -153,7 +204,7 @@ namespace BW.GameCode.UI
 
         [ContextMenu("获取UI引用")]
         void FindUI() {
-            m_allUIs = FindObjectsOfType<APanelUI>().ToList();
+            m_allUIs = FindObjectsOfType<BaseUI>().ToList();
         }
 
 #endif

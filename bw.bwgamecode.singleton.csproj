@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Assets\Pck_Singleton\Runtime\LazySingleton.cs" />
     <Compile Include="Assets\Pck_Singleton\Runtime\Singleton.cs" />
+    <Compile Include="Assets\Pck_Singleton\Runtime\ScriptableObjectSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Pck_Singleton\Singleton.asmdef" />

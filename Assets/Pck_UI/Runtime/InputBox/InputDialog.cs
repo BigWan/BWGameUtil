@@ -89,9 +89,11 @@ namespace BW.GameCode.UI
         protected IEnumerator Process(InputBoxArgument args, Action<InputResult> callback) {
             Title = args.Title;
             Content = args.Text;
+            Result = null;
             SetBodyVisible(true);
             yield return FadeInProcess();
             SetBodyInteractable(true);
+            OnShow();
             yield return new WaitUntil(() => Result != null);
             SetBodyInteractable(false);
             callback?.Invoke(Result.Value);
@@ -129,9 +131,11 @@ namespace BW.GameCode.UI
                 };
             } else {
                 // TODO:display warning
+                DisplayWarning();
             }
         }
 
+        protected virtual void DisplayWarning() { }
         protected void OnCancelButtonClick() {
             Result = new InputResult()
             {
@@ -142,10 +146,12 @@ namespace BW.GameCode.UI
 
         protected abstract void DisplayButtons(MessageBoxButton btnType);
 
-        protected void OnShow() {
-            if (m_input != null) {
-                m_input.ActivateInputField();
-            }
-        }
+        protected virtual void OnShow() { }
+
+        //protected void OnShow() {
+        //    if (m_input != null) {
+        //        m_input.ActivateInputField();
+        //    }
+        //}
     }
 }

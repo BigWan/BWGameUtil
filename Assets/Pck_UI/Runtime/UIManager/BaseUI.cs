@@ -3,7 +3,7 @@ using System.Collections;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
-namespace  BW.GameCode.UI
+namespace BW.GameCode.UI
 {
     /// <summary>
     /// 最基础的UI组件,可以打开,关闭,以及一些回调
@@ -12,17 +12,20 @@ namespace  BW.GameCode.UI
     [DisallowMultipleComponent]
     public class BaseUI : UIBehaviour
     {
-       
         [Header("Body Canvas")]
         [SerializeField] CanvasGroup m_body = default; // 不要Fade这个CanvasGroup,因为UI会直接设置他的值
+        [SerializeField] UIType m_uiType = default;
 
         public bool IsShow { get; private set; }
+
+        public UIType UIType => m_uiType;
 
         public event Action Event_OnActive;
         public event Action Event_OnShow;
         public event Action Event_OnClose;
         public event Action Event_OnDeactive;
         public event Action Event_OnRefresh;
+
         Coroutine mShowHideCoroutine; // 显示和关闭的携程
 
         protected sealed override void Awake() {
@@ -76,13 +79,6 @@ namespace  BW.GameCode.UI
             yield break;
         }
 
-        private IEnumerator DoProcessHideAnimation() {
-            yield return DoPlayHideAnimation();
-            //if (m_animation != null) {
-            //    yield return m_animation.PlayBackword();
-            //}
-        }
-
         public void Show() {
             Debug.Log($"UI <{this.name}> is Showing");
 
@@ -102,8 +98,8 @@ namespace  BW.GameCode.UI
             if (mShowHideCoroutine != null) {
                 StopCoroutine(mShowHideCoroutine);
             }
-            IsShow = false;
-            mShowHideCoroutine = StartCoroutine(DoClose());
+
+            mShowHideCoroutine = StartCoroutine(ProgressClose());
         }
 
         private IEnumerator ShowProcess() {
@@ -120,18 +116,18 @@ namespace  BW.GameCode.UI
             //RichLog.EndLog($"<{this.name}> is Active");
         }
 
-        private IEnumerator DoClose() {
+        private IEnumerator ProgressClose() {
             //RichLog.Log($"<{this.name}> is Close");
             SetBodyInteractable(false);
             OnClose();
             Event_OnClose?.Invoke();
             // 先播放动画后设置
-            yield return DoProcessHideAnimation();
+            yield return DoPlayHideAnimation();
 
             SetBodyVisible(false);
-            //canvasGroup.alpha = 0;
 
             OnDeactive();
+            IsShow = false;
             Event_OnDeactive?.Invoke();
             //callback?.Invoke();
             //RichLog.Log($"{name} Is Deactive");

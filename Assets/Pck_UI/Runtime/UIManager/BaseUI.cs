@@ -16,14 +16,33 @@ namespace BW.GameCode.UI
         [SerializeField] CanvasGroup m_body = default; // 不要Fade这个CanvasGroup,因为UI会直接设置他的值
         [SerializeField] UIType m_uiType = default;
 
+        [Header("关闭后卸载还是缓存")]
+        [SerializeField] bool m_autoDestroyOnHide;
         public bool IsShow { get; private set; }
+
+        public bool AutoDestroyOnHide => m_autoDestroyOnHide;
 
         public UIType UIType => m_uiType;
 
+        /// <summary>
+        /// UI激活
+        /// </summary>
         public event Action Event_OnActive;
+        /// <summary>
+        /// UI 显示完成
+        /// </summary>
         public event Action Event_OnShow;
+        /// <summary>
+        /// UI开始关闭
+        /// </summary>
         public event Action Event_OnClose;
+        /// <summary>
+        /// UI 完全隐藏
+        /// </summary>
         public event Action Event_OnDeactive;
+        /// <summary>
+        /// 刷新数据
+        /// </summary>
         public event Action Event_OnRefresh;
 
         Coroutine mShowHideCoroutine; // 显示和关闭的携程

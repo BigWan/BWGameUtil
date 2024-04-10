@@ -785,7 +785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_body: {fileID: 7790105978819159417}
-  m_uiType: 1
+  m_uiType: 0
   m_autoDestroyOnHide: 1
   m_CloseButton: {fileID: 445430017110625355}
   m_CreateNewGameButton: {fileID: 109298858609118516}

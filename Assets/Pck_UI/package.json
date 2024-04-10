@@ -8,5 +8,14 @@
   "category": "Controllers",
   "dependencies": {
     "com.unity.textmeshpro": "3.0.0"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "测试UI",
+      "description": "测试",
+      "path": "Samples/SampleUI"
+    }
+  ]
+
+
 }

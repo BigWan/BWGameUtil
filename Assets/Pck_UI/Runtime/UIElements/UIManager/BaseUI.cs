@@ -36,11 +36,11 @@ namespace BW.GameCode.UI
         /// <summary>
         /// UI开始关闭
         /// </summary>
-        public event Action Event_OnClose;
+        public event Action Event_OnDeactive;
         /// <summary>
         /// UI 完全隐藏
         /// </summary>
-        public event Action Event_OnDeactive;
+        public event Action Event_OnHide;
         /// <summary>
         /// 刷新数据
         /// </summary>
@@ -49,13 +49,13 @@ namespace BW.GameCode.UI
         Coroutine mShowHideCoroutine; // 显示和关闭的携程
 
         protected sealed override void Awake() {
-            SetBodyVisible(false);
-            SetBodyInteractable(false);
+            SetUIVisible(false);
+            SetUIInteractable(false);
             OnInit();
             BindUIEvent();
         }
-        protected virtual void BindUIEvent() {
 
+        protected virtual void BindUIEvent() {
         }
 
         protected virtual void OnInit() {
@@ -70,7 +70,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        protected  void SetBodyVisible(bool value) {
+        protected void SetUIVisible(bool value) {
             if (!gameObject.activeSelf) {
                 gameObject.SetActive(true);
             }
@@ -78,11 +78,9 @@ namespace BW.GameCode.UI
             m_body.blocksRaycasts = value;
         }
 
-        protected  void SetBodyInteractable(bool value) {
+        protected void SetUIInteractable(bool value) {
             m_body.interactable = value;    // 所有控件aviable
         }
-
-
 
         protected virtual IEnumerator DoPlayShowAnimation() {
             yield break;
@@ -101,19 +99,20 @@ namespace BW.GameCode.UI
             }
             mShowHideCoroutine = StartCoroutine(ShowProcess());
         }
+
         private IEnumerator ShowProcess() {
             Debug.Log($"<{this.name}> is ShowProcess");
-            SetBodyVisible(true);
+            SetUIVisible(true);
             OnActive(); // 先执行页面初始化逻辑
             Event_OnActive?.Invoke();
             yield return DoPlayShowAnimation();
-
+            SetUIInteractable(true);
             OnShow();
             Event_OnShow?.Invoke();
-            SetBodyInteractable(true);
             //callback?.Invoke();
             Debug.Log($"<{this.name}> is Active");
         }
+
         /// <summary>
         /// close
         /// </summary>
@@ -127,21 +126,18 @@ namespace BW.GameCode.UI
             mShowHideCoroutine = StartCoroutine(ProgressClose());
         }
 
-
-
         private IEnumerator ProgressClose() {
             Debug.Log($"<{this.name}> is Close");
-            SetBodyInteractable(false);
-            OnClose();
-            Event_OnClose?.Invoke();
+            SetUIInteractable(false);
+            OnDeactive();
+            Event_OnDeactive?.Invoke();
             // 先播放动画后设置
             yield return DoPlayHideAnimation();
 
-            SetBodyVisible(false);
-
-            OnDeactive();
+            SetUIVisible(false);
             IsShow = false;
-            Event_OnDeactive?.Invoke();
+            OnHide();
+            Event_OnHide?.Invoke();
             //callback?.Invoke();
             Debug.Log($"{name} Is Deactive");
         }
@@ -172,21 +168,21 @@ namespace BW.GameCode.UI
         /// <summary>
         /// 界面开始关闭,此时还没开始播放关闭动画
         /// </summary>
-        protected virtual void OnClose() {
+        protected virtual void OnDeactive() {
         }
 
         /// <summary>
         /// 界面消失,此时关闭动画已经完成
         /// </summary>
-        protected virtual void OnDeactive() { }
-
+        protected virtual void OnHide() { }
 
 #if UNITY_EDITOR
-        [ContextMenu("改名")]
 
+        [ContextMenu("改名")]
         void ChangeREsName() {
             UnityEditor.Selection.gameObjects.First().name = this.GetType().Name;
         }
+
 #endif
     }
 }

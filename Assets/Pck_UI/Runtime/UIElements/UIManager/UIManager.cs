@@ -1,9 +1,10 @@
-﻿using System;
+﻿using BW.GameCode.Singleton;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 using UnityEngine;
-using BW.GameCode.Singleton;
 namespace BW.GameCode.UI
 {
     public enum UIType
@@ -51,10 +52,8 @@ namespace BW.GameCode.UI
         // cached
         Dictionary<Type, BaseUI> cachedUI = new Dictionary<Type, BaseUI>();
 
-
         //string GetUIPath(Type uiType) => Path.Combine(m_uiResPath, uiType.Name);
         string GetUIPath(Type uiType) => m_uiResPath + "/" + uiType.Name;
-
 
         public string GetStackLayer() {
             string result = panelStack.Count.ToString();
@@ -62,7 +61,6 @@ namespace BW.GameCode.UI
                 result += item.Name + "\n";
             }
             return result;
-            
         }
 
         /// <summary>
@@ -74,20 +72,20 @@ namespace BW.GameCode.UI
 
         BaseUI InstantiateUI(Type uiType) {
             var uiPath = GetUIPath(uiType);
-            var uiObj = Resources.Load<GameObject>(uiPath) ;
+            var uiObj = Resources.Load<GameObject>(uiPath);
             if (uiObj == null) {
                 throw new FileNotFoundException(uiPath);
             }
             var uiRes = uiObj.GetComponent<BaseUI>();
-            if(uiRes == null) {
+            if (uiRes == null) {
                 throw new ArgumentNullException(uiPath);
             }
             var ui = Instantiate(uiRes, m_canvas.GetLayer(uiRes.UIType));
             if (ui == null) {
                 throw new NullReferenceException($"实例化UI为空{uiPath}/{uiType}");
             }
-            ui.Event_OnDeactive += () => OnUIDeactived(ui);
-            ui.Event_OnClose += () => OnUIClose(ui);
+            ui.Event_OnHide += () => OnUIHide(ui);
+            ui.Event_OnDeactive += () => OnUIDeactive(ui);
             ui.Event_OnActive += () => OnUIActived(ui);
 
             return ui;
@@ -169,26 +167,23 @@ namespace BW.GameCode.UI
             }
         }
 
-        private void OnUIClose(BaseUI ui) {
-
-
-        }
-
-        void OnUIDeactived(BaseUI ui) {
-            // 移除实例引用
-            Debug.Log("UIManager On UIDeactive");
-            var type = ui.GetType();
-            if (minstances.ContainsKey(type)) {
-                Debug.Log("移除打开的实例引用");
-                minstances.Remove(type);
-            }
-
+        private void OnUIDeactive(BaseUI ui) {
             if (ui == activedPanel || activedPanel == null) {
                 activedPanel = null;
                 if (panelStack.Count > 0) {
                     var stackUIType = panelStack.Pop();
                     Show(stackUIType);
                 }
+            }
+        }
+
+        void OnUIHide(BaseUI ui) {
+            // 移除实例引用
+            Debug.Log("UIManager On UIDeactive");
+            var type = ui.GetType();
+            if (minstances.ContainsKey(type)) {
+                Debug.Log("移除打开的实例引用");
+                minstances.Remove(type);
             }
 
             if (ui.AutoDestroyOnHide) {
@@ -199,8 +194,6 @@ namespace BW.GameCode.UI
                 cachedUI[type] = ui;
             }
         }
-
-
 
 #if UNITY_EDITOR
 

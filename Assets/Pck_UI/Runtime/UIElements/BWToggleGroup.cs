@@ -54,13 +54,13 @@ namespace BW.GameCode.UI
             };
 
             mItemActions.Add(item, action);
-            item.Event_OnClick.AddListener(action.click);// += Result_onSelected; //.AddListener(x => Item_OnToggle(result,                                                                      // x));
+            //item.Event_OnClick.AddListener(action.click);// += Result_onSelected; //.AddListener(x => Item_OnToggle(result,                                                                      // x));
             item.Event_OnValueChanged.AddListener(action.change);
         }
 
         void UnRegItemEvent(BWToggle item) {
             if (mItemActions.TryGetValue(item, out var action)) {
-                item.Event_OnClick.RemoveListener(action.click);
+                //item.Event_OnClick.RemoveListener(action.click);
                 item.Event_OnValueChanged.RemoveListener(action.change);
                 mItemActions.Remove(item);
             }

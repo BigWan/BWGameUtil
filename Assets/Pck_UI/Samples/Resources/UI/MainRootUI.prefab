@@ -211,7 +211,8 @@ GameObject:
   - component: {fileID: 7212022036344856302}
   - component: {fileID: 5086058602247141889}
   - component: {fileID: 5836610085298442669}
-  - component: {fileID: 445430017110625355}
+  - component: {fileID: 5093293674024743906}
+  - component: {fileID: 3523482361868873325}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -277,7 +278,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &445430017110625355
+--- !u!114 &5093293674024743906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,7 +287,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 3424338418683607536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 1282a14d404bcaa47a4eebe983ced270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canvasGroup: {fileID: 0}
+  m_animTime: 0.15
+--- !u!114 &3523482361868873325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424338418683607536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762914cb38b651049811d0c18f4b2c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -296,7 +311,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -321,6 +336,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  m_buttonTransitions:
+  - {fileID: 5093293674024743906}
 --- !u!1 &4076341646154816999
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +804,7 @@ MonoBehaviour:
   m_body: {fileID: 7790105978819159417}
   m_uiType: 0
   m_autoDestroyOnHide: 1
-  m_CloseButton: {fileID: 445430017110625355}
+  m_CloseButton: {fileID: 3523482361868873325}
   m_CreateNewGameButton: {fileID: 109298858609118516}
   m_ShowAchGameButton: {fileID: 311077214380106563}
   myText: {fileID: 244420379864273449}

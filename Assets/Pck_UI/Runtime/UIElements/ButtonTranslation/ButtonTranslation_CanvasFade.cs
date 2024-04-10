@@ -4,27 +4,32 @@ using UnityEngine;
 
 namespace BW.GameCode.UI
 {
-    public class ButtonTranslation_CanvasFade : AbstractButtonTranslation
+    public class ButtonTranslation_CanvasFade : ButtonTransition
     {
         [SerializeField] CanvasGroup m_canvasGroup = default;
         [SerializeField] float m_animTime = 0.15f;
 
-        public override void OnStateChanged(BWButton.ButtonState state) {
+        internal override void DoStateTransition(BWButton.ButtonState state, bool instant) {
             switch (state) {
                 //case AbstractButton.ButtonState.Selected:
                 //case AbstractButton.ButtonState.SelectedHover:
-                case BWButton.ButtonState.Hover:
-                    Fade(1); break;
-                case BWButton.ButtonState.Disable:
-                case BWButton.ButtonState.Normal:
+                case BWButton.ButtonState.Highlighted:
+                    Fade(1, instant); break;
+
                 default:
-                    Fade(0); break;
+                    Fade(0, instant); break;
             }
         }
 
-        void Fade(float value) {
-            if (m_canvasGroup != null) {
-                m_canvasGroup.DOKill();
+        void Fade(float value, bool instant) {
+            if (m_canvasGroup == null) {
+                return;
+            }
+
+            m_canvasGroup.DOKill();
+            if (instant) {
+                m_canvasGroup.alpha = value;
+            } else {
                 m_canvasGroup.DOFade(value, m_animTime);
             }
         }

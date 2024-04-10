@@ -10,9 +10,9 @@ namespace BW.GameCode.UI
     public class ButtonTranslation_SpriteRendererColor : ButtonTranslation_Color
     {
         [SerializeField] SpriteRenderer m_renderer = default;
-        
-        protected override void SetColor(Color color,float time) {
-            Debug.Assert(m_renderer != null,this.transform);
+
+        protected override void SetColor(Color color, float time, bool instant) {
+            Debug.Assert(m_renderer != null, this.transform);
             m_renderer.DOKill();
             m_renderer.DOColor(color, time);
         }

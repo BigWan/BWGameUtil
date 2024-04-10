@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BW.GameCode.UI
 {
-    public class ButtonTranslation_ImageFade : AbstractButtonTranslation
+    public class ButtonTranslation_ImageFade : ButtonTransition
     {
         [SerializeField] Graphic m_toggleImage = default;
 
@@ -13,21 +13,20 @@ namespace BW.GameCode.UI
             m_toggleImage.DOKill();
         }
 
-        public override void OnStateChanged(BWButton.ButtonState state) {
+        internal override void DoStateTransition(BWButton.ButtonState state, bool instant) {
             switch (state) {
-                //case AbstractButton.ButtonState.Selected:
-                //case AbstractButton.ButtonState.SelectedHover:
-                case BWButton.ButtonState.Hover:
-                case BWButton.ButtonState.Pressed:
-                    TweenAlpha(1); break;
-                case BWButton.ButtonState.Disable:
                 case BWButton.ButtonState.Normal:
+                case BWButton.ButtonState.Highlighted:
+                case BWButton.ButtonState.Pressed:
+                case BWButton.ButtonState.Selected:
+                    TweenAlpha(1, instant); break;
+                case BWButton.ButtonState.Disable:
                 default:
-                    TweenAlpha(0); break;
+                    TweenAlpha(0, instant); break;
             }
         }
 
-        void TweenAlpha(float value) {
+        void TweenAlpha(float value, bool instant) {
             //Debug.Assert(m_toggleImage != null);
             if (m_toggleImage != null) {
                 m_toggleImage.DOKill();

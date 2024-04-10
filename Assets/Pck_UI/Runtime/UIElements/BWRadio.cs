@@ -32,7 +32,7 @@ namespace BW.GameCode.UI
 
         public void SelectFirstAviable() {
             foreach (var item in this) {
-                if (item.Interactable) {
+                if (item.interactable) {
                     item.IsOn = true;
                     //Select(item);
                     break;

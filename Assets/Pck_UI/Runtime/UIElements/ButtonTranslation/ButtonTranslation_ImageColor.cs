@@ -11,7 +11,7 @@ namespace BW.GameCode.UI
     {
         [SerializeField] Graphic m_image = default;
 
-        protected override void SetColor(Color color,float time) {
+        protected override void SetColor(Color color,float time, bool instant) {
             if (m_image == null) return;
             m_image.CrossFadeColor(color, time, true, true);
         }

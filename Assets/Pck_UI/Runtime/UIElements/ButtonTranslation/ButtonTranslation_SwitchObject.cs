@@ -2,21 +2,20 @@
 
 namespace BW.GameCode.UI
 {
-    public class ButtonTranslation_SwitchObject : AbstractButtonTranslation
+    public class ButtonTranslation_SwitchObject : ButtonTransition
     {
         [SerializeField] GameObject m_toggleObject = default;
         [SerializeField] bool m_defaultValue = false;
-        public override void OnStateChanged(BWButton.ButtonState state) {
+
+        internal override void DoStateTransition(BWButton.ButtonState state, bool instant) {
             switch (state) {
-                //case AbstractButton.ButtonState.Selected:
-                //case AbstractButton.ButtonState.SelectedHover:
-                //    SetActive(true); break;
-                case BWButton.ButtonState.Hover:
-                    SetActive(!m_defaultValue); break;
-                case BWButton.ButtonState.Disable:
-                case BWButton.ButtonState.Normal:
+                case BWButton.ButtonState.Highlighted:
+                    SetActive(!m_defaultValue);
+                    break;
+
                 default:
-                    SetActive(m_defaultValue); break;
+                    SetActive(m_defaultValue);
+                    break;
             }
         }
 

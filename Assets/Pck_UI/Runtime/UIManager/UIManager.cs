@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using UnityEngine;
-
+using BW.GameCode.Singleton;
 namespace BW.GameCode.UI
 {
     public enum UIType
@@ -30,17 +30,6 @@ namespace BW.GameCode.UI
         public IUIData Data { get; set; }
     }
 
-    public class GameUICanvas : MonoBehaviour
-    {
-        [SerializeField] Transform m_sceneLayer;
-        [SerializeField] Transform m_panelLayer;
-        [SerializeField] Transform m_popupLayer;
-        [SerializeField] Transform m_topLayer;
-
-        public Transform GetLayer(UIType uiType) {
-        }
-    }
-
     /// <summary>
     /// 管理场景中的常驻UI
     /// 改进UI系统
@@ -49,8 +38,10 @@ namespace BW.GameCode.UI
     /// https://github.com/feifeid47/Unity-Async-UIFrame/blob/main/Runtime/Core/UIFrame.cs
     /// 每个场景一个UIManager,作为单例会自动切换
     /// </summary>
-    public class UIManager : MonoBehaviour
+    public class UIManager : SimpleSingleton<UIManager>
     {
+        [SerializeField] GameUICanvas m_canvas;
+        [SerializeField] string m_uiResPath = "BaseUI";
         // 打开的UI
         Dictionary<Type, BaseUI> minstances = new Dictionary<Type, BaseUI>();
         // panel
@@ -60,13 +51,19 @@ namespace BW.GameCode.UI
         // cached
         Dictionary<Type, BaseUI> cachedUI = new Dictionary<Type, BaseUI>();
 
-        static GameUICanvas GameCanvas;
 
-        public static UIManager I { get; private set; }
+        //string GetUIPath(Type uiType) => Path.Combine(m_uiResPath, uiType.Name);
+        string GetUIPath(Type uiType) => m_uiResPath + "/" + uiType.Name;
 
-        public static string UI_RES_PATH = "UI/WINDOWS";
 
-        string GetUIPath(Type uiType) => Path.Combine(UI_RES_PATH, uiType.Name);
+        public string GetStackLayer() {
+            string result = panelStack.Count.ToString();
+            foreach (var item in panelStack) {
+                result += item.Name + "\n";
+            }
+            return result;
+            
+        }
 
         /// <summary>
         /// 加载一个UI资源
@@ -77,11 +74,15 @@ namespace BW.GameCode.UI
 
         BaseUI InstantiateUI(Type uiType) {
             var uiPath = GetUIPath(uiType);
-            var res = Resources.Load(uiPath) as BaseUI;
-            if (res == null) {
+            var uiObj = Resources.Load<GameObject>(uiPath) ;
+            if (uiObj == null) {
                 throw new FileNotFoundException(uiPath);
             }
-            var ui = Instantiate(res, GameCanvas.GetLayer(res.UIType));
+            var uiRes = uiObj.GetComponent<BaseUI>();
+            if(uiRes == null) {
+                throw new ArgumentNullException(uiPath);
+            }
+            var ui = Instantiate(uiRes, m_canvas.GetLayer(uiRes.UIType));
             if (ui == null) {
                 throw new NullReferenceException($"实例化UI为空{uiPath}/{uiType}");
             }
@@ -93,9 +94,14 @@ namespace BW.GameCode.UI
         }
 
         BaseUI GetUIInstance(Type uiType) {
-            if (cachedUI.TryGetValue(uiType, out var ui)) {
+            if (cachedUI.TryGetValue(uiType, out BaseUI result)) {
                 cachedUI[uiType] = null; // 从缓存中取出实例
-                return ui;
+                if (result == null) {
+                    cachedUI.Remove(uiType);
+                }
+            }
+            if (result != null) {
+                return result;
             }
             // 啥都不在,重新实例化一个新的UI
             return InstantiateUI(uiType);
@@ -126,17 +132,23 @@ namespace BW.GameCode.UI
                 return false;
             }
             var ui = GetUIInstance(uiType);
-            minstances.Add(uiType, ui);
-            // 处理Panel堆栈
-            if (ui.UIType == UIType.Panel) {
-                if (activedPanel != null) {
-                    panelStack.Push(activedPanel.GetType());
-                    TryClose(activedPanel);
-                }
-            }
-            activedPanel = ui;
+
             ui.Show();
             return true;
+        }
+
+        void OnUIActived(BaseUI ui) {
+            minstances.Add(ui.GetType(), ui);
+            ui.transform.SetAsLastSibling();
+            // 如果是主页面
+            if (ui.UIType == UIType.Panel) {
+                var temp = activedPanel;
+                activedPanel = ui;
+                if (temp != null) {
+                    panelStack.Push(temp.GetType());
+                    temp.Close();
+                }
+            }
         }
 
         public void TryClose(BaseUI ui) {
@@ -157,30 +169,21 @@ namespace BW.GameCode.UI
             }
         }
 
-        void OnUIActived(BaseUI ui) {
-            minstances.Add(ui.GetType(), ui);
-            // 如果是主页面
-            if (ui.UIType == UIType.Panel) {
-                if (activedPanel != null && activedPanel != ui) {
-                    activedPanel = ui;
-                    var temp = activedPanel;
-                    panelStack.Push(temp.GetType());
-                    temp.Close();
-                }
-            }
-        }
-
         private void OnUIClose(BaseUI ui) {
+
+
         }
 
         void OnUIDeactived(BaseUI ui) {
             // 移除实例引用
+            Debug.Log("UIManager On UIDeactive");
             var type = ui.GetType();
             if (minstances.ContainsKey(type)) {
-                minstances[type] = null;
+                Debug.Log("移除打开的实例引用");
+                minstances.Remove(type);
             }
 
-            if (ui == activedPanel) {
+            if (ui == activedPanel || activedPanel == null) {
                 activedPanel = null;
                 if (panelStack.Count > 0) {
                     var stackUIType = panelStack.Pop();
@@ -189,17 +192,15 @@ namespace BW.GameCode.UI
             }
 
             if (ui.AutoDestroyOnHide) {
+                Debug.Log($"删除UI{ui.name}");
                 Destroy(ui.gameObject);
             } else {
+                Debug.Log($"缓存UI{ui.name}");
                 cachedUI[type] = ui;
             }
         }
 
-        void OnDestroy() {
-            if (I == this) {
-                I = null;
-            }
-        }
+
 
 #if UNITY_EDITOR
 

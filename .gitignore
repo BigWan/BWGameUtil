@@ -266,3 +266,11 @@ src/**/*.txt
 .vscode/
 
 *.diagsession
+bw.bwgamecode.pathing.csproj
+bw.bwgamecode.singleton.csproj
+bw.bwgamecode.ui.csproj
+BwGameCode.sln
+bwpackage-runtime.csproj
+bwpersonal-editor.csproj
+DOTween.Modules.csproj
+*.csproj

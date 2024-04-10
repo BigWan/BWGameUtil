@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -48,18 +49,16 @@ namespace BW.GameCode.UI
         Coroutine mShowHideCoroutine; // 显示和关闭的携程
 
         protected sealed override void Awake() {
-            //// 5-28 最后处理: Awake的时候不处理动画,初始化放在每次Show的时候
-            //// 5-29 还是这里Init吧,因为如果每次Show都Init的话,动画会闪烁
-            //if (m_animation != null) {
-            //    m_animation.InitNode();
-            //}
-
             SetBodyVisible(false);
             SetBodyInteractable(false);
-            OnAwake();
+            OnInit();
+            BindUIEvent();
+        }
+        protected virtual void BindUIEvent() {
+
         }
 
-        protected virtual void OnAwake() {
+        protected virtual void OnInit() {
         }
 
         protected virtual void FindRefs() {
@@ -71,7 +70,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        protected virtual void SetBodyVisible(bool value) {
+        protected  void SetBodyVisible(bool value) {
             if (!gameObject.activeSelf) {
                 gameObject.SetActive(true);
             }
@@ -79,16 +78,11 @@ namespace BW.GameCode.UI
             m_body.blocksRaycasts = value;
         }
 
-        protected virtual void SetBodyInteractable(bool value) {
+        protected  void SetBodyInteractable(bool value) {
             m_body.interactable = value;    // 所有控件aviable
         }
 
-        private IEnumerator DoProcessShowAnimation() {
-            //if (m_animation != null) {
-            //    yield return m_animation.PlayForward();
-            //}
-            yield return DoPlayShowAnimation();
-        }
+
 
         protected virtual IEnumerator DoPlayShowAnimation() {
             yield break;
@@ -107,7 +101,19 @@ namespace BW.GameCode.UI
             }
             mShowHideCoroutine = StartCoroutine(ShowProcess());
         }
+        private IEnumerator ShowProcess() {
+            Debug.Log($"<{this.name}> is ShowProcess");
+            SetBodyVisible(true);
+            OnActive(); // 先执行页面初始化逻辑
+            Event_OnActive?.Invoke();
+            yield return DoPlayShowAnimation();
 
+            OnShow();
+            Event_OnShow?.Invoke();
+            SetBodyInteractable(true);
+            //callback?.Invoke();
+            Debug.Log($"<{this.name}> is Active");
+        }
         /// <summary>
         /// close
         /// </summary>
@@ -121,22 +127,10 @@ namespace BW.GameCode.UI
             mShowHideCoroutine = StartCoroutine(ProgressClose());
         }
 
-        private IEnumerator ShowProcess() {
-            //RichLog.Log($"<{this.name}> is show");
-            SetBodyVisible(true);
-            OnActive(); // 先执行页面初始化逻辑
-            Event_OnActive?.Invoke();
-            yield return DoProcessShowAnimation();
 
-            OnShow();
-            Event_OnShow?.Invoke();
-            SetBodyInteractable(true);
-            //callback?.Invoke();
-            //RichLog.EndLog($"<{this.name}> is Active");
-        }
 
         private IEnumerator ProgressClose() {
-            //RichLog.Log($"<{this.name}> is Close");
+            Debug.Log($"<{this.name}> is Close");
             SetBodyInteractable(false);
             OnClose();
             Event_OnClose?.Invoke();
@@ -149,7 +143,7 @@ namespace BW.GameCode.UI
             IsShow = false;
             Event_OnDeactive?.Invoke();
             //callback?.Invoke();
-            //RichLog.Log($"{name} Is Deactive");
+            Debug.Log($"{name} Is Deactive");
         }
 
         public override bool IsActive() => base.IsActive() && m_body.alpha > 0;
@@ -185,5 +179,14 @@ namespace BW.GameCode.UI
         /// 界面消失,此时关闭动画已经完成
         /// </summary>
         protected virtual void OnDeactive() { }
+
+
+#if UNITY_EDITOR
+        [ContextMenu("改名")]
+
+        void ChangeREsName() {
+            UnityEditor.Selection.gameObjects.First().name = this.GetType().Name;
+        }
+#endif
     }
 }

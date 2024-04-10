@@ -274,3 +274,4 @@ bwpackage-runtime.csproj
 bwpersonal-editor.csproj
 DOTween.Modules.csproj
 *.csproj
+bw.bwgamecode.pathing.csproj

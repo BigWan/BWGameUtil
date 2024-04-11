@@ -12,21 +12,12 @@
     public class ST_SizeDelta : SelectableTransition
     {
         [SerializeField] RectTransform m_expandPart = default;
-        [SerializeField] STValue_Float m_value;
-        [SerializeField] Vector2 m_commonSize;
-        [SerializeField] Vector2 m_hoverSize;
-        [SerializeField] Vector2 m_pressSize;
+        [SerializeField] STValue_V2 m_value;
         [SerializeField] float m_animTime = 0.15f;
 
         internal override void DoStateTransition(SelectableState state, bool instant) {
-            switch (state) {
-                case SelectableState.Highlighted: DOSize(m_hoverSize, instant); return;
-                case SelectableState.Pressed: DOSize(m_pressSize, instant); return;
-                case SelectableState.Disabled:
-                case SelectableState.Normal:
-                default:
-                    DOSize(m_commonSize,instant);
-                    return;
+            if(m_expandPart!=null && m_value != null) {
+                DOSize(m_value.GetValue(state), instant);
             }
         }
 

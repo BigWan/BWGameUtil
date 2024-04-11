@@ -34,11 +34,6 @@ namespace BW.GameCode.UI
             }
         }
 
-        private void OnDestroy() {
-            if (m_canvasGroup != null) {
 
-                m_canvasGroup.DOKill();
-            }
-        }
     }
 }

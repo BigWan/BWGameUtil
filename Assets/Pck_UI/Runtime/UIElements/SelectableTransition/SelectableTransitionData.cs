@@ -38,4 +38,6 @@ namespace BW.GameCode.UI
 
     [System.Serializable]
     public class STValue_V3 : SelectableTransitionData<Vector3> { }
+    [System.Serializable]
+    public class STValue_V2 : SelectableTransitionData<Vector2> { }
 }

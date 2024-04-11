@@ -15,22 +15,6 @@ namespace BW.GameCode.UI
         Top         // 顶层UI
     }
 
-    public interface IUIManager
-    {
-        void OnUIActive(BaseUI ui);
-
-        void OnUIDeactive(BaseUI ui);
-    }
-
-    public interface IUIData
-    { }
-
-    public struct UIStackItem
-    {
-        public Type UIType { get; set; }    // 存储的是UI的类型,而不是实例
-        public IUIData Data { get; set; }
-    }
-
     /// <summary>
     /// 管理场景中的常驻UI
     /// 改进UI系统

@@ -1,29 +1,40 @@
-﻿//using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+namespace BW.GameCode.UI
+{
 
-//namespace BW.GameCode.UI
-//{
-//    public abstract class ToggleTranslation : MonoBehaviour
-//    {
-//        [SerializeField] BWToggle m_target;
-//        protected virtual void Awake() {
-//            if (m_target == null) {
-//                m_target = GetComponent<BWToggle>();
-//            }
-//            if (m_target != null) {
-//                m_target.Event_OnValueChanged.AddListener(OnToggleChanged);
-//            }
-//        }
 
-//        protected void Start() {
-//            OnToggleChanged(m_target.IsOn);
-//        }
+    public abstract class ToggleTranslation : MonoBehaviour
+    {
+        [SerializeField] UnityEngine.UI.Toggle m_target;
+    
 
-//        public abstract void OnToggleChanged(bool isOn);
+        protected virtual void Awake() {
+            if (m_target == null) {
+                m_target = GetComponent<UnityEngine.UI.Toggle>();
+            }
+            if (m_target != null) {
+                m_target.onValueChanged.AddListener(DOTranslation);
+            }
+        }
 
-//        private void OnValidate() {
-//            if (m_target == null) {
-//                m_target = GetComponent<BWToggle>();
-//            }
-//        }
-//    }
-//}
+
+
+        private void OnEnable() {
+            DOTranslation(m_target.isOn);
+        }
+
+        protected abstract void DOTranslation(bool isOn);
+
+      
+
+        private void OnValidate() {
+            if (m_target == null) {
+                m_target = GetComponent<UnityEngine.UI.Toggle>();
+            }
+            if (m_target != null) {
+                DOTranslation(m_target.isOn);
+            }
+        }
+    }
+}

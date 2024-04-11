@@ -41,6 +41,7 @@ namespace BW.GameCode.UI
             m_animations = GetComponents<SelectableTransition>();
         }
         private void DoStateTransition(SelectableState currentSelectionState, bool instant) {
+            //Debug.Log($"{this.name}+DO Translation {currentSelectionState}");
             if (m_animations != null) {
                 for (int i = 0; i < m_animations.Length; i++) {
                     if (m_animations[i] != null) {
@@ -52,7 +53,7 @@ namespace BW.GameCode.UI
 
         protected SelectableState currentSelectionState {
             get {
-                if (m_selectable.IsInteractable())
+                if (!m_selectable.IsInteractable())
                     return SelectableState.Disabled;
                 if (isPointerDown)
                     return SelectableState.Pressed;

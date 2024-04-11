@@ -3,24 +3,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using static BW.GameCode.UI.SelectableAnimationController;
+
 namespace BW.GameCode.UI
 {
-    public class ButtonTranslation_ImageFade : ButtonTransition
+    public class ST_ImageFade : SelectableTransition
     {
         [SerializeField] Graphic m_toggleImage = default;
-
+        [SerializeField] STValue_Bool m_value;
         private void OnDestroy() {
-            m_toggleImage.DOKill();
+            if (m_toggleImage != null) {
+
+                m_toggleImage.DOKill();
+            }
         }
 
-        internal override void DoStateTransition(BWButton.ButtonState state, bool instant) {
+        internal override void DoStateTransition(SelectableState state, bool instant) {
             switch (state) {
-                case BWButton.ButtonState.Normal:
-                case BWButton.ButtonState.Highlighted:
-                case BWButton.ButtonState.Pressed:
-                case BWButton.ButtonState.Selected:
+                case SelectableState.Normal:
+                case SelectableState.Highlighted:
+                case SelectableState.Pressed:
+                case SelectableState.Selected:
                     TweenAlpha(1, instant); break;
-                case BWButton.ButtonState.Disable:
+                case SelectableState.Disabled:
                 default:
                     TweenAlpha(0, instant); break;
             }

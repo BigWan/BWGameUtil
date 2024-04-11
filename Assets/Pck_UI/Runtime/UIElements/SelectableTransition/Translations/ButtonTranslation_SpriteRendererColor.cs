@@ -7,7 +7,7 @@ namespace BW.GameCode.UI
     /// <summary>
     /// 颜色变换
     /// </summary>
-    public class ButtonTranslation_SpriteRendererColor : ButtonTranslation_Color
+    public class ButtonTranslation_SpriteRendererColor : ST_Color
     {
         [SerializeField] SpriteRenderer m_renderer = default;
 

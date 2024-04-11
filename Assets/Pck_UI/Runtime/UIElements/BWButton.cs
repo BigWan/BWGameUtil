@@ -1,72 +1,62 @@
-﻿using System;
+﻿//using System;
 
-using UnityEngine;
+//using UnityEngine;
 
-using UnityEngine.Events;
-using UnityEngine.UI;
-namespace BW.GameCode.UI
-{
-    [DisallowMultipleComponent]
-    public class BWButton : Button
-    {
-        [Serializable]
-        public class BoolEvent : UnityEvent<bool>
-        { }
+//using UnityEngine.Events;
+//using UnityEngine.UI;
+//namespace BW.GameCode.UI
+//{
+//    [DisallowMultipleComponent]
+//    public class BWButton : Button
+//    {
 
-        public enum ButtonState
-        {
-            Normal,
-            Highlighted,
-            Pressed,
-            Selected,
-            Disable,
-        }
 
-        [Header("动画组件(可为空)")]
-        [SerializeField] ButtonTransition[] m_buttonTransitions = default;
 
-        protected override void DoStateTransition(SelectionState state, bool instant) {
-            base.DoStateTransition(state, instant);
-            if (m_buttonTransitions == null) {
-                return;
-            }
-            var buttonState = ButtonState.Normal;
-            switch (state) {
-                case SelectionState.Normal:
-                    buttonState = ButtonState.Normal;
-                    break;
+//        [Header("动画组件(可为空)")]
+//        [SerializeField] SelectableTransition[] m_buttonTransitions = default;
 
-                case SelectionState.Highlighted:
-                    buttonState = ButtonState.Highlighted;
-                    break;
+//        protected override void DoStateTransition(SelectionState state, bool instant) {
+//            base.DoStateTransition(state, instant);
+//            if (m_buttonTransitions == null) {
+//                return;
+//            }
+//            var buttonState = ButtonState.Normal;
+//            switch (state) {
+//                case SelectionState.Normal:
+//                    buttonState = ButtonState.Normal;
+//                    break;
 
-                case SelectionState.Pressed:
-                    buttonState = ButtonState.Pressed;
-                    break;
+//                case SelectionState.Highlighted:
+//                    buttonState = ButtonState.Highlighted;
+//                    break;
 
-                case SelectionState.Selected:
-                    buttonState = ButtonState.Selected;
-                    break;
+//                case SelectionState.Pressed:
+//                    buttonState = ButtonState.Pressed;
+//                    break;
 
-                case SelectionState.Disabled:
-                    buttonState = ButtonState.Disable;
-                    break;
+//                case SelectionState.Selected:
+//                    buttonState = ButtonState.Selected;
+//                    break;
 
-                default:
-                    break;
-            }
-            for (int i = 0; i < m_buttonTransitions.Length; i++) {
-                if (m_buttonTransitions[i] != null) {
-                    m_buttonTransitions[i].DoStateTransition(buttonState, instant);
-                }
-            }
-        }
+//                case SelectionState.Disabled:
+//                    buttonState = ButtonState.Disable;
+//                    break;
 
-        protected override void OnValidate() {
-            base.OnValidate();
-            if (m_buttonTransitions == null || m_buttonTransitions.Length == 0) {
-                m_buttonTransitions = GetComponents<ButtonTransition>();
-            }
-        }
-    }
-}
+//                default:
+//                    break;
+//            }
+//            for (int i = 0; i < m_buttonTransitions.Length; i++) {
+//                if (m_buttonTransitions[i] != null) {
+//                    m_buttonTransitions[i].DoStateTransition(buttonState, instant);
+//                }
+//            }
+//        }
+
+//        protected override void OnValidate() {
+//            base.OnValidate();
+//            if (m_buttonTransitions == null || m_buttonTransitions.Length == 0) {
+//                m_buttonTransitions = GetComponents<SelectableTransition>();
+//            }
+//        }
+//    }
+//}

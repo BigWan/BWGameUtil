@@ -5,7 +5,7 @@ namespace BW.GameCode.UI
     /// <summary>
     /// 按钮的颜色过度配置文件
     /// </summary>
-    [CreateAssetMenu(fileName ="Button Translation Color Config")]
+    [CreateAssetMenu(fileName ="Selectable Translation Color Config")]
     public class BWButtonTranslationColorSO : ScriptableObject
     {
         [SerializeField] Color m_commonColor = Color.white;

@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace BW.GameCode.UI
 {
-    public class ButtonTranslation_CanvasFade : ButtonTransition
+    using static BW.GameCode.UI.SelectableAnimationController;
+
+    /// <summary>
+    /// 高亮一个Cg
+    /// </summary>
+    public class ST_CanvasGroup : SelectableTransition
     {
         [SerializeField] CanvasGroup m_canvasGroup = default;
+        [SerializeField] STValue_Float m_value;
         [SerializeField] float m_animTime = 0.15f;
 
-        internal override void DoStateTransition(BWButton.ButtonState state, bool instant) {
-            switch (state) {
-                //case AbstractButton.ButtonState.Selected:
-                //case AbstractButton.ButtonState.SelectedHover:
-                case BWButton.ButtonState.Highlighted:
-                    Fade(1, instant); break;
-
-                default:
-                    Fade(0, instant); break;
+        internal override void DoStateTransition(SelectableState state, bool instant) {
+            if (m_value != null && m_canvasGroup != null) {
+                Fade(m_value.GetValue(state), instant);
             }
         }
 
@@ -35,7 +35,10 @@ namespace BW.GameCode.UI
         }
 
         private void OnDestroy() {
-            m_canvasGroup.DOKill();
+            if (m_canvasGroup != null) {
+
+                m_canvasGroup.DOKill();
+            }
         }
     }
 }

@@ -4,33 +4,35 @@
 
     using UnityEngine;
 
+    using static BW.GameCode.UI.SelectableAnimationController;
+
     /// <summary>
     /// 缩放
     /// </summary>
-    public class ButtonTranslation_Scale3D : ButtonTransition
+    public class ST_Scale3D : SelectableTransition
     {
         [SerializeField] Transform m_scalePart = default;
-
+        [SerializeField] STValue_V3 m_value;
         [SerializeField] Vector3 m_selectScale = 1.1f * Vector3.one;
         [SerializeField] Vector3 m_hoverScale = 1.1f * Vector3.one;
         [SerializeField] Vector3 m_pressedScale = 1.1f * Vector3.one;
         [SerializeField] float m_animTime = 0.25f;
 
-        internal override void DoStateTransition(BWButton.ButtonState state, bool instant) {
+        internal override void DoStateTransition(SelectableState state, bool instant) {
             switch (state) {
-                //case AbstractButton.ButtonState.Selected:
-                //    DOScale(m_selectScale);
-                //    break;
+                case SelectableState.Selected:
+                    DOScale(m_selectScale,instant);
+                    break;
 
-                case BWButton.ButtonState.Pressed:
+                case SelectableState.Pressed:
                     DOScale(m_pressedScale, instant); break;
                 //case AbstractButton.ButtonState.SelectedHover:
-                case BWButton.ButtonState.Highlighted:
+                case SelectableState.Highlighted:
                     DOScale(m_hoverScale, instant);
                     break;
 
-                case BWButton.ButtonState.Disable:
-                case BWButton.ButtonState.Normal:
+                case SelectableState.Disabled:
+                case SelectableState.Normal:
                 default:
                     DOScale(Vector3.one, instant);
                     break;

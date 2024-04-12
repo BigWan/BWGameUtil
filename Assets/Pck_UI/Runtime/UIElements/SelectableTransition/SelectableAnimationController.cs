@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
 namespace BW.GameCode.UI
 {
 
@@ -22,6 +23,7 @@ namespace BW.GameCode.UI
         [SerializeField] Selectable m_selectable;
 
         [SerializeField] SelectableTransition[] m_animations;
+
         bool isPointerInside;
         bool isPointerDown;
         bool hasSelection;
@@ -30,6 +32,7 @@ namespace BW.GameCode.UI
             isPointerDown = false;
             DoStateTransition(currentSelectionState, true);
         }
+
         void OnDisable() {
             isPointerInside = false;
             isPointerDown = false;
@@ -37,9 +40,15 @@ namespace BW.GameCode.UI
         }
 
         void OnValidate() {
-
+            if (m_selectable == null) {
+                m_selectable = GetComponent<Selectable>();
+            }
+            if (m_selectable != null) {
+                m_selectable.transition = Selectable.Transition.None;
+            }
             m_animations = GetComponents<SelectableTransition>();
         }
+
         private void DoStateTransition(SelectableState currentSelectionState, bool instant) {
             //Debug.Log($"{this.name}+DO Translation {currentSelectionState}");
             if (m_animations != null) {
@@ -76,8 +85,6 @@ namespace BW.GameCode.UI
                 return false;
             return isPointerDown;
         }
-
-
 
         public void OnDeselect(BaseEventData eventData) {
             hasSelection = false;
@@ -120,7 +127,5 @@ namespace BW.GameCode.UI
             hasSelection = true;
             EvaluateAndTransitionToSelectionState();
         }
-
-
     }
 }

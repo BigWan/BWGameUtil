@@ -7,7 +7,6 @@
   "description": "UI框架",
   "category": "Controllers",
   "dependencies": {
-    "com.unity.textmeshpro": "3.0.0"
   },
   "samples": [
     {

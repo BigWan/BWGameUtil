@@ -1,17 +1,20 @@
-﻿namespace BW.GameCode.UI
+﻿using System;
+using System.Collections;
+
+using TMPro;
+
+using UnityEngine;
+
+namespace BW.GameCode.UI
 {
-    using UnityEngine;
-    using TMPro;
-    using DG.Tweening;
-    using System;
-    using System.Collections.Generic;
-    using System.Collections;
 
     public class InfoLine : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI m_content;
         [SerializeField] CanvasGroup m_cg;
         [SerializeField] float m_infoDuration = 2f;
+
+        public bool IsBusy { get; private set; }
         public RectTransform Rect { get; private set; }
         public string Text { get => m_content.text; set => m_content.text = value; }
         public Color Color { get => m_content.color; set => m_content.color = value; }
@@ -28,6 +31,9 @@
         }
 
         public void Show(string text) {
+            if(IsBusy) {
+                throw new System.Exception("该弹出被占用,无法再次启动");
+            }
             Show(text, Color.white);
         }
 
@@ -38,18 +44,24 @@
         }
 
         public void DisappearImmediately() {
-            m_cg.DOKill();
             m_cg.alpha = 0;
-            StopAllCoroutines();
-            //gameObject.SetActive(false);
+            IsBusy = false;
             Event_OnDisappear?.Invoke();
         }
 
         IEnumerator ShowCoroutine() {
-            m_cg.DOKill();
-            yield return m_cg.DOFade(1, 1f).From(0).WaitForCompletion();
+            IsBusy = true;
+            m_cg.alpha = 0;
+            float alphaStep = 1f;
+            while (m_cg.alpha<=1) {
+                m_cg.alpha += alphaStep * Time.deltaTime; ;
+            }
+            m_cg.alpha = 1;
             yield return infoDurationWaiter;
-            yield return m_cg.DOFade(0, 1f).WaitForCompletion();
+            while (m_cg.alpha>=0) {
+                m_cg.alpha -= alphaStep * Time.deltaTime;
+            }
+
             DisappearImmediately();
         }
     }

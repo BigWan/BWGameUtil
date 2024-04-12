@@ -1,10 +1,10 @@
-﻿using DG.Tweening;
+﻿using BW.GameCode.Singleton;
 
 using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using BW.GameCode.Singleton;
+
 namespace BW.GameCode.UI
 {
     /// <summary>
@@ -39,8 +39,7 @@ namespace BW.GameCode.UI
                 result = Instantiate<InfoLine>(m_infoBoxPrefab, m_lineParent);
                 result.Event_OnDisappear += () => RecycleLine(result);
             }
-            result.transform.SetAsLastSibling();
-            result.Rect.anchoredPosition = new Vector2(0, m_startPosY);// = Vector3.zero;
+
             //result.gameObject.SetActive(true);
             result.gameObject.name = "Actived";
             return result;
@@ -61,6 +60,8 @@ namespace BW.GameCode.UI
                 //RecycleLine(item);
             }
             var line = GetLine();
+            line.transform.SetAsLastSibling();
+            line.Rect.anchoredPosition = new Vector2(0, m_startPosY);// = Vector3.zero;
             line.Show(info, color);
             actives.Add(line);
             //line.gameObject.name = actives.Count.ToString();

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using BW.GameCode.Core;
+
+using UnityEngine;
 using UnityEngine.UI;
 
 using static BW.GameCode.UI.SelectableAnimationController;
@@ -10,7 +12,7 @@ namespace BW.GameCode.UI
         [SerializeField] STValue_Color m_color;
         [SerializeField] Graphic m_image = default;
         [SerializeField] float m_animTime = 0.4f;
-
+        
         internal override void DoStateTransition(SelectableState state, bool instant) {
             if (m_image == null || m_color == null) return;
             m_image.CrossFadeColor(m_color.GetValue(state), instant ? 0 : m_animTime, true, true);

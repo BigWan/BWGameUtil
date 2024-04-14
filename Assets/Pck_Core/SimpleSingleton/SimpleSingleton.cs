@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BW.GameCode.Singleton
+namespace BW.GameCode.Core
 {
     /// <summary>
     /// 单例抽象类

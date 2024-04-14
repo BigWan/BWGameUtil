@@ -1,0 +1,10 @@
+{
+  "name": "com.bwgamecode.core",
+  "author": "bigwan",
+  "displayName": "基础代码(非框架类)",
+  "version": "0.0.1",
+  "unity": "2017.1",
+  "description": "Singleton,SimpleTween<T>",
+  "category": "Controllers",
+  "dependencies": {}
+}

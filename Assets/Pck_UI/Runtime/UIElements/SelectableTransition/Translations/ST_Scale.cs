@@ -4,7 +4,7 @@
     using UnityEngine;
 
     using static BW.GameCode.UI.SelectableAnimationController;
-    using BW.GameCode.Singleton;
+    using BW.GameCode.Core;
 
     /// <summary>
     /// 缩放
@@ -17,24 +17,29 @@
 
         [SerializeField] float m_animTime = 0.25f;
 
-        SimpleTween<float> m_tweenRunner = new SimpleTween<float>(Mathf.Lerp);
-        
+        SimpleTween<float> runner = new SimpleTween<float>();
+
+        private void Awake() {
+            runner.SetCallback((x) => {
+                if (m_scalePart != null) {
+                    m_scalePart.localScale= Vector3.one*x;
+                }
+            })
+            .SetDuration(m_animTime)
+            .SetLerp(Mathf.Lerp);
+        }
         internal override void DoStateTransition(SelectableState state, bool instant) {
            if(m_scalePart!=null && m_value != null) {
-                m_tweenRunner.StartValue = m_scalePart.transform.localScale.x;
-                m_tweenRunner.EndValue = m_value.GetValue(state);
-                m_tweenRunner.Duration = m_animTime;
-                m_tweenRunner.Host = this;
                 DOScale(m_value.GetValue(state), instant);
             }
         }
 
-        private void DOScale(float target, bool instant) {
+        private void DOScale(float value, bool instant) {
             //m_scalePart.DOKill();
             if (instant) {
-                m_scalePart.localScale = target * Vector3.one;
+                m_scalePart.localScale = value * Vector3.one;
             } else {
-                m_tweenRunner.StartTween();
+                runner.SetStartAndEnd(m_scalePart.localScale.x, value).StartTween(this);
             }
         }
 

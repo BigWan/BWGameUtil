@@ -1,9 +1,9 @@
-﻿using DG.Tweening;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BW.GameCode.UI
 {
+    using BW.GameCode.Core;
+
     public sealed class ToggleTranslation_Expand : ToggleTranslation
     {
         [SerializeField] RectTransform m_expandPart = default;
@@ -12,6 +12,17 @@ namespace BW.GameCode.UI
         //[SerializeField] Vector2 m_sizeOn;
         [SerializeField] float m_animTime = 0.15f;
 
+        SimpleTween<Vector2> tween = new SimpleTween<Vector2>();
+
+        protected override void Awake() {
+            tween.SetCallback(x => {
+                if (m_expandPart != null) {
+                    m_expandPart.sizeDelta = x;
+                }
+            });
+            base.Awake();
+        }
+
         protected override void DOTranslation(bool isOn) {
             if (m_value != null && m_expandPart != null) {
                 DOSize(m_value.GetValue(isOn));
@@ -19,7 +30,7 @@ namespace BW.GameCode.UI
         }
 
         void DOSize(Vector2 size) {
-            m_expandPart.DOSizeDelta(size, m_animTime);
+            tween.SetStartAndEnd(m_expandPart.sizeDelta, size).StartTween(this);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using BW.GameCode.Singleton;
+﻿using BW.GameCode.Core;
 
 using System.Collections;
 using System.Collections.Generic;
@@ -80,9 +80,9 @@ namespace BW.GameCode.UI
             yield return null;
             float curHeight = m_startPosY;
             for (int i = actives.Count - 1; i >= 0; i--) {
-                actives[i].Rect.DOKill();
-                actives[i].Rect.DOAnchorPosY(curHeight, 0.3f);
-                //Debug.Log(curHeight);
+                //actives[i].Rect.DOKill();
+                //actives[i].Rect.DOAnchorPosY(curHeight, 0.3f);
+                ////Debug.Log(curHeight);
                 curHeight += actives[i].Height;
             }
         }

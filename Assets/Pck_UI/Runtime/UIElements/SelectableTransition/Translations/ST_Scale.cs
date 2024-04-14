@@ -1,10 +1,10 @@
 ﻿namespace BW.GameCode.UI
 {
-    using DG.Tweening;
 
     using UnityEngine;
 
     using static BW.GameCode.UI.SelectableAnimationController;
+    using BW.GameCode.Singleton;
 
     /// <summary>
     /// 缩放
@@ -16,8 +16,15 @@
         //[SerializeField] float m_selectScale = 1.1f;
 
         [SerializeField] float m_animTime = 0.25f;
+
+        SimpleTween<float> m_tweenRunner = new SimpleTween<float>(Mathf.Lerp);
+        
         internal override void DoStateTransition(SelectableState state, bool instant) {
            if(m_scalePart!=null && m_value != null) {
+                m_tweenRunner.StartValue = m_scalePart.transform.localScale.x;
+                m_tweenRunner.EndValue = m_value.GetValue(state);
+                m_tweenRunner.Duration = m_animTime;
+                m_tweenRunner.Host = this;
                 DOScale(m_value.GetValue(state), instant);
             }
         }
@@ -27,7 +34,7 @@
             if (instant) {
                 m_scalePart.localScale = target * Vector3.one;
             } else {
-                m_scalePart.DOScale(target, m_animTime);
+                m_tweenRunner.StartTween();
             }
         }
 

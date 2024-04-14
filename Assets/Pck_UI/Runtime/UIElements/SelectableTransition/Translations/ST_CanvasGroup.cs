@@ -5,7 +5,7 @@ using System.Collections;
 namespace BW.GameCode.UI
 {
     using static BW.GameCode.UI.SelectableAnimationController;
-
+    using BW.GameCode.Singleton;
     /// <summary>
     /// 高亮一个Cg
     /// </summary>
@@ -14,7 +14,8 @@ namespace BW.GameCode.UI
         [SerializeField] CanvasGroup m_canvasGroup = default;
         [SerializeField] STValue_Float m_value;
         [SerializeField] float m_animTime = 0.15f;
-        Coroutine co;
+        SimpleTween<float> runner = new SimpleTween<float>();
+
         internal override void DoStateTransition(SelectableState state, bool instant) {
             if (m_value != null && m_canvasGroup != null) {
                 Fade(m_value.GetValue(state), instant);
@@ -32,12 +33,10 @@ namespace BW.GameCode.UI
                 m_canvasGroup.alpha = value;
             } else {
                 m_canvasGroup.DOFade(value, m_animTime);
+                UnityEngine.UI.Image image
             }
         }
-        IEnumerator FadeProcess(float targetValue) {
-            UnityEngine.UI.Image imag;
-            imag.CrossFadeAlpha
-        }
+
         
 
 

@@ -1,10 +1,10 @@
 ﻿{
   "name": "com.bwgamecode.ui",
   "author": "bigwan",
-  "displayName": "简单的UI框架",
+  "displayName": "简单的UI代码合集",
   "version": "0.0.1",
   "unity": "2017.1",
-  "description": "UI框架",
+  "description": "基于Resources的UIManager,扩展的Selectable动画控制",
   "category": "Controllers",
   "dependencies": {
   },

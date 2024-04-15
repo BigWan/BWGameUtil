@@ -1,9 +1,9 @@
 ::设置模块名字
-SET ToolName=upm-bwgamecode-fundation
+SET ToolName=upm-bwgamecode
 ::设置模块版本
-SET ToolVersion=bwgamecode-fundation-1.0.0
+SET ToolVersion=bwgamecode-fundation-0.0.1
 ::设置模块源路径
-SET ToolAssetPath=Plugin/RoneDir/Assets
+SET ToolAssetPath=Assets/Pck_Core
 
 ::此命令会创建一个ToolName的分支，并同步ToolAssetPath下的内容
 git subtree split -P %ToolAssetPath% --branch %ToolName%

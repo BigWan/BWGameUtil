@@ -24,6 +24,11 @@ namespace BW.GameCode.UI
 
         [SerializeField] SelectableTransition[] m_animations;
 
+        [SerializeField] SelectableState debugState;
+        void Update() {
+            debugState = currentSelectionState;
+        }
+
         bool isPointerInside;
         bool isPointerDown;
         bool hasSelection;
@@ -66,10 +71,11 @@ namespace BW.GameCode.UI
                     return SelectableState.Disabled;
                 if (isPointerDown)
                     return SelectableState.Pressed;
-                if (hasSelection)
-                    return SelectableState.Selected;
                 if (isPointerInside)
                     return SelectableState.Highlighted;
+                if (hasSelection)
+                    return SelectableState.Selected;
+               
                 return SelectableState.Normal;
             }
         }

@@ -62,7 +62,6 @@
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\SimplgeMessageDialog.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InputBox\InputBox.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_SizeDelta.cs" />
-    <Compile Include="Packages\Pck_UI\Samples\UIUsage.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_Expand.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\MessageBoxDialog.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIManager\BaseUI.cs" />
@@ -72,7 +71,6 @@
     <Compile Include="Packages\Pck_UI\Runtime\InfoBar\InfoLine.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_ImageFade.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation.cs" />
-    <Compile Include="Packages\Pck_UI\Samples\MainRootUI.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\SelectableTransitionData.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_CanvasGroup.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InputBox\InputDialog.cs" />
@@ -82,16 +80,14 @@
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_ToggleObject.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIManager\UIManager.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_Scale.cs" />
-    <Compile Include="Packages\Pck_UI\Samples\AchievementUI.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InfoBar\InfoBar.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\SelectableTransition.cs" />
-    <Compile Include="Packages\Pck_UI\Samples\CreatePanel.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\MessageBox.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_Scale3D.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_GraphicColor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Packages\Pck_UI\ui.asmdef" />
+    <None Include="Packages\Pck_UI\UI.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

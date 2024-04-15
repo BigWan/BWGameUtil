@@ -10,15 +10,16 @@ namespace BW.GameCode.UI
             return isOn ? OnValue : OffValue;
         }
     }
-
+    [System.Serializable]
+    public class ToggleData_Sprite : ToggleTranslationData<Sprite> { }
     [System.Serializable]
     public class ToggleTranslationData_Float : ToggleTranslationData<float> { }
 
     [System.Serializable]
-    public class ToggleTranslationData_V2 : ToggleTranslationData<Vector2> { }
+    public class ToggleTranslationData_Vector2 : ToggleTranslationData<Vector2> { }
 
     [System.Serializable]
-    public class ToggleTranslationData_V3 : ToggleTranslationData<Vector3> { }
+    public class ToggleTranslationData_Vector3 : ToggleTranslationData<Vector3> { }
 
     [System.Serializable]
     public class ToggleTranslationData_Bool : ToggleTranslationData<bool> { }

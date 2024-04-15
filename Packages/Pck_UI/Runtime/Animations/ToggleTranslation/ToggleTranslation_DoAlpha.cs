@@ -1,11 +1,10 @@
-﻿using DG.Tweening;
-
+﻿
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BW.GameCode.UI
 {
-    public sealed class ToggleTranslation_GraphicAlpha : ToggleTranslation
+    public sealed class ToggleTranslation_DoAlpha : ToggleTranslation
     {
         [SerializeField] Graphic m_targetGraphic;
         [SerializeField] ToggleTranslationData_Float m_value;

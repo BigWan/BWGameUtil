@@ -7,7 +7,7 @@ namespace BW.GameCode.UI
     public sealed class ToggleTranslation_Expand : ToggleTranslation
     {
         [SerializeField] RectTransform m_expandPart = default;
-        [SerializeField] ToggleTranslationData_V2 m_value;
+        [SerializeField] ToggleTranslationData_Vector2 m_value;
         //[SerializeField] Vector2 m_sizeOff;
         //[SerializeField] Vector2 m_sizeOn;
         [SerializeField] float m_animTime = 0.15f;

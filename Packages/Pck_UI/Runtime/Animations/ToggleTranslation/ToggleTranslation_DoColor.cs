@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace BW.GameCode.UI
 {
-    public sealed class ToggleTranslation_GraphicColor : ToggleTranslation
+    public sealed class ToggleTranslation_DoColor : ToggleTranslation
     {
         [SerializeField] Graphic m_targetGraphic;
         [SerializeField] ToggleTranslationData_Color m_value;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 namespace BW.GameCode.UI
 {
-    public class AchievementUI : BaseUI
+    public class AchievementUI : BaseUIPage
     {
         [SerializeField] Button m_closeButton;
         [SerializeField] Text myText;

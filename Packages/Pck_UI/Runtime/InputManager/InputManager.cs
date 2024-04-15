@@ -13,6 +13,7 @@ namespace BW.GameCode.UI
     /// </summary>
     public class InputManager : SimpleSingleton<InputManager>
     {
+        
         [SerializeField] InputWindow m_dialogPrefab;
         [SerializeField] Transform m_dialogParent;
 

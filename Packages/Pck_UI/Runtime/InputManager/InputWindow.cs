@@ -1,9 +1,6 @@
-﻿using DG.Tweening;
-
+﻿
 using System;
 using System.Collections;
-
-using TMPro;
 
 using UnityEngine;
 
@@ -30,7 +27,7 @@ namespace BW.GameCode.UI
         /// <summary>
         /// 输入框是否可以取消
         /// </summary>
-        public bool cancelAble = true;  
+        public bool cancelAble = true;
         public ContentType ContentType = ContentType.Standard;
         public int CharacterLimit = 30;
         public InputValueDelegate Checker = default;
@@ -47,7 +44,7 @@ namespace BW.GameCode.UI
         public abstract string InputValue { get; }
 
         protected InputValueDelegate checkFunc;
-
+        Coroutine handler;
         /// <summary>
         /// 内容类型
         /// </summary>
@@ -70,9 +67,12 @@ namespace BW.GameCode.UI
         /// </summary>
         protected abstract string PlaceHolder { get; set; }
 
-        Coroutine handler;
+        protected bool CheckValueValidate() {
+            return checkFunc?.Invoke(InputValue) ?? false;
+        }
 
         protected void OnValueChanged(string curValue) {
+
         }
 
         public void SetCancelButtonActive(bool active) {
@@ -125,8 +125,7 @@ namespace BW.GameCode.UI
 
         protected void OnConfirmButtonClick() {
             if (checkFunc == null || checkFunc(InputValue)) {
-                Result = new InputResult()
-                {
+                Result = new InputResult() {
                     Cancle = false,
                     Text = InputValue
                 };
@@ -136,10 +135,11 @@ namespace BW.GameCode.UI
             }
         }
 
-        protected virtual void DisplayWarning() { }
+        protected virtual void DisplayWarning() {
+        }
+
         protected void OnCancelButtonClick() {
-            Result = new InputResult()
-            {
+            Result = new InputResult() {
                 Cancle = true,
                 Text = string.Empty
             };
@@ -147,7 +147,8 @@ namespace BW.GameCode.UI
 
         protected abstract void DisplayButtons();
 
-        protected virtual void OnShow() { }
+        protected virtual void OnShow() {
+        }
 
         //protected void OnShow() {
         //    if (m_input != null) {

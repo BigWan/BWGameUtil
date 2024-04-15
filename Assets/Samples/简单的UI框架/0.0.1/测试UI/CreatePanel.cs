@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BW.GameCode.UI
 {
-    public class CreatePanel : BaseUI
+    public class CreatePanel : BaseUIPage
     {
         [SerializeField] Button myButton;
         [SerializeField] Text myText;

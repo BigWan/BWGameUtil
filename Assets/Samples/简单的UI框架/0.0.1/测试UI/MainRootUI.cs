@@ -11,7 +11,7 @@
     /// <summary>
     /// 成就UI
     /// </summary>
-    public class MainRootUI : BaseUI
+    public class MainRootUI : BaseUIPage
     {
         [SerializeField] Button m_CloseButton;
         [SerializeField] Button m_CreateNewGameButton;

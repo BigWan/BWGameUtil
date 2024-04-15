@@ -28,13 +28,13 @@ namespace BW.GameCode.UI
         [SerializeField] GameUICanvas m_canvas;
         [SerializeField] string m_uiResPath = "BaseUI";
         // 打开的UI
-        Dictionary<Type, BaseUI> minstances = new Dictionary<Type, BaseUI>();
+        Dictionary<Type, BaseUIPage> minstances = new Dictionary<Type, BaseUIPage>();
         // panel
         Stack<Type> panelStack = new Stack<Type>();
         // 当前活动的页面
-        BaseUI activedPanel;
+        BaseUIPage activedPanel;
         // cached
-        Dictionary<Type, BaseUI> cachedUI = new Dictionary<Type, BaseUI>();
+        Dictionary<Type, BaseUIPage> cachedUI = new Dictionary<Type, BaseUIPage>();
 
         //string GetUIPath(Type uiType) => Path.Combine(m_uiResPath, uiType.Name);
         string GetUIPath(Type uiType) => m_uiResPath + "/" + uiType.Name;
@@ -50,17 +50,17 @@ namespace BW.GameCode.UI
         /// <summary>
         /// 加载一个UI资源
         /// </summary>
-        T InstantiateUI<T>() where T : BaseUI {
+        T InstantiateUI<T>() where T : BaseUIPage {
             return InstantiateUI(typeof(T)) as T;
         }
 
-        BaseUI InstantiateUI(Type uiType) {
+        BaseUIPage InstantiateUI(Type uiType) {
             var uiPath = GetUIPath(uiType);
             var uiObj = Resources.Load<GameObject>(uiPath);
             if (uiObj == null) {
                 throw new FileNotFoundException(uiPath);
             }
-            var uiRes = uiObj.GetComponent<BaseUI>();
+            var uiRes = uiObj.GetComponent<BaseUIPage>();
             if (uiRes == null) {
                 throw new ArgumentNullException(uiPath);
             }
@@ -75,8 +75,8 @@ namespace BW.GameCode.UI
             return ui;
         }
 
-        BaseUI GetUIInstance(Type uiType) {
-            if (cachedUI.TryGetValue(uiType, out BaseUI result)) {
+        BaseUIPage GetUIInstance(Type uiType) {
+            if (cachedUI.TryGetValue(uiType, out BaseUIPage result)) {
                 cachedUI[uiType] = null; // 从缓存中取出实例
                 if (result == null) {
                     cachedUI.Remove(uiType);
@@ -97,15 +97,15 @@ namespace BW.GameCode.UI
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T GetUIInstance<T>() where T : BaseUI => GetUIInstance(typeof(T)) as T;
+        T GetUIInstance<T>() where T : BaseUIPage => GetUIInstance(typeof(T)) as T;
 
         bool AlreadyShowd(Type uiType) {
             return minstances.ContainsKey(uiType);
         }
 
-        bool AlreadyShowed<T>() where T : BaseUI => minstances.ContainsKey(typeof(T));
+        bool AlreadyShowed<T>() where T : BaseUIPage => minstances.ContainsKey(typeof(T));
 
-        public bool Show<T>() where T : BaseUI {
+        public bool Show<T>() where T : BaseUIPage {
             return Show(typeof(T));
         }
 
@@ -119,7 +119,7 @@ namespace BW.GameCode.UI
             return true;
         }
 
-        void OnUIActived(BaseUI ui) {
+        void OnUIActived(BaseUIPage ui) {
             minstances.Add(ui.GetType(), ui);
             ui.transform.SetAsLastSibling();
             // 如果是主页面
@@ -133,7 +133,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        public void TryClose(BaseUI ui) {
+        public void TryClose(BaseUIPage ui) {
             Debug.Assert(ui != null);
             ui.Close();
         }
@@ -142,7 +142,7 @@ namespace BW.GameCode.UI
         /// 关闭UI,从打开的实例中移除
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void TryClose<T>() where T : BaseUI {
+        public void TryClose<T>() where T : BaseUIPage {
             var uiType = typeof(T);
             if (minstances.TryGetValue(uiType, out var ui)) {
                 ui.Close();
@@ -151,7 +151,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        private void OnUIDeactive(BaseUI ui) {
+        private void OnUIDeactive(BaseUIPage ui) {
             if (ui == activedPanel || activedPanel == null) {
                 activedPanel = null;
                 if (panelStack.Count > 0) {
@@ -161,7 +161,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        void OnUIHide(BaseUI ui) {
+        void OnUIHide(BaseUIPage ui) {
             // 移除实例引用
             Debug.Log("UIManager On UIDeactive");
             var type = ui.GetType();

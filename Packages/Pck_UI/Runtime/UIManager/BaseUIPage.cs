@@ -11,7 +11,7 @@ namespace BW.GameCode.UI
     /// </summary>
     [RequireComponent(typeof(CanvasGroup))]
     [DisallowMultipleComponent]
-    public class BaseUI : UIBehaviour
+    public class BaseUIPage : UIBehaviour
     {
         [Header("Body Canvas")]
         [SerializeField] CanvasGroup m_body = default; // 不要Fade这个CanvasGroup,因为UI会直接设置他的值

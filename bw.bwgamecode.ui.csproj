@@ -63,7 +63,7 @@
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_SizeDelta.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_Expand.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\MessageBoxDialog.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\UIManager\BaseUI.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIManager\BaseUIPage.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_Color.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\GUIHelper.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIManager\GameUICanvas.cs" />

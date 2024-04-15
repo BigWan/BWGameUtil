@@ -47,14 +47,14 @@ namespace BW.GameCode.Foundation
             return this;
         }
 
-        public void StartTween(MonoBehaviour host) {
+        public Coroutine StartTween(MonoBehaviour host) {
             this.Host = host;
             if (Host == null) {
-                return;
+                return null;
             }
             StopTween();
             tweenInstance = SpawnIEnumerator();
-            Host.StartCoroutine(tweenInstance);
+            return Host.StartCoroutine(tweenInstance);
         }
 
         public void StopTween() {

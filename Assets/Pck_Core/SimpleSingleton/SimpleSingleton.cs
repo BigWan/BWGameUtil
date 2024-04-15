@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BW.GameCode.Core
+namespace BW.GameCode.Foundation
 {
     /// <summary>
     /// 单例抽象类

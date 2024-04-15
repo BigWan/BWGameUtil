@@ -2,7 +2,7 @@
 
 namespace BW.GameCode.UI
 {
-    using BW.GameCode.Core;
+    using BW.GameCode.Foundation;
 
     public sealed class ToggleTranslation_Expand : ToggleTranslation
     {

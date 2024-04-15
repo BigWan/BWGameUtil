@@ -1,4 +1,4 @@
-﻿using BW.GameCode.Core;
+﻿using BW.GameCode.Foundation;
 
 using System;
 using System.Collections;

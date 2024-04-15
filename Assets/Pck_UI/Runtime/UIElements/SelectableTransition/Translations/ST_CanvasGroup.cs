@@ -5,7 +5,7 @@ using System.Collections;
 namespace BW.GameCode.UI
 {
     using static BW.GameCode.UI.SelectableAnimationController;
-    using BW.GameCode.Core;
+    using BW.GameCode.Foundation;
 
     /// <summary>
     /// 高亮一个Cg
@@ -15,6 +15,7 @@ namespace BW.GameCode.UI
         [SerializeField] CanvasGroup m_canvasGroup = default;
         [SerializeField] STValue_Float m_value;
         [SerializeField] float m_animTime = 0.15f;
+
         SimpleTween<float> runner = new SimpleTween<float>();
 
         private void Awake() {

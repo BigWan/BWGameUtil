@@ -1,6 +1,6 @@
 ﻿namespace BW.GameCode.UI
 {
-    using BW.GameCode.Core;
+    using BW.GameCode.Foundation;
 
     using DG.Tweening;
 

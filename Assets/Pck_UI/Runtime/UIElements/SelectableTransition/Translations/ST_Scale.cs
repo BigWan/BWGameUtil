@@ -4,7 +4,7 @@
     using UnityEngine;
 
     using static BW.GameCode.UI.SelectableAnimationController;
-    using BW.GameCode.Core;
+    using BW.GameCode.Foundation;
 
     /// <summary>
     /// 缩放

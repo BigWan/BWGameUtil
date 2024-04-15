@@ -3,11 +3,11 @@ using System.Collections;
 
 using UnityEngine;
 
-namespace BW.GameCode.Core
+namespace BW.GameCode.Foundation
 {
     public delegate T EaseFunc<T>(T a, T b, float t);
 
-    public class SimpleTween<T>
+    public class SimpleTween<T> where T:struct
     {
         IEnumerator tweenInstance;
 

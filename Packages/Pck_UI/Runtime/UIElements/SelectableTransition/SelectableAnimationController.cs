@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace BW.GameCode.UI
 {
-
     [RequireComponent(typeof(Selectable))]
     [DisallowMultipleComponent]
     public class SelectableAnimationController : MonoBehaviour,
@@ -20,18 +19,25 @@ namespace BW.GameCode.UI
             Selected,
             Highlighted
         }
+
         [SerializeField] Selectable m_selectable;
 
         [SerializeField] SelectableTransition[] m_animations;
-
+#if UNITY_EDITOR
         [SerializeField] SelectableState debugState;
+
         void Update() {
             debugState = currentSelectionState;
         }
 
+#endif
         bool isPointerInside;
         bool isPointerDown;
         bool hasSelection;
+
+        private void Start() {
+            DoStateTransition(currentSelectionState, true);
+        }
 
         void OnEnable() {
             isPointerDown = false;
@@ -75,7 +81,7 @@ namespace BW.GameCode.UI
                     return SelectableState.Highlighted;
                 if (hasSelection)
                     return SelectableState.Selected;
-               
+
                 return SelectableState.Normal;
             }
         }

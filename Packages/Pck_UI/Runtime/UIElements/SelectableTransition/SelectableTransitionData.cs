@@ -5,10 +5,18 @@ namespace BW.GameCode.UI
     public abstract class SelectableTransitionData<T>
     {
         public T NormalValue;
-        public T DisableValue;
+        public T HighlightedValue;
         public T PressedValue;
         public T SelectedValue;
-        public T HighlightedValue;
+        public T DisableValue;
+
+        public void Reset(T def) {
+            NormalValue = def;
+            HighlightedValue = def;
+            PressedValue = def;
+            SelectedValue = def;
+            DisableValue = def;
+        }
 
         public T GetValue(SelectableAnimationController.SelectableState state) {
             switch (state) {
@@ -26,18 +34,31 @@ namespace BW.GameCode.UI
     [System.Serializable]
     public class STValue_Float : SelectableTransitionData<float>
     {
+        public static STValue_Float DEFAULT_FADE_VALUE = new STValue_Float() {
+            DisableValue = 0,
+            HighlightedValue =1,
+            NormalValue = 0,
+            PressedValue = 1,
+            SelectedValue =1
+        };
+
         public STValue_Float() {
         }
     }
 
     [System.Serializable]
-    public class STValue_Color : SelectableTransitionData<Color> { }
+    public class STValue_Color : SelectableTransitionData<Color>
+    { }
 
     [System.Serializable]
-    public class STValue_Bool : SelectableTransitionData<bool> { }
+    public class STValue_Bool : SelectableTransitionData<bool>
+    { }
 
     [System.Serializable]
-    public class STValue_V3 : SelectableTransitionData<Vector3> { }
+    public class STValue_V3 : SelectableTransitionData<Vector3>
+    { }
+
     [System.Serializable]
-    public class STValue_V2 : SelectableTransitionData<Vector2> { }
+    public class STValue_V2 : SelectableTransitionData<Vector2>
+    { }
 }

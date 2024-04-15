@@ -59,7 +59,7 @@
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_GraphicAlpha.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_SpriteSwap.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\SimplgeMessageDialog.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\InputBox\InputBox.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\InputManager\InputManager.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_SizeDelta.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_Expand.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\MessageBoxDialog.cs" />
@@ -68,11 +68,11 @@
     <Compile Include="Packages\Pck_UI\Runtime\GUIHelper.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIManager\GameUICanvas.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InfoBar\InfoLine.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_ImageFade.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_GraphicFade.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\SelectableTransitionData.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_CanvasGroup.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\InputBox\InputDialog.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\InputManager\InputWindow.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\SelectableAnimationController.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslationData.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\SelectableTransition\Translations\ST_Scale.cs" />

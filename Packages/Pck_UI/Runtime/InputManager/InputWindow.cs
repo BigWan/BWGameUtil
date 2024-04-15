@@ -33,12 +33,12 @@ namespace BW.GameCode.UI
         public bool cancelAble = true;  
         public ContentType ContentType = ContentType.Standard;
         public int CharacterLimit = 30;
-        public CheckInputValueDelegate Checker = default;
+        public InputValueDelegate Checker = default;
     }
 
-    public delegate bool CheckInputValueDelegate(string value);
+    public delegate bool InputValueDelegate(string value);
 
-    public abstract class InputDialog : MonoBehaviour
+    public abstract class InputWindow : MonoBehaviour
     {
         [SerializeField] CanvasGroup m_body;
 
@@ -46,7 +46,7 @@ namespace BW.GameCode.UI
         public InputResult? Result { get; private set; }
         public abstract string InputValue { get; }
 
-        protected CheckInputValueDelegate checkFunc;
+        protected InputValueDelegate checkFunc;
 
         /// <summary>
         /// 内容类型
@@ -72,7 +72,7 @@ namespace BW.GameCode.UI
 
         Coroutine handler;
 
-        private void OnValueChanged(string curValue) {
+        protected void OnValueChanged(string curValue) {
         }
 
         public void SetCancelButtonActive(bool active) {
@@ -90,6 +90,7 @@ namespace BW.GameCode.UI
             Title = args.Title;
             Content = args.Text;
             Result = null;
+            SetCancelButtonActive(args.cancelAble);
             SetBodyVisible(true);
             yield return FadeInProcess();
             SetBodyInteractable(true);
@@ -144,7 +145,7 @@ namespace BW.GameCode.UI
             };
         }
 
-        protected abstract void DisplayButtons(MessageBoxButton btnType);
+        protected abstract void DisplayButtons();
 
         protected virtual void OnShow() { }
 

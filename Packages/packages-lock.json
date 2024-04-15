@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.bwgamecode.foundation": {
-      "version": "file:Pck_Core",
+      "version": "file:Pck_Fundation",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

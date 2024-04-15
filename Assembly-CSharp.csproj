@@ -709,10 +709,6 @@
       <Project>{35940D2E-42F3-E911-480B-893B86C7CB9D}</Project>
       <Name>DOTween.Modules</Name>
     </ProjectReference>
-    <ProjectReference Include="bwpersonal-editor.csproj">
-      <Project>{00DA10F0-B364-78F3-8EDE-18D82CF3439C}</Project>
-      <Name>bwpersonal-editor</Name>
-    </ProjectReference>
     <ProjectReference Include="bw.bwgamecode.pathing.csproj">
       <Project>{20D697D3-67CA-1E51-B22B-AE69EC63D9CC}</Project>
       <Name>bw.bwgamecode.pathing</Name>
@@ -724,6 +720,10 @@
     <ProjectReference Include="bw.bwgamecode.ui.csproj">
       <Project>{65ADE80D-6963-B92E-68AD-F071104FCEEF}</Project>
       <Name>bw.bwgamecode.ui</Name>
+    </ProjectReference>
+    <ProjectReference Include="bwpersonal-editor.csproj">
+      <Project>{00DA10F0-B364-78F3-8EDE-18D82CF3439C}</Project>
+      <Name>bwpersonal-editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

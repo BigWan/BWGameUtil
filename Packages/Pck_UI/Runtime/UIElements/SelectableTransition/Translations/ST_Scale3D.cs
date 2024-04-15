@@ -1,6 +1,5 @@
 ﻿namespace BW.GameCode.UI
 {
-    using DG.Tweening;
 
     using UnityEngine;
 
@@ -26,8 +25,7 @@
             if (instant) {
                 m_scalePart.localScale = target;
             } else {
-                m_scalePart.DOKill();
-                m_scalePart.DOScale(target, m_animTime);
+             
             }
         }
 

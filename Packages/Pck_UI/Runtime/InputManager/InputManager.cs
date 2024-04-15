@@ -11,28 +11,28 @@ namespace BW.GameCode.UI
     /// <summary>
     /// 输入框
     /// </summary>
-    public class InputBox : SimpleSingleton<InputBox>
+    public class InputManager : SimpleSingleton<InputManager>
     {
-        [SerializeField] InputDialog m_dialogPrefab;
+        [SerializeField] InputWindow m_dialogPrefab;
         [SerializeField] Transform m_dialogParent;
 
         [SerializeField] int m_cacheCount = 5;
 
-        static Queue<InputDialog> mCaches = new Queue<InputDialog>();
+        static Queue<InputWindow> mCaches = new Queue<InputWindow>();
 
-        static InputDialog CreateDialog() {
-            InputDialog obj;
+        static InputWindow CreateDialog() {
+            InputWindow obj;
             if (mCaches.Count > 0) {
                 obj = mCaches.Dequeue();
             } else {
-                obj = Instantiate<InputDialog>(I.m_dialogPrefab, I.m_dialogParent);
+                obj = Instantiate<InputWindow>(I.m_dialogPrefab, I.m_dialogParent);
                 obj.Event_OnHide += () => RecycleDialog(obj);
             }
             obj.gameObject.name = "Actived";
             return obj;
         }
 
-        private static void RecycleDialog(InputDialog ui) {
+        private static void RecycleDialog(InputWindow ui) {
             if (mCaches.Count > I.m_cacheCount) {
                 Destroy(ui.gameObject);
             } else {

@@ -1,10 +1,14 @@
 ﻿namespace BW.GameCode.UI
 {
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
+
+    using BW.GameCode.Foundation;
 
     using UnityEngine;
 
     using static BW.GameCode.UI.SelectableAnimationController;
-    using BW.GameCode.Foundation;
 
     /// <summary>
     /// 缩放
@@ -22,14 +26,15 @@
         private void Awake() {
             runner.SetCallback((x) => {
                 if (m_scalePart != null) {
-                    m_scalePart.localScale= Vector3.one*x;
+                    m_scalePart.localScale = Vector3.one * x;
                 }
             })
             .SetDuration(m_animTime)
             .SetLerp(Mathf.Lerp);
         }
+
         internal override void DoStateTransition(SelectableState state, bool instant) {
-           if(m_scalePart!=null && m_value != null) {
+            if (m_scalePart != null && m_value != null) {
                 DOScale(m_value.GetValue(state), instant);
             }
         }
@@ -43,12 +48,39 @@
             }
         }
 
-
-
         private void OnValidate() {
             if (m_scalePart == null) {
                 m_scalePart = this.transform;
             }
         }
+
+#if UNITY_EDITOR
+
+        void SetAll(int value) {
+            m_value.Reset(value);
+        }
+
+#endif
     }
+
+#if UNITY_EDITOR
+
+    [CustomEditor(typeof(ST_Scale))]
+    internal class ST_ScaleEditor : Editor
+    {
+        ST_Scale prop;
+
+        private void OnEnable() {
+            prop = target as ST_Scale;
+        }
+
+        public override void OnInspectorGUI() {
+            base.OnInspectorGUI();
+
+            if (GUILayout.Button("全部设置为1")) {
+            }
+        }
+    }
+
+#endif
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-namespace BW.GameCode.Core
+namespace BW.GameCode.Foundation
 {
     public class LazySingleton<T> : MonoBehaviour where T : Component
     {

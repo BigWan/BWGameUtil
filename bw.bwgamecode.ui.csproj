@@ -57,7 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_GraphicAlpha.cs" />
-    <Compile Include="Packages\Pck_UI\Scenes\MessageBoxTest.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIElements\ToggleTranslation\ToggleTranslation_SpriteSwap.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\SimplgeMessageDialog.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InputBox\InputBox.cs" />

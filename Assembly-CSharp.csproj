@@ -57,7 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\OhterCodes\Algorithm\EasyFunction\Easy.cs" />
+    <Compile Include="Assets\Samples\简单的UI框架\0.0.1\测试UI\UIUsage.cs" />
+    <Compile Include="Assets\Samples\简单的UI框架\0.0.1\测试UI\MainRootUI.cs" />
     <Compile Include="Assets\OhterCodes\MessageDispatch.cs" />
+    <Compile Include="Assets\Samples\简单的UI框架\0.0.1\测试UI\AchievementUI.cs" />
+    <Compile Include="Assets\Samples\简单的UI框架\0.0.1\测试UI\CreatePanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -713,13 +717,13 @@
       <Project>{20D697D3-67CA-1E51-B22B-AE69EC63D9CC}</Project>
       <Name>bw.bwgamecode.pathing</Name>
     </ProjectReference>
-    <ProjectReference Include="bw.bwgamecode.ui.csproj">
-      <Project>{65ADE80D-6963-B92E-68AD-F071104FCEEF}</Project>
-      <Name>bw.bwgamecode.ui</Name>
-    </ProjectReference>
     <ProjectReference Include="bw.bwgamecode.foundation.csproj">
       <Project>{C2D21E4C-7A0C-E49C-4802-81811BE5897F}</Project>
       <Name>bw.bwgamecode.foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="bw.bwgamecode.ui.csproj">
+      <Project>{65ADE80D-6963-B92E-68AD-F071104FCEEF}</Project>
+      <Name>bw.bwgamecode.ui</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

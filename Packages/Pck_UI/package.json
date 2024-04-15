@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "com.bwgamecode.ui",
   "author": "bigwan",
   "displayName": "简单的UI框架",
@@ -12,7 +12,7 @@
     {
       "displayName": "测试UI",
       "description": "测试",
-      "path": "Samples/SampleUI"
+      "path": "Samples~"
     }
   ]
 

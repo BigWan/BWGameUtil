@@ -56,34 +56,35 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\ToggleTranslation\ToggleTranslation_DoAlpha.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\ToggleTranslation\ToggleTranslation_SpriteSwap.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslation_DoAlpha.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslation_SpriteSwap.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\SimplgeMessageDialog.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InputManager\InputManager.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\ST_SizeDelta.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\ToggleTranslation\ToggleTranslation_Expand.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_SizeDelta.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslation_Expand.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\MessageBoxDialog.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIManager\BaseUIPage.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\ST_Color.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_Color.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\GUIHelper.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIManager\GameUICanvas.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InfoBar\InfoLine.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\ST_GraphicFade.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\ToggleTranslation\ToggleTranslation.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\SelectableTransitionData.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\ST_CanvasGroup.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_GraphicFade.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslation.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\SelectableTransitionData.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_CanvasGroup.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InputManager\InputWindow.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\SelectableAnimationController.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\ToggleTranslation\ToggleTranslationData.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\ST_Scale.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\ST_ToggleObject.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\SelectableAnimationController.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslationData.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_Scale.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_ToggleObject.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIManager\UIManager.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\ToggleTranslation\ToggleTranslation_Scale.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslation_Scale.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\InfoBar\InfoBar.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\SelectableTransition.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\SelectableTransition.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\MessageBox\MessageBox.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\SelectableTransition\Translations\ST_Scale3D.cs" />
-    <Compile Include="Packages\Pck_UI\Runtime\Animations\ToggleTranslation\ToggleTranslation_DoColor.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_Scale3D.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslation_DoColor.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages\Pck_UI\ui.asmdef" />

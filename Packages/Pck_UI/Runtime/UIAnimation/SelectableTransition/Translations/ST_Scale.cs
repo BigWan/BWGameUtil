@@ -23,6 +23,7 @@
 
         SimpleTween<float> runner = new SimpleTween<float>();
 
+
         private void Awake() {
             runner.SetCallback((x) => {
                 if (m_scalePart != null) {

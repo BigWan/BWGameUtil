@@ -85,6 +85,13 @@
     <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\SelectableTransition\Translations\ST_Scale3D.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\ToggleTranslation\ToggleTranslation_DoColor.cs" />
     <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimation.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimationController.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimationData.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimation_Move.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimation_AnchoredPosition.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimation_Fade.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimation_Scale.cs" />
+    <Compile Include="Packages\Pck_UI\Runtime\UIAnimation\LayoutGroupAnimation\UIAnimation_Sequence.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages\Pck_UI\ui.asmdef" />

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BW.GameCode.UI
+namespace BW.GameCode.Animation
 {
     public abstract class AnimPartData<T>
     {

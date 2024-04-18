@@ -1,20 +1,16 @@
-namespace BW.GameCode.UI
+namespace BW.GameCode.Animation
 {
     using System.Collections;
     using System;
     using UnityEngine;
 
-    [RequireComponent(typeof(RectTransform))]
     public abstract class AnimPart : MonoBehaviour
     {
-       
-
         public abstract float Duration { get; }
 
-         float m_process;
+        float m_process;
 
         public virtual void Init() {
-           
         }
 
         public void UpdateState(float process) {
@@ -27,7 +23,5 @@ namespace BW.GameCode.UI
         /// </summary>
         /// <param name="process"></param>
         protected abstract void SetAnimationState(float process);
-
-
     }
 }

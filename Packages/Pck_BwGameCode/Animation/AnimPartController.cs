@@ -1,4 +1,4 @@
-﻿namespace BW.GameCode.UI
+﻿namespace BW.GameCode.Animation
 {
     using System.Collections;
 

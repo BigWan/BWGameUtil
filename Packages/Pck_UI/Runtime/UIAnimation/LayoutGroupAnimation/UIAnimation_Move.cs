@@ -17,7 +17,7 @@
             UpdatePosition(m_data.StartValue);
         }
 
-        internal override void SetAnimationState(float progress) {
+        protected override void SetAnimationState(float progress) {
             UpdatePosition(Vector3.Lerp(m_data.StartValue, m_data.EndValue, progress));
         }
 

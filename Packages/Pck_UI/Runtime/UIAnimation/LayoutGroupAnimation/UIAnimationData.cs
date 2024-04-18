@@ -7,7 +7,7 @@ namespace BW.GameCode.UI
     {
         public T StartValue;
         public T EndValue;
-        public float Duration;
+        public float Duration = 1f;
     }
     [System.Serializable]
     public class UIAnimationData_Vector3 : UIAnimationData<Vector3>

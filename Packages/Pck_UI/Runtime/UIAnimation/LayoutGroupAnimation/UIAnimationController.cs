@@ -4,49 +4,101 @@
 
     using UnityEngine;
 
+    public enum AnimtionLoopType
+    {
+        /// <summary>
+        /// 不循环
+        /// </summary>
+        None,
+        /// <summary>
+        /// 重头开始
+        /// </summary>
+        Restart,
+        /// <summary>
+        /// 转圈循环
+        /// </summary>
+        Yoyo,
+    }
+
+    [DisallowMultipleComponent]
     public class UIAnimationController : MonoBehaviour
     {
-        [SerializeField] UIAnimation[] m_anims = default;
-        [SerializeField] float m_animInterval = 0f;
-        [Header("动画速度")]
-        [SerializeField] float m_speed = 1f;
-
-        WaitForSeconds m_animIntervalWait;
+        [SerializeField] UIAnimation[] m_anims;
+        [SerializeField] float m_speed = 1;
+        [SerializeField] AnimtionLoopType m_loopType = AnimtionLoopType.None;
 
         IEnumerator animInstance;
+        UIAnimation activeAnim;
 
         public void InitAnimations() {
-            if (m_anims == null) {
-                return;
-            }
-
-            for (int i = 0; i < m_anims.Length; i++) {
-                if (m_anims[i] != null) {
-                    m_anims[i].Init();
-                }
-            }
-            m_animIntervalWait = new WaitForSeconds(m_animInterval);
-        }
-
-        public Coroutine Play() {
-            Stop();
-            animInstance = DoPlay();
-            return StartCoroutine(animInstance);
-        }
-
-        IEnumerator DoPlay() {
-            for (int i = 0; i < m_anims.Length; i++) {
-                if (m_anims[i] != null) {
-                    yield return m_anims[i].Play(m_speed);
-                    yield return m_animIntervalWait;
+            if (m_anims != null) {
+                foreach (var a in m_anims) {
+                    a.Init();
                 }
             }
         }
 
-        public void Stop() {
+        public Coroutine Play(int animIndex = 0, bool resetCurrent = false) {
+            Stop(resetCurrent);
+            if (m_anims != null && m_anims.Length >= animIndex) {
+                activeAnim = m_anims[animIndex];
+                animInstance = m_loopType switch {
+                    AnimtionLoopType.Restart => PlayRestart(activeAnim, m_speed),
+                    AnimtionLoopType.Yoyo => PlayYoyo(activeAnim, m_speed),
+                    _ => PlayOnce(activeAnim, m_speed),
+                };
+                return StartCoroutine(animInstance);
+            }
+            return null;
+        }
+
+        public void Stop(bool reset = true) {
             if (animInstance != null) {
                 StopCoroutine(animInstance);
+                if (reset) {
+                    activeAnim.UpdateState(0);
+                }
             }
+        }
+
+        IEnumerator PlayRestart(UIAnimation anim, float speed) {
+            while (true) {
+                yield return PlayOnce(anim, speed);
+            }
+        }
+
+        IEnumerator PlayYoyo(UIAnimation anim, float speed) {
+            while (true) {
+                yield return PlayOnce(anim, speed);
+                speed *= -1;
+                Debug.Log($"Speed = {speed}");
+            }
+        }
+
+        /// <summary>
+        /// 播放一个片段
+        /// </summary>
+        /// <param name="anim"></param>
+        /// <param name="speed"></param>
+        /// <returns></returns>
+        IEnumerator PlayOnce(UIAnimation anim, float speed) {
+            var duration = anim.Duration;
+            float elapsedTime = 0;
+            while (Mathf.Abs(elapsedTime) < duration) {
+                elapsedTime += Time.deltaTime * speed;
+                float normal = elapsedTime / duration;
+                if (normal < 0) {
+                    normal += 1;
+                }
+                normal = Mathf.Clamp01(normal);
+                Debug.Log(normal);
+                anim.UpdateState(normal);
+                yield return null;
+            }
+
+            //Debug.Log(normal);
+
+            //anim.SetAnimationState(normal);
         }
     }
 }

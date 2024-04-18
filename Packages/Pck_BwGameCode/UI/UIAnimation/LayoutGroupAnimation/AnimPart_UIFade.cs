@@ -4,11 +4,10 @@
     using UnityEngine;
 
     [RequireComponent(typeof(CanvasGroup))]
-    public class UIAnimation_Fade : UIAnimation
+    public class AnimPart_UIFade : AnimPart
     {
-        [SerializeField] UIAnimationData_Float m_data;
+        [SerializeField] AnimPartData_Float m_data;
         [SerializeField] CanvasGroup m_cg;
-
         public override void Init() {
             base.Init();
             if (m_cg == null) {

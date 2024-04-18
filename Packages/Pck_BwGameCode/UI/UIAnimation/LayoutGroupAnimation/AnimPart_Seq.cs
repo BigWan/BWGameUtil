@@ -1,43 +1,8 @@
-﻿namespace BW.GameCode.UI
+﻿using UnityEngine;
+
+namespace BW.GameCode.UI
 {
-    using System;
-
-    using UnityEngine;
-
-    /// <summary>
-    ///
-    /// </summary>
-    [System.Serializable]
-    public struct AnimtionTrack
-    {
-        /// <summary>
-        /// 动画片段
-        /// </summary>
-        public UIAnimation Clip;
-        /// <summary>
-        /// 动画的起始时间
-        /// </summary>
-        public float StartTime;
-
-        [NonSerialized] public float NormalStartPoint;
-        [NonSerialized] public float NormalLength;
-
-        public float SafeDuration {
-            get {
-                if (Clip != null) return Clip.Duration;
-                return 0;
-            }
-        }
-
-        public float GetProcessInWholeAnimation(float wholeProcess) {
-            return Mathf.Clamp01((wholeProcess - NormalStartPoint) / NormalLength);
-        }
-    }
-
-    /// <summary>
-    /// 动画组
-    /// </summary>
-    public class UIAnimation_Parallel : UIAnimation
+    public class AnimPart_Seq : AnimPart
     {
         [SerializeField] AnimtionTrack[] m_tracks;
 

@@ -3,9 +3,9 @@
 
     using UnityEngine;
 
-    public class UIAnimation_Scale : UIAnimation
+    public class AnimPart_Scale : AnimPart
     {
-        [SerializeField] UIAnimationData_Float m_data;
+        [SerializeField] AnimPartData_Float m_data;
 
         public override float Duration => m_data != null ? m_data.Duration : 0f;
 

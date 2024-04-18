@@ -21,15 +21,15 @@
     }
 
     [DisallowMultipleComponent]
-    public class UIAnimationController : MonoBehaviour
+    public class AnimPartController : MonoBehaviour
     {
         [Header(" 动画元素，元素不是都会播放，根据需要播放某一个")]
-        [SerializeField] UIAnimation[] m_anims;
+        [SerializeField] AnimPart[] m_anims;
         [SerializeField] float m_speed = 1;
         [SerializeField] AnimtionLoopType m_loopType = AnimtionLoopType.None;
 
         IEnumerator animInstance;
-        UIAnimation activeAnim;
+        AnimPart activeAnim;
 
         public void InitAnimations() {
             if (m_anims != null) {
@@ -43,11 +43,21 @@
             Stop(resetCurrent);
             if (m_anims != null && m_anims.Length >= animIndex) {
                 activeAnim = m_anims[animIndex];
-                animInstance = m_loopType switch {
-                    AnimtionLoopType.Restart => PlayRestart(activeAnim, m_speed),
-                    AnimtionLoopType.Yoyo => PlayYoyo(activeAnim, m_speed),
-                    _ => PlayOnce(activeAnim, m_speed),
-                };
+                switch (m_loopType) {
+                    case AnimtionLoopType.Restart:
+                        animInstance = PlayRestart(activeAnim, m_speed);
+                        break;
+
+                    case AnimtionLoopType.Yoyo:
+                        animInstance = PlayYoyo(activeAnim, m_speed);
+                        break;
+
+                    case AnimtionLoopType.None:
+                    default:
+                        animInstance = PlayYoyo(activeAnim, m_speed);
+                        break;
+                }
+
                 return StartCoroutine(animInstance);
             }
             return null;
@@ -62,13 +72,13 @@
             }
         }
 
-        IEnumerator PlayRestart(UIAnimation anim, float speed) {
+        IEnumerator PlayRestart(AnimPart anim, float speed) {
             while (true) {
                 yield return PlayOnce(anim, speed);
             }
         }
 
-        IEnumerator PlayYoyo(UIAnimation anim, float speed) {
+        IEnumerator PlayYoyo(AnimPart anim, float speed) {
             while (true) {
                 yield return PlayOnce(anim, speed);
                 speed *= -1;
@@ -81,7 +91,7 @@
         /// <param name="anim"></param>
         /// <param name="speed"></param>
         /// <returns></returns>
-        IEnumerator PlayOnce(UIAnimation anim, float speed) {
+        IEnumerator PlayOnce(AnimPart anim, float speed) {
             var duration = anim.Duration;
             float elapsedTime = 0;
             while (Mathf.Abs(elapsedTime) < duration) {

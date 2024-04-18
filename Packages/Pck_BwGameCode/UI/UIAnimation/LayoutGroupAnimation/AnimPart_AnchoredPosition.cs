@@ -2,14 +2,16 @@
 {
     using UnityEngine;
 
-    public class UIAnimation_AnchoredPosition : UIAnimation
+    [RequireComponent(typeof(RectTransform))]
+    public class AnimPart_AnchoredPosition : AnimPart
     {
-        [SerializeField] UIAnimationData_Vector2 m_data;
-
+        [SerializeField] AnimPartData_Vector2 m_data;
+        RectTransform Rect;
         public override float Duration => m_data != null ? m_data.Duration : 0f;
 
         public override void Init() {
             base.Init();
+            Rect = this.transform as RectTransform;
             Debug.Log(this.transform.name);
             Rect.anchoredPosition = m_data.StartValue;
         }

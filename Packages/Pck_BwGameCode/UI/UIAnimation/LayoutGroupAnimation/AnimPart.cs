@@ -5,17 +5,16 @@ namespace BW.GameCode.UI
     using UnityEngine;
 
     [RequireComponent(typeof(RectTransform))]
-    public abstract class UIAnimation : MonoBehaviour
+    public abstract class AnimPart : MonoBehaviour
     {
-        protected RectTransform Rect { get; private set; }
+       
 
         public abstract float Duration { get; }
 
          float m_process;
 
         public virtual void Init() {
-            Rect = this.transform as RectTransform;
-            Debug.Assert(Rect != null);
+           
         }
 
         public void UpdateState(float process) {

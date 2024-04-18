@@ -5,10 +5,10 @@
     /// <summary>
     /// 移动动画
     /// </summary>
-    public class UIAnimation_Move : UIAnimation
+    public class AnimPart_Move : AnimPart
     {
         [SerializeField] bool m_useWorldPosition;
-        [SerializeField] UIAnimationData_Vector3 m_data;
+        [SerializeField] AnimPartData_Vector3 m_data;
 
         public override float Duration => m_data != null ? m_data.Duration : 0f;
 
@@ -23,9 +23,9 @@
 
         void UpdatePosition(Vector3 pos) {
             if (m_useWorldPosition) {
-                Rect.position = pos;
+                transform.position = pos;
             } else {
-                Rect.localPosition = pos;
+                transform.localPosition = pos;
             }
         }
     }

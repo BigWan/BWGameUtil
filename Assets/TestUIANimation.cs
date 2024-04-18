@@ -4,7 +4,7 @@ using UnityEngine;
 using BW.GameCode.UI;
 public class TestUIANimation : MonoBehaviour
 {
-    [SerializeField] UIAnimationController c;
+    [SerializeField] AnimPartController  c;
     // Start is called before the first frame update
     void Start()
     {

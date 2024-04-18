@@ -91,7 +91,6 @@
                     normal += 1;
                 }
                 normal = Mathf.Clamp01(normal);
-                Debug.Log(normal);
                 anim.UpdateState(normal);
                 yield return null;
             }

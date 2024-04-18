@@ -1,0 +1,10 @@
+{
+  "name": "com.bwgamecode",
+  "author": "bigwan",
+  "displayName": "\u57fa\u7840\u4ee3\u7801(\u975e\u6846\u67b6\u7c7b)",
+  "version": "0.0.1",
+  "unity": "2017.1",
+  "description": "Singleton\nSimpleTween<T>\nUIAnimation\nUIManager",
+  "category": "Controllers",
+  "type": "library"
+}

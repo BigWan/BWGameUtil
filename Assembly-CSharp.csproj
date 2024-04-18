@@ -699,21 +699,13 @@
       <Project>{DFAE163C-D374-D9DF-8776-FA48024A2BE7}</Project>
       <Name>bwpackage-runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="bw.bwgamecode.pathing.csproj">
-      <Project>{20D697D3-67CA-1E51-B22B-AE69EC63D9CC}</Project>
-      <Name>bw.bwgamecode.pathing</Name>
+    <ProjectReference Include="bwpersonal-editor.csproj">
+      <Project>{00DA10F0-B364-78F3-8EDE-18D82CF3439C}</Project>
+      <Name>bwpersonal-editor</Name>
     </ProjectReference>
     <ProjectReference Include="bw.bwgamecode.foundation.csproj">
       <Project>{C2D21E4C-7A0C-E49C-4802-81811BE5897F}</Project>
       <Name>bw.bwgamecode.foundation</Name>
-    </ProjectReference>
-    <ProjectReference Include="bw.bwgamecode.ui.csproj">
-      <Project>{65ADE80D-6963-B92E-68AD-F071104FCEEF}</Project>
-      <Name>bw.bwgamecode.ui</Name>
-    </ProjectReference>
-    <ProjectReference Include="bwpersonal-editor.csproj">
-      <Project>{00DA10F0-B364-78F3-8EDE-18D82CF3439C}</Project>
-      <Name>bwpersonal-editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

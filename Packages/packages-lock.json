@@ -1,19 +1,7 @@
 {
   "dependencies": {
-    "com.bwgamecode.foundation": {
-      "version": "file:Pck_Fundation",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "com.bwgamecode.pathing": {
-      "version": "file:Pck_Pathing",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "com.bwgamecode.ui": {
-      "version": "file:Pck_UI",
+    "com.bwgamecode": {
+      "version": "file:Pck_BwGameCode",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

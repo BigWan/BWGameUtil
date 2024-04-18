@@ -17,5 +17,6 @@
         protected override void SetAnimationState(float process) {
             Rect.anchoredPosition = Vector2.Lerp(m_data.StartValue, m_data.EndValue, process);
         }
+
     }
 }

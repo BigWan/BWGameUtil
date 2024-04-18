@@ -23,6 +23,7 @@
     [DisallowMultipleComponent]
     public class UIAnimationController : MonoBehaviour
     {
+        [Header(" 动画元素，元素不是都会播放，根据需要播放某一个")]
         [SerializeField] UIAnimation[] m_anims;
         [SerializeField] float m_speed = 1;
         [SerializeField] AnimtionLoopType m_loopType = AnimtionLoopType.None;
@@ -71,7 +72,6 @@
             while (true) {
                 yield return PlayOnce(anim, speed);
                 speed *= -1;
-                Debug.Log($"Speed = {speed}");
             }
         }
 

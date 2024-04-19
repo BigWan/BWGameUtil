@@ -31,6 +31,8 @@
         IEnumerator animInstance;
         AnimPart activeAnim;
 
+        public AnimtionLoopType LoopType { get => m_loopType; set { m_loopType = value; } }
+
         public void InitAnimations() {
             if (m_anims != null) {
                 foreach (var a in m_anims) {
@@ -54,7 +56,7 @@
 
                     case AnimtionLoopType.None:
                     default:
-                        animInstance = PlayYoyo(activeAnim, m_speed);
+                        animInstance = PlayOnce(activeAnim, m_speed);
                         break;
                 }
 
@@ -67,7 +69,7 @@
             if (animInstance != null) {
                 StopCoroutine(animInstance);
                 if (reset) {
-                    activeAnim.UpdateState(0);
+                    activeAnim.Process = 0;
                 }
             }
         }
@@ -75,6 +77,7 @@
         IEnumerator PlayRestart(AnimPart anim, float speed) {
             while (true) {
                 yield return PlayOnce(anim, speed);
+                anim.Process = speed > 0 ? 0f : 1f;
             }
         }
 
@@ -85,13 +88,38 @@
             }
         }
 
+        IEnumerator PlayOnce(AnimPart part, float speed) {
+            var process = part.Process;
+
+            float target = speed > 0 ? 1f : 0f; // 速度大于0,目标是1,速度小于0,目标是0
+
+            float duration = part.Duration;
+
+            while (!IsAnimReachedTarget(process, speed)) {
+                //Debug.Log("A" + process + "/" + speed + "+" + IsAnimReachedTarget(process, speed));
+                process += Time.deltaTime / duration * speed;
+                part.Process = process;
+                //Debug.Log("B" + process + "/" + speed);
+                yield return null;
+            }
+            part.Process = target;
+        }
+
+        bool IsAnimReachedTarget(float process, float speed) {
+            if (speed > 0) {
+                return process >= 1f;
+            } else {
+                return process <= 0f;
+            }
+        }
+
         /// <summary>
         /// 播放一个片段
         /// </summary>
         /// <param name="anim"></param>
         /// <param name="speed"></param>
         /// <returns></returns>
-        IEnumerator PlayOnce(AnimPart anim, float speed) {
+        IEnumerator PlayOnce2(AnimPart anim, float speed) {
             var duration = anim.Duration;
             float elapsedTime = 0;
             while (Mathf.Abs(elapsedTime) < duration) {
@@ -101,7 +129,7 @@
                     normal += 1;
                 }
                 normal = Mathf.Clamp01(normal);
-                anim.UpdateState(normal);
+                anim.Process = normal;
                 yield return null;
             }
 

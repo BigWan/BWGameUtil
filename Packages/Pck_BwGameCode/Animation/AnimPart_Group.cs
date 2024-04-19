@@ -7,8 +7,8 @@
     /// <summary>
     ///
     /// </summary>
-    [System.Serializable]
-    public struct AnimtionTrack
+    [Serializable]
+    public struct AnimtionTrackData
     {
         /// <summary>
         /// 动画片段
@@ -28,25 +28,21 @@
                 return 0;
             }
         }
-
-        public float GetProcessInWholeAnimation(float wholeProcess) {
-            return Mathf.Clamp01((wholeProcess - NormalStartPoint) / NormalLength);
-        }
     }
 
     /// <summary>
-    /// 动画组
+    /// 多轨道动画
     /// </summary>
-    public class AnimPart_Parallel : AnimPart
+    public class AnimPart_Group : AnimPart
     {
-        [SerializeField] AnimtionTrack[] m_tracks;
+        [SerializeField] AnimtionTrackData[] m_tracks;
 
         public override float Duration {
             get {
                 float result = 0;
                 for (int i = 0; i < m_tracks.Length; i++) {
                     if (m_tracks[i].Clip != null) {
-                        result += m_tracks[i].Clip.Duration;
+                        result = Mathf.Max(m_tracks[i].SafeDuration + m_tracks[i].StartTime, result);
                     }
                 }
                 return result;
@@ -54,8 +50,6 @@
         }
 
         public override void Init() {
-            base.Init();
-
             if (m_tracks != null) {
                 foreach (var item in m_tracks) {
                     if (item.Clip != null) {
@@ -70,15 +64,20 @@
                     m_tracks[i].NormalLength = m_tracks[i].SafeDuration / duration;
                 }
             }
+            base.Init();
         }
 
         protected override void SetAnimationState(float process) {
             for (int i = 0; i < m_tracks.Length; i++) {
                 if (m_tracks[i].Clip != null) {
-                    float pc = m_tracks[i].GetProcessInWholeAnimation(process);
-                    m_tracks[i].Clip.UpdateState(pc);
+                    float value = GetProcessInWholeAnimation(m_tracks[i], process);
+                    m_tracks[i].Clip.Process = value;
                 }
             }
+        }
+
+        float GetProcessInWholeAnimation(AnimtionTrackData data, float wholeProcess) {
+            return Mathf.Clamp01((wholeProcess - data.NormalStartPoint) / data.NormalLength);
         }
     }
 }

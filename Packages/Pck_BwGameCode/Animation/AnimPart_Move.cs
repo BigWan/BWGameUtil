@@ -14,11 +14,10 @@
 
         public override void Init() {
             base.Init();
-            UpdatePosition(m_data.StartValue);
         }
 
-        protected override void SetAnimationState(float progress) {
-            UpdatePosition(Vector3.Lerp(m_data.StartValue, m_data.EndValue, progress));
+        protected override void SetAnimationState(float process) {
+            UpdatePosition(m_data.GetValue(process));
         }
 
         void UpdatePosition(Vector3 pos) {

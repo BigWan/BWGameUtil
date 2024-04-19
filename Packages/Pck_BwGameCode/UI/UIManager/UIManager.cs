@@ -23,7 +23,7 @@ namespace BW.GameCode.UI
     /// https://github.com/feifeid47/Unity-Async-UIFrame/blob/main/Runtime/Core/UIFrame.cs
     /// 每个场景一个UIManager,作为单例会自动切换
     /// </summary>
-    public class UIManager : SimpleSingleton<UIManager>
+    public class UIManager : MonoBehaviour
     {
         [SerializeField] GameUICanvas m_canvas;
         [SerializeField] string m_uiResPath = "BaseUI";
@@ -99,23 +99,23 @@ namespace BW.GameCode.UI
         /// <returns></returns>
         T GetUIInstance<T>() where T : BaseUIPage => GetUIInstance(typeof(T)) as T;
 
-        bool AlreadyShowd(Type uiType) {
+       bool AlreadyShowd(Type uiType) {
             return minstances.ContainsKey(uiType);
         }
 
         bool AlreadyShowed<T>() where T : BaseUIPage => minstances.ContainsKey(typeof(T));
 
-        public bool Show<T>() where T : BaseUIPage {
-            return Show(typeof(T));
+        public  bool Show<T>(Action callback = default) where T : BaseUIPage {
+            return Show(typeof(T),callback);
         }
 
-        public bool Show(Type uiType) {
+        public  bool Show(Type uiType,Action callback=default) {
             if (AlreadyShowd(uiType)) {
                 return false;
             }
             var ui = GetUIInstance(uiType);
 
-            ui.Show();
+            ui.Show(callback);
             return true;
         }
 
@@ -142,10 +142,10 @@ namespace BW.GameCode.UI
         /// 关闭UI,从打开的实例中移除
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void TryClose<T>() where T : BaseUIPage {
+        public void TryClose<T>(Action callback = default) where T : BaseUIPage {
             var uiType = typeof(T);
             if (minstances.TryGetValue(uiType, out var ui)) {
-                ui.Close();
+                ui.Close(callback);
             } else {
                 Debug.LogWarning($"No such UI {uiType} Opened");
             }

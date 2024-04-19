@@ -90,17 +90,17 @@ namespace BW.GameCode.UI
             yield break;
         }
 
-        public void Show() {
+        public void Show(Action callback = default) {
             Debug.Log($"UI <{this.name}> is Showing");
 
             IsShow = true;
             if (mShowHideCoroutine != null) {
                 StopCoroutine(mShowHideCoroutine);
             }
-            mShowHideCoroutine = StartCoroutine(ShowProcess());
+            mShowHideCoroutine = StartCoroutine(ShowProcess(callback));
         }
 
-        private IEnumerator ShowProcess() {
+        private IEnumerator ShowProcess(Action onShowedCallback = default) {
             Debug.Log($"<{this.name}> is ShowProcess");
             SetUIVisible(true);
             OnActive(); // 先执行页面初始化逻辑
@@ -109,7 +109,7 @@ namespace BW.GameCode.UI
             SetUIInteractable(true);
             OnShow();
             Event_OnShow?.Invoke();
-            //callback?.Invoke();
+            onShowedCallback?.Invoke();
             Debug.Log($"<{this.name}> is Active");
         }
 
@@ -117,16 +117,16 @@ namespace BW.GameCode.UI
         /// close
         /// </summary>
         /// <param name="deactiveCallback"> UI完全关闭后的回调</param>
-        public void Close() {
+        public void Close(Action callback = default) {
             Debug.Log($"UI <{this.name}> is Closing");
             if (mShowHideCoroutine != null) {
                 StopCoroutine(mShowHideCoroutine);
             }
 
-            mShowHideCoroutine = StartCoroutine(ProgressClose());
+            mShowHideCoroutine = StartCoroutine(ProgressClose(callback));
         }
 
-        private IEnumerator ProgressClose() {
+        private IEnumerator ProgressClose(Action onHideCallback) {
             Debug.Log($"<{this.name}> is Close");
             SetUIInteractable(false);
             OnDeactive();
@@ -138,7 +138,7 @@ namespace BW.GameCode.UI
             IsShow = false;
             OnHide();
             Event_OnHide?.Invoke();
-            //callback?.Invoke();
+            onHideCallback?.Invoke();
             Debug.Log($"{name} Is Deactive");
         }
 

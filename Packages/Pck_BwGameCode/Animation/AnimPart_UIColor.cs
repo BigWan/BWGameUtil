@@ -6,7 +6,7 @@
     [RequireComponent(typeof(Graphic))]
     public class AnimPart_UIColor : AnimPart
     {
-        [SerializeField] AnimPartData_Color m_data;
+        [SerializeField] AnimPartData_Color m_data = new AnimPartData_Color( Color.white,Color.white,0.4f);
         [SerializeField] Graphic m_graphic;
         public override float Duration => m_data.Duration;
 
@@ -28,4 +28,5 @@
             m_graphic.color = m_data.GetValue(process);
         }
     }
+
 }

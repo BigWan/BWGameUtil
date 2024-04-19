@@ -3,7 +3,7 @@
     using UnityEngine;
 
     [RequireComponent(typeof(CanvasGroup))]
-    public class AnimPart_UIFade : AnimPart
+    public class AnimPart_CanvasFade : AnimPart
     {
         [SerializeField] AnimPartData_Float m_data;
         [SerializeField] CanvasGroup m_cg;

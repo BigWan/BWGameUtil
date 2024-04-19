@@ -19,6 +19,7 @@ namespace BW.GameCode.Animation
             }
         }
 
+
         public virtual void Init() {
             Process = 0;
         }

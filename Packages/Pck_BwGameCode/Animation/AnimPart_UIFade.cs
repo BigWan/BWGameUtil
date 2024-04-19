@@ -8,10 +8,13 @@
         [SerializeField] AnimPartData_Float m_data;
         [SerializeField] CanvasGroup m_cg;
 
-        public override void Init() {
+        private void OnValidate() {
             if (m_cg == null) {
                 m_cg = GetComponent<CanvasGroup>();
             }
+        }
+
+        public override void Init() {
             Debug.Assert(m_cg != null);
             base.Init();
         }

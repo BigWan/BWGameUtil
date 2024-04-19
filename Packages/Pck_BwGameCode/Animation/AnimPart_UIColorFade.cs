@@ -9,10 +9,13 @@
         [SerializeField] Graphic m_graphic;
         public override float Duration => m_data.Duration;
 
-        public override void Init() {
+        private void OnValidate() {
             if (m_graphic == null) {
                 m_graphic = GetComponent<Graphic>();
             }
+        }
+
+        public override void Init() {
             Debug.Assert(m_graphic != null);
             base.Init();
         }

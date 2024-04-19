@@ -55,7 +55,7 @@ namespace BW.GameCode.UI
 
    
 
-        public static void Show(string title, string content, MessageBoxButton btnType = MessageBoxButton.Yes,
+        public void Show(string title, string content, MessageBoxButton btnType = MessageBoxButton.Yes,
             MessageBoxClickDelegate callback = default) {
             var dialog = Instance.CreateDialog();
             dialog.Show(content, title, btnType, callback);

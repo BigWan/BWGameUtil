@@ -1,6 +1,4 @@
-﻿using BW.GameCode.Foundation;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,9 +9,8 @@ namespace BW.GameCode.UI
     /// <summary>
     /// 输入框
     /// </summary>
-    public class InputManager : SimpleSingleton<InputManager>
+    public class InputManager : MonoBehaviour
     {
-        
         [SerializeField] InputWindow m_dialogPrefab;
         [SerializeField] Transform m_dialogParent;
 
@@ -21,20 +18,20 @@ namespace BW.GameCode.UI
 
         static Queue<InputWindow> mCaches = new Queue<InputWindow>();
 
-        static InputWindow CreateDialog() {
+        InputWindow CreateDialog() {
             InputWindow obj;
             if (mCaches.Count > 0) {
                 obj = mCaches.Dequeue();
             } else {
-                obj = Instantiate<InputWindow>(I.m_dialogPrefab, I.m_dialogParent);
+                obj = Instantiate<InputWindow>(m_dialogPrefab, m_dialogParent);
                 obj.Event_OnHide += () => RecycleDialog(obj);
             }
             obj.gameObject.name = "Actived";
             return obj;
         }
 
-        private static void RecycleDialog(InputWindow ui) {
-            if (mCaches.Count > I.m_cacheCount) {
+        private void RecycleDialog(InputWindow ui) {
+            if (mCaches.Count > m_cacheCount) {
                 Destroy(ui.gameObject);
             } else {
                 ui.gameObject.name = "Cached";
@@ -42,7 +39,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        public static void Show(InputBoxArgument args, Action<InputResult> callback) {
+        public void Show(InputBoxArgument args, Action<InputResult> callback) {
             var dialog = CreateDialog();
             dialog.Show(args, callback);
         }

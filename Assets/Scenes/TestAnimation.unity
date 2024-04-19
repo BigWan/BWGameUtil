@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 104938425}
   - component: {fileID: 104938424}
   - component: {fileID: 104938428}
+  - component: {fileID: 104938429}
   m_Layer: 5
   m_Name: SizeDelta (1)
   m_TagString: Untagged
@@ -186,7 +187,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
@@ -205,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_anims:
-  - {fileID: 1801820086}
+  - {fileID: 104938429}
   m_speed: 1
   m_loopType: 2
 --- !u!114 &104938426
@@ -322,6 +323,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &104938429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104938422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68cc5c74bcb42dc479ba26f1f8aecff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_tracks:
+  - Clip: {fileID: 1801820086}
+    StartTime: 0
+  - Clip: {fileID: 320973215}
+    StartTime: 0
+  - Clip: {fileID: 1450390140}
+    StartTime: 0
 --- !u!1 &261536121
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,8 +525,8 @@ GameObject:
   - component: {fileID: 320973213}
   - component: {fileID: 320973217}
   - component: {fileID: 320973216}
-  - component: {fileID: 320973215}
   - component: {fileID: 320973214}
+  - component: {fileID: 320973215}
   m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
@@ -547,12 +567,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: -1
+  m_MinHeight: 30
   m_PreferredWidth: -1
-  m_PreferredHeight: 60.75
+  m_PreferredHeight: 30
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
-  m_LayoutPriority: 1
+  m_LayoutPriority: 0
 --- !u!114 &320973215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,13 +582,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 320973212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8f552f2eaa8d64ab1d71debf95c67a, type: 3}
+  m_Script: {fileID: 11500000, guid: 78128b690f58c414aa75f89335d31cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    StartValue: {x: 100, y: 100}
-    EndValue: {x: 150, y: 150}
-    Duration: 1
+    StartValue: 30
+    EndValue: 80
+    Duration: 0.4
+  m_layoutElement: {fileID: 320973214}
+  m_drivenValue: 4
 --- !u!114 &320973216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2326,7 +2348,7 @@ MonoBehaviour:
     StartValue: 0
     EndValue: 0
     Duration: 1
-  m_le: {fileID: 1358119405}
+  m_layoutElement: {fileID: 1358119405}
   m_drivenValue: 0
 --- !u!114 &1358119405
 MonoBehaviour:
@@ -2402,8 +2424,8 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: 30
-  m_PreferredWidth: 100
-  m_PreferredHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 30
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -2857,7 +2879,7 @@ MonoBehaviour:
     StartValue: 0
     EndValue: 0
     Duration: 1
-  m_le: {fileID: 0}
+  m_layoutElement: {fileID: 0}
   m_drivenValue: 0
 --- !u!1 &1700225251
 GameObject:
@@ -2963,8 +2985,8 @@ GameObject:
   - component: {fileID: 1801820084}
   - component: {fileID: 1801820088}
   - component: {fileID: 1801820087}
-  - component: {fileID: 1801820086}
   - component: {fileID: 1801820085}
+  - component: {fileID: 1801820086}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -3007,10 +3029,10 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: 30
   m_PreferredWidth: 100
-  m_PreferredHeight: -1
+  m_PreferredHeight: 30
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
-  m_LayoutPriority: 1
+  m_LayoutPriority: 0
 --- !u!114 &1801820086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3020,13 +3042,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1801820083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8f552f2eaa8d64ab1d71debf95c67a, type: 3}
+  m_Script: {fileID: 11500000, guid: 78128b690f58c414aa75f89335d31cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    StartValue: {x: 100, y: 100}
-    EndValue: {x: 150, y: 150}
+    StartValue: 30
+    EndValue: 200
     Duration: 1
+  m_layoutElement: {fileID: 1801820085}
+  m_drivenValue: 3
 --- !u!114 &1801820087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3220,7 +3244,7 @@ MonoBehaviour:
     StartValue: 0
     EndValue: 0
     Duration: 1
-  m_le: {fileID: 0}
+  m_layoutElement: {fileID: 0}
   m_drivenValue: 0
 --- !u!1 &1909532347
 GameObject:
@@ -3377,7 +3401,7 @@ MonoBehaviour:
     StartValue: 0
     EndValue: 0
     Duration: 1
-  m_le: {fileID: 0}
+  m_layoutElement: {fileID: 0}
   m_drivenValue: 0
 --- !u!1 &1943318698
 GameObject:

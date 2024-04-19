@@ -20,17 +20,26 @@ namespace BW.GameCode.UI
         public string Text { get; set; }
     }
 
-    public class InputBoxArgument
+    public struct InputBoxArgument
     {
         public string Title;
-        public string Text = default;
+        public string Text ;
         /// <summary>
         /// 输入框是否可以取消
         /// </summary>
-        public bool cancelAble = true;
-        public ContentType ContentType = ContentType.Standard;
-        public int CharacterLimit = 30;
-        public InputValueDelegate Checker = default;
+        public bool cancelAble ;
+        public ContentType ContentType ;
+        public int CharacterLimit ;
+        public Predicate<string> Checker ;
+
+        public InputBoxArgument(string title,string text,bool cancel,ContentType contentType = ContentType.Standard,int charLimit = 30, Predicate<string> inputCheck = default) {
+            this.Title = title;
+            this.Text = text;
+            cancelAble = cancel;
+            ContentType = contentType;
+            CharacterLimit = charLimit;
+            Checker = inputCheck;
+        }
     }
 
     public delegate bool InputValueDelegate(string value);

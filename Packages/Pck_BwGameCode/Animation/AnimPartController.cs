@@ -25,7 +25,6 @@
     {
         [Header(" 动画元素，元素不是都会播放，根据需要播放某一个")]
         [SerializeField] AnimPart[] m_anims;
-        [SerializeField] float m_speed = 1;
         [SerializeField] AnimtionLoopType m_loopType = AnimtionLoopType.None;
 
         IEnumerator animInstance;
@@ -41,22 +40,22 @@
             }
         }
 
-        public Coroutine Play(int animIndex = 0, bool resetCurrent = false) {
+        public Coroutine Play(float speed = 1f, int animIndex = 0, bool resetCurrent = false) {
             Stop(resetCurrent);
             if (m_anims != null && m_anims.Length >= animIndex) {
                 activeAnim = m_anims[animIndex];
                 switch (m_loopType) {
                     case AnimtionLoopType.Restart:
-                        animInstance = PlayRestart(activeAnim, m_speed);
+                        animInstance = PlayRestart(activeAnim, speed);
                         break;
 
                     case AnimtionLoopType.Yoyo:
-                        animInstance = PlayYoyo(activeAnim, m_speed);
+                        animInstance = PlayYoyo(activeAnim, speed);
                         break;
 
                     case AnimtionLoopType.None:
                     default:
-                        animInstance = PlayOnce(activeAnim, m_speed);
+                        animInstance = PlayOnce(activeAnim, speed);
                         break;
                 }
 

@@ -42,7 +42,7 @@
 
         public Coroutine Play(float speed = 1f, int animIndex = 0, bool resetCurrent = false) {
             Stop(resetCurrent);
-            if (m_anims != null && m_anims.Length >= animIndex) {
+            if (m_anims != null && m_anims.Length > animIndex) {
                 activeAnim = m_anims[animIndex];
                 switch (m_loopType) {
                     case AnimtionLoopType.Restart:

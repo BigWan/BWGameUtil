@@ -65,6 +65,7 @@ namespace BW.GameCode.Foundation
         }
 
         void TweenValueAndRaiseEvent(float progress) {
+            Debug.Assert(mLerpFunc != null,this.Host.transform);
             var value = mLerpFunc(StartValue, EndValue, progress);
             OnValueChanged?.Invoke(value);
         }

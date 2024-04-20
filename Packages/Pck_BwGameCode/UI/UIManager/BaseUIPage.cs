@@ -15,15 +15,13 @@ namespace BW.GameCode.UI
     {
         [Header("Body Canvas")]
         [SerializeField] CanvasGroup m_body = default; // 不要Fade这个CanvasGroup,因为UI会直接设置他的值
-        [SerializeField] UIType m_uiType = default;
+        [SerializeField] int m_uiType = default;
 
         [Header("关闭后卸载还是缓存")]
         [SerializeField] bool m_autoDestroyOnHide;
         public bool IsShow { get; private set; }
-
         public bool AutoDestroyOnHide => m_autoDestroyOnHide;
-
-        public UIType UIType => m_uiType;
+        public int UITypeCode => m_uiType;
 
         /// <summary>
         /// UI激活

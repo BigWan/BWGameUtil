@@ -7,14 +7,6 @@ using System.IO;
 using UnityEngine;
 namespace BW.GameCode.UI
 {
-    public enum UIType
-    {
-        SceneUI,       // 场景UI,背景UI
-        Panel,       // 大的页面,Page控制弹窗,关闭Page的时候,这个Page的所有弹窗都会消失
-        Popup,      // 整体的弹窗,弹窗会遮盖底层UI的交互
-        Top         // 顶层UI
-    }
-
     /// <summary>
     /// 管理场景中的常驻UI
     /// 改进UI系统
@@ -25,7 +17,7 @@ namespace BW.GameCode.UI
     /// </summary>
     public class UIManager : MonoBehaviour
     {
-        [SerializeField] GameUICanvas m_canvas;
+        [SerializeField] UICanvasLayerManager m_canvas;
         [SerializeField] string m_uiResPath = "BaseUI";
         // 打开的UI
         Dictionary<Type, BaseUIPage> minstances = new Dictionary<Type, BaseUIPage>();
@@ -64,7 +56,7 @@ namespace BW.GameCode.UI
             if (uiRes == null) {
                 throw new ArgumentNullException(uiPath);
             }
-            var ui = Instantiate(uiRes, m_canvas.GetLayer(uiRes.UIType));
+            var ui = Instantiate(uiRes, m_canvas.GetUILayer(uiRes.UITypeCode));
             if (ui == null) {
                 throw new NullReferenceException($"实例化UI为空{uiPath}/{uiType}");
             }
@@ -99,17 +91,17 @@ namespace BW.GameCode.UI
         /// <returns></returns>
         T GetUIInstance<T>() where T : BaseUIPage => GetUIInstance(typeof(T)) as T;
 
-       bool AlreadyShowd(Type uiType) {
+        bool AlreadyShowd(Type uiType) {
             return minstances.ContainsKey(uiType);
         }
 
         bool AlreadyShowed<T>() where T : BaseUIPage => minstances.ContainsKey(typeof(T));
 
-        public  bool Show<T>(Action callback = default) where T : BaseUIPage {
-            return Show(typeof(T),callback);
+        public bool Show<T>(Action callback = default) where T : BaseUIPage {
+            return Show(typeof(T), callback);
         }
 
-        public  bool Show(Type uiType,Action callback=default) {
+        public bool Show(Type uiType, Action callback = default) {
             if (AlreadyShowd(uiType)) {
                 return false;
             }
@@ -123,7 +115,7 @@ namespace BW.GameCode.UI
             minstances.Add(ui.GetType(), ui);
             ui.transform.SetAsLastSibling();
             // 如果是主页面
-            if (ui.UIType == UIType.Panel) {
+            if (m_canvas.IsPanelLayer(ui.UITypeCode)) {
                 var temp = activedPanel;
                 activedPanel = ui;
                 if (temp != null) {

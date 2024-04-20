@@ -11,17 +11,18 @@ namespace BW.GameCode.UI
     /// </summary>
     [RequireComponent(typeof(CanvasGroup))]
     [DisallowMultipleComponent]
-    public class BaseUIPage : UIBehaviour
+    public abstract class BaseUIPage : UIBehaviour
     {
-        [Header("Body Canvas")]
+        [Header("-------------------------------------------------------------")]
+        [Header("基础信息")]
+        [Space(10)]
         [SerializeField] CanvasGroup m_body = default; // 不要Fade这个CanvasGroup,因为UI会直接设置他的值
-        [SerializeField] int m_uiType = default;
-
-        [Header("关闭后卸载还是缓存")]
+        
         [SerializeField] bool m_autoDestroyOnHide;
+
         public bool IsShow { get; private set; }
         public bool AutoDestroyOnHide => m_autoDestroyOnHide;
-        public int UITypeCode => m_uiType;
+        public abstract string UILayer { get; }
 
         /// <summary>
         /// UI激活
@@ -59,14 +60,7 @@ namespace BW.GameCode.UI
         protected virtual void OnInit() {
         }
 
-        protected virtual void FindRefs() {
-            //if (m_animation == null) {
-            //    m_animation = GetComponent<AbstractMotionNode>();
-            //}
-            if (m_body == null) {
-                m_body = GetComponent<CanvasGroup>();
-            }
-        }
+
 
         protected void SetUIVisible(bool value) {
             if (!gameObject.activeSelf) {
@@ -88,17 +82,18 @@ namespace BW.GameCode.UI
             yield break;
         }
 
-        public void Show(Action callback = default) {
-            Debug.Log($"UI <{this.name}> is Showing");
+        //public Coroutine Show(Action callback = default) {
+        //    Debug.Log($"UI <{this.name}> is Showing");
 
-            IsShow = true;
-            if (mShowHideCoroutine != null) {
-                StopCoroutine(mShowHideCoroutine);
-            }
-            mShowHideCoroutine = StartCoroutine(ShowProcess(callback));
-        }
+        //    IsShow = true;
+        //    if (mShowHideCoroutine != null) {
+        //        StopCoroutine(mShowHideCoroutine);
+        //    }
+        //    mShowHideCoroutine = StartCoroutine(ShowProcess(callback));
+        //    return mShowHideCoroutine;
+        //}
 
-        private IEnumerator ShowProcess(Action onShowedCallback = default) {
+        public IEnumerator Show(Action onShowedCallback = default) {
             Debug.Log($"<{this.name}> is ShowProcess");
             SetUIVisible(true);
             OnActive(); // 先执行页面初始化逻辑
@@ -111,20 +106,20 @@ namespace BW.GameCode.UI
             Debug.Log($"<{this.name}> is Active");
         }
 
-        /// <summary>
-        /// close
-        /// </summary>
-        /// <param name="deactiveCallback"> UI完全关闭后的回调</param>
-        public void Close(Action callback = default) {
-            Debug.Log($"UI <{this.name}> is Closing");
-            if (mShowHideCoroutine != null) {
-                StopCoroutine(mShowHideCoroutine);
-            }
+        ///// <summary>
+        ///// close
+        ///// </summary>
+        ///// <param name="deactiveCallback"> UI完全关闭后的回调</param>
+        //public void Close(Action callback = default) {
+        //    Debug.Log($"UI <{this.name}> is Closing");
+        //    if (mShowHideCoroutine != null) {
+        //        StopCoroutine(mShowHideCoroutine);
+        //    }
 
-            mShowHideCoroutine = StartCoroutine(ProgressClose(callback));
-        }
+        //    mShowHideCoroutine = StartCoroutine(ProgressClose(callback));
+        //}
 
-        private IEnumerator ProgressClose(Action onHideCallback) {
+        public IEnumerator Close(Action onHideCallback = default) {
             Debug.Log($"<{this.name}> is Close");
             SetUIInteractable(false);
             OnDeactive();
@@ -142,9 +137,13 @@ namespace BW.GameCode.UI
 
         public override bool IsActive() => base.IsActive() && m_body.alpha > 0;
 
-        protected override void Reset() => FindRefs();
 
-        protected override void OnValidate() => FindRefs();
+
+        protected override void OnValidate() {
+            if (m_body == null) {
+                m_body = GetComponent<CanvasGroup>();
+            }
+        }
 
         public virtual void ResetUI() {
         }

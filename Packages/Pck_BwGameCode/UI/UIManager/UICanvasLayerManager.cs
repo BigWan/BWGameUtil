@@ -4,7 +4,7 @@ namespace BW.GameCode.UI
 {
     public abstract class UICanvasLayerManager : MonoBehaviour
     {
-        public abstract Transform GetUILayer(int uiLayer);
-        public abstract bool IsPanelLayer(int uiLayer);
+        public abstract Transform GetUILayer(string uiLayer);
+        public abstract bool IsPanelLayer(string uiLayer);
     }
 }

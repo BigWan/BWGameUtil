@@ -1,6 +1,7 @@
 ﻿using BW.GameCode.Foundation;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -56,13 +57,13 @@ namespace BW.GameCode.UI
             if (uiRes == null) {
                 throw new ArgumentNullException(uiPath);
             }
-            var ui = Instantiate(uiRes, m_canvas.GetUILayer(uiRes.UITypeCode));
+            var ui = Instantiate(uiRes, m_canvas.GetUILayer(uiRes.UILayer));
             if (ui == null) {
                 throw new NullReferenceException($"实例化UI为空{uiPath}/{uiType}");
             }
             ui.Event_OnHide += () => OnUIHide(ui);
-            ui.Event_OnDeactive += () => OnUIDeactive(ui);
-            ui.Event_OnActive += () => OnUIActived(ui);
+            //ui.Event_OnDeactive += () => OnUIDeactive(ui);
+            //ui.Event_OnActive += () => OnUIActived(ui);
 
             return ui;
         }
@@ -106,23 +107,22 @@ namespace BW.GameCode.UI
                 return false;
             }
             var ui = GetUIInstance(uiType);
-
-            ui.Show(callback);
+            ui.transform.SetAsLastSibling();
+            if (!m_canvas.IsPanelLayer(ui.UILayer)) {
+                return true;
+            }
+            StartCoroutine(ShowProcess(ui, callback));
             return true;
         }
 
-        void OnUIActived(BaseUIPage ui) {
-            minstances.Add(ui.GetType(), ui);
-            ui.transform.SetAsLastSibling();
-            // 如果是主页面
-            if (m_canvas.IsPanelLayer(ui.UITypeCode)) {
-                var temp = activedPanel;
-                activedPanel = ui;
-                if (temp != null) {
-                    panelStack.Push(temp.GetType());
-                    temp.Close();
-                }
+        private IEnumerator ShowProcess(BaseUIPage ui, Action callback) {
+            // 处理panel逻辑
+            if (activedPanel != null) {
+                panelStack.Push(activedPanel.GetType());
+                yield return activedPanel.Close();
             }
+            yield return ui.Show();
+            callback?.Invoke();
         }
 
         public void TryClose(BaseUIPage ui) {
@@ -142,8 +142,21 @@ namespace BW.GameCode.UI
                 Debug.LogWarning($"No such UI {uiType} Opened");
             }
         }
+        private IEnumerable HiedProcess(BaseUIPage ui,Action callback) {
 
-        private void OnUIDeactive(BaseUIPage ui) {
+        }
+        //private void OnUIDeactive(BaseUIPage ui) {
+        //    if (ui == activedPanel || activedPanel == null) {
+        //        activedPanel = null;
+        //        if (panelStack.Count > 0) {
+        //            var stackUIType = panelStack.Pop();
+        //            Show(stackUIType);
+        //        }
+        //    }
+        //}
+
+        void OnUIHide(BaseUIPage ui) {
+            // 移除实例引用
             if (ui == activedPanel || activedPanel == null) {
                 activedPanel = null;
                 if (panelStack.Count > 0) {
@@ -151,10 +164,6 @@ namespace BW.GameCode.UI
                     Show(stackUIType);
                 }
             }
-        }
-
-        void OnUIHide(BaseUIPage ui) {
-            // 移除实例引用
             Debug.Log("UIManager On UIDeactive");
             var type = ui.GetType();
             if (minstances.ContainsKey(type)) {

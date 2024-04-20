@@ -5,7 +5,7 @@
     [RequireComponent(typeof(CanvasGroup))]
     public class AnimPart_CanvasFade : AnimPart
     {
-        [SerializeField] AnimPartData_Float m_data;
+        [SerializeField] AnimPartData_Float m_data = new AnimPartData_Float(0,1,0.4f);
         [SerializeField] CanvasGroup m_cg;
 
         private void OnValidate() {

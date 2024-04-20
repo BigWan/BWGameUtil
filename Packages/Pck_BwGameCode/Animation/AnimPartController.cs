@@ -32,6 +32,7 @@
 
         public AnimtionLoopType LoopType { get => m_loopType; set { m_loopType = value; } }
 
+        [ContextMenu("Init Animations")]
         public void InitAnimations() {
             if (m_anims != null) {
                 foreach (var a in m_anims) {

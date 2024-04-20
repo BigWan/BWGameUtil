@@ -21,7 +21,7 @@ namespace BW.GameCode.Animation
 
 
         public virtual void Init() {
-            Process = 0;
+            Debug.Log($"{this.transform.name}Init AnimPart");
         }
 
         /// <summary>

@@ -47,9 +47,9 @@ namespace BW.GameCode.UI
         Coroutine mShowHideCoroutine; // 显示和关闭的携程
 
         protected sealed override void Awake() {
+            OnInit();
             SetUIVisible(false);
             SetUIInteractable(false);
-            OnInit();
             BindUIEvent();
         }
 

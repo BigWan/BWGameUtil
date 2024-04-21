@@ -20,27 +20,7 @@ namespace BW.GameCode.UI
         public string Text { get; set; }
     }
 
-    public struct InputBoxArgument
-    {
-        public string Title;
-        public string Text ;
-        /// <summary>
-        /// 输入框是否可以取消
-        /// </summary>
-        public bool cancelAble ;
-        public ContentType ContentType ;
-        public int CharacterLimit ;
-        public Predicate<string> Checker ;
-
-        public InputBoxArgument(string title,string text,bool cancel,ContentType contentType = ContentType.Standard,int charLimit = 30, Predicate<string> inputCheck = default) {
-            this.Title = title;
-            this.Text = text;
-            cancelAble = cancel;
-            ContentType = contentType;
-            CharacterLimit = charLimit;
-            Checker = inputCheck;
-        }
-    }
+   
 
     public delegate bool InputValueDelegate(string value);
 
@@ -88,18 +68,17 @@ namespace BW.GameCode.UI
             //m_cancelButton.gameObject.SetActive(active);
         }
 
-        public void Show(InputBoxArgument args, Action<InputResult> callback) {
+        public void Show(string title,string text, Action<InputResult> callback) {
             if (handler != null) {
                 StopCoroutine(handler);
             }
-            handler = StartCoroutine(Process(args, callback));
+            handler = StartCoroutine(Process(title,text ,callback));
         }
 
-        protected IEnumerator Process(InputBoxArgument args, Action<InputResult> callback) {
-            Title = args.Title;
-            Content = args.Text;
+        protected IEnumerator Process(string title, string text, Action<InputResult> callback) {
+            Title = title;
+            Content = text;
             Result = null;
-            SetCancelButtonActive(args.cancelAble);
             SetBodyVisible(true);
             yield return FadeInProcess();
             SetBodyInteractable(true);

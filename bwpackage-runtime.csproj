@@ -58,11 +58,11 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\OhterCodes\BWPackage\Runtime\ExtensionMethod\ComponentExtension.cs" />
     <Compile Include="Assets\OhterCodes\BWPackage\Runtime\ReadData\ReadCsv.cs" />
     <Compile Include="Assets\OhterCodes\BWPackage\Runtime\Poolable.cs" />
     <Compile Include="Assets\OhterCodes\BWPackage\Runtime\GameDebug.cs" />
     <Compile Include="Assets\OhterCodes\BWPackage\Runtime\Timer.cs" />
-    <Compile Include="Assets\OhterCodes\BWPackage\Runtime\ExtensionMethod\ComponentExtension.cs" />
     <Compile Include="Assets\OhterCodes\BWPackage\Runtime\TimerComponent.cs" />
     <Compile Include="Assets\OhterCodes\BWPackage\Runtime\ExtensionMethod\TransformExtension.cs" />
     <Compile Include="Assets\OhterCodes\BWPackage\Runtime\Pool.cs" />

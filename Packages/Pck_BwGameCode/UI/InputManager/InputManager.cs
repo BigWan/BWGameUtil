@@ -39,9 +39,10 @@ namespace BW.GameCode.UI
             }
         }
 
-        public void Show(InputBoxArgument args, Action<InputResult> callback) {
+        public InputWindow Show(string title,string text , Action<InputResult> callback) {
             var dialog = CreateDialog();
-            dialog.Show(args, callback);
+            dialog.Show(title,text, callback);
+            return dialog;
         }
     }
 }

@@ -41,6 +41,22 @@
             }
         }
 
+        [ContextMenu("Start")]
+        public void SetStartPoint() {
+            if (m_anims != null) {
+                foreach (var a in m_anims) {
+                    a.Process = 0;
+                }
+            }
+        }
+        [ContextMenu("End")]
+        public void SetEndPoint() {
+            if (m_anims != null) {
+                foreach (var a in m_anims) {
+                    a.Process = 1;
+                }
+            }
+        }
         public Coroutine Play(float speed = 1f, int animIndex = 0, bool resetCurrent = false) {
             Stop(resetCurrent);
             if (m_anims != null && m_anims.Length > animIndex) {
@@ -111,31 +127,6 @@
             } else {
                 return process <= 0f;
             }
-        }
-
-        /// <summary>
-        /// 播放一个片段
-        /// </summary>
-        /// <param name="anim"></param>
-        /// <param name="speed"></param>
-        /// <returns></returns>
-        IEnumerator PlayOnce2(AnimPart anim, float speed) {
-            var duration = anim.Duration;
-            float elapsedTime = 0;
-            while (Mathf.Abs(elapsedTime) < duration) {
-                elapsedTime += Time.deltaTime * speed;
-                float normal = elapsedTime / duration;
-                if (normal < 0) {
-                    normal += 1;
-                }
-                normal = Mathf.Clamp01(normal);
-                anim.Process = normal;
-                yield return null;
-            }
-
-            //Debug.Log(normal);
-
-            //anim.SetAnimationState(normal);
         }
     }
 }

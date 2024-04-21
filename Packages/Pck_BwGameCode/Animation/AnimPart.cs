@@ -1,5 +1,7 @@
 namespace BW.GameCode.Animation
 {
+    using System.Collections;
+
     using UnityEngine;
 
     public abstract class AnimPart : MonoBehaviour
@@ -19,7 +21,6 @@ namespace BW.GameCode.Animation
             }
         }
 
-
         public virtual void Init() {
         }
 
@@ -28,5 +29,30 @@ namespace BW.GameCode.Animation
         /// </summary>
         /// <param name="process"></param>
         protected abstract void SetAnimationState(float process);
+
+        public static IEnumerator Play(AnimPart m_anim, float speed) {
+            var process = m_anim.Process;
+
+            float target = speed > 0 ? 1f : 0f; // 速度大于0,目标是1,速度小于0,目标是0
+
+            float duration = m_anim.Duration;
+
+            while (!IsAnimReachedTarget(process, speed)) {
+                //Debug.Log("A" + process + "/" + speed + "+" + IsAnimReachedTarget(process, speed));
+                process += Time.deltaTime / duration * speed;
+                m_anim.Process = process;
+                //Debug.Log("B" + process + "/" + speed);
+                yield return null;
+            }
+            m_anim.Process = target;
+        }
+
+        static bool IsAnimReachedTarget(float process, float speed) {
+            if (speed > 0) {
+                return process >= 1f;
+            } else {
+                return process <= 0f;
+            }
+        }
     }
 }

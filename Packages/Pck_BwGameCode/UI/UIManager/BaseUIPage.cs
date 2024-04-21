@@ -51,10 +51,6 @@ namespace BW.GameCode.UI
             OnInit();
             SetUIVisible(false);
             SetUIInteractable(false);
-            BindUIEvent();
-        }
-
-        protected virtual void BindUIEvent() {
         }
 
         protected virtual void OnInit() {

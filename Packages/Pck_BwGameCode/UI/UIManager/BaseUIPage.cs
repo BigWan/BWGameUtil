@@ -80,30 +80,25 @@ namespace BW.GameCode.UI
             yield break;
         }
 
-        public Coroutine Show(bool sendEvent = true) {
+        public Coroutine Show() {
             Debug.Log($"UI <{this.name}> is Showing");
             IsShow = true;
             if (Process != null) {
                 StopCoroutine(Process);
                 Process = null;
             }
-            Process = ProgressShow(sendEvent);
+            Process = ProgressShow();
             return StartCoroutine(Process);
         }
 
-        private IEnumerator ProgressShow(bool sendEvent) {
-            
-            SetUIVisible(true);
+        private IEnumerator ProgressShow() {
             OnActive(); // 先执行页面初始化逻辑
-            if (sendEvent) {
-                Event_OnActive?.Invoke();
-            }
+            Event_OnActive?.Invoke();
+            SetUIVisible(true);
             yield return DoPlayShowAnimation();
             SetUIInteractable(true);
             OnShow();
-            if (sendEvent) {
-                Event_OnShow?.Invoke();
-            }
+            Event_OnShow?.Invoke();
         }
 
         /// <summary>
@@ -121,7 +116,6 @@ namespace BW.GameCode.UI
         }
 
         IEnumerator ProgressClose(bool raiseEvent) {
-            
             SetUIInteractable(false);
             OnDeactive();
             if (raiseEvent) {
@@ -148,6 +142,9 @@ namespace BW.GameCode.UI
         }
 
         public virtual void ResetUI() {
+        }
+
+        protected virtual void SetupUIElements() {
         }
 
         /// <summary>

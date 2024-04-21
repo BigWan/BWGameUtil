@@ -1,5 +1,4 @@
-﻿using BW.GameCode.Foundation;
-
+﻿
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -125,11 +124,6 @@ namespace BW.GameCode.UI
             callback?.Invoke();
         }
 
-        public void TryClose(BaseUIPage ui) {
-            Debug.Assert(ui != null);
-            ui.Close();
-        }
-
         /// <summary>
         /// 关闭UI,从打开的实例中移除
         /// </summary>
@@ -142,18 +136,6 @@ namespace BW.GameCode.UI
                 Debug.LogWarning($"No such UI {uiType} Opened");
             }
         }
-        private IEnumerable HiedProcess(BaseUIPage ui,Action callback) {
-
-        }
-        //private void OnUIDeactive(BaseUIPage ui) {
-        //    if (ui == activedPanel || activedPanel == null) {
-        //        activedPanel = null;
-        //        if (panelStack.Count > 0) {
-        //            var stackUIType = panelStack.Pop();
-        //            Show(stackUIType);
-        //        }
-        //    }
-        //}
 
         void OnUIHide(BaseUIPage ui) {
             // 移除实例引用

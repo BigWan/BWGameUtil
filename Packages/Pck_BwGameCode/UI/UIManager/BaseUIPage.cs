@@ -17,7 +17,7 @@ namespace BW.GameCode.UI
         [Header("基础信息")]
         [Space(10)]
         [SerializeField] CanvasGroup m_body = default; // 不要Fade这个CanvasGroup,因为UI会直接设置他的值
-        
+
         [SerializeField] bool m_autoDestroyOnHide;
 
         public bool IsShow { get; private set; }
@@ -45,7 +45,7 @@ namespace BW.GameCode.UI
         /// </summary>
         public event Action Event_OnRefresh;
 
-        Coroutine mShowHideCoroutine; // 显示和关闭的携程
+        IEnumerator Process;
 
         protected sealed override void Awake() {
             OnInit();
@@ -59,8 +59,6 @@ namespace BW.GameCode.UI
 
         protected virtual void OnInit() {
         }
-
-
 
         protected void SetUIVisible(bool value) {
             if (!gameObject.activeSelf) {
@@ -82,18 +80,19 @@ namespace BW.GameCode.UI
             yield break;
         }
 
-        //public Coroutine Show(Action callback = default) {
-        //    Debug.Log($"UI <{this.name}> is Showing");
+        public Coroutine Show(Action callback = default) {
+            Debug.Log($"UI <{this.name}> is Showing");
 
-        //    IsShow = true;
-        //    if (mShowHideCoroutine != null) {
-        //        StopCoroutine(mShowHideCoroutine);
-        //    }
-        //    mShowHideCoroutine = StartCoroutine(ShowProcess(callback));
-        //    return mShowHideCoroutine;
-        //}
+            IsShow = true;
+            if (Process != null) {
+                StopCoroutine(Process);
+                Process = null;
+            }
+            Process = ProgressShow(callback);
+            return StartCoroutine(Process);
+        }
 
-        public IEnumerator Show(Action onShowedCallback = default) {
+        private IEnumerator ProgressShow(Action onShowedCallback = default) {
             Debug.Log($"<{this.name}> is ShowProcess");
             SetUIVisible(true);
             OnActive(); // 先执行页面初始化逻辑
@@ -106,20 +105,22 @@ namespace BW.GameCode.UI
             Debug.Log($"<{this.name}> is Active");
         }
 
-        ///// <summary>
-        ///// close
-        ///// </summary>
-        ///// <param name="deactiveCallback"> UI完全关闭后的回调</param>
-        //public void Close(Action callback = default) {
-        //    Debug.Log($"UI <{this.name}> is Closing");
-        //    if (mShowHideCoroutine != null) {
-        //        StopCoroutine(mShowHideCoroutine);
-        //    }
+        /// <summary>
+        /// close
+        /// </summary>
+        /// <param name="deactiveCallback"> UI完全关闭后的回调</param>
+        public Coroutine Close(Action callback = default) {
+            Debug.Log($"UI <{this.name}> is Closing");
+            if (Process != null) {
+                StopCoroutine(Process);
+                Process = null;
+            }
+            Process = ProgressClose(callback);
 
-        //    mShowHideCoroutine = StartCoroutine(ProgressClose(callback));
-        //}
+            return  StartCoroutine(Process);
+        }
 
-        public IEnumerator Close(Action onHideCallback = default) {
+        public IEnumerator ProgressClose(Action onHideCallback = default) {
             Debug.Log($"<{this.name}> is Close");
             SetUIInteractable(false);
             OnDeactive();
@@ -136,8 +137,6 @@ namespace BW.GameCode.UI
         }
 
         public override bool IsActive() => base.IsActive() && m_body.alpha > 0;
-
-
 
         protected override void OnValidate() {
             if (m_body == null) {

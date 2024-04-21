@@ -60,13 +60,18 @@ namespace BW.GameCode.UI
             if (ui == null) {
                 throw new NullReferenceException($"实例化UI为空{uiPath}/{uiType}");
             }
-            ui.Event_OnHide += () => OnUIHide(ui);
-            //ui.Event_OnDeactive += () => OnUIDeactive(ui);
-            //ui.Event_OnActive += () => OnUIActived(ui);
 
             return ui;
         }
 
+        /// <summary>
+        /// 获取UI实例 按以下逻辑执行
+        /// 1.已经打开的UI会直接返回实例,
+        /// 2.缓存的UI则返回缓存的,
+        /// 3.未加载的UI执行加载
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         BaseUIPage GetUIInstance(Type uiType) {
             if (cachedUI.TryGetValue(uiType, out BaseUIPage result)) {
                 cachedUI[uiType] = null; // 从缓存中取出实例
@@ -81,89 +86,95 @@ namespace BW.GameCode.UI
             return InstantiateUI(uiType);
         }
 
-        /// <summary>
-        /// 获取UI实例 按以下逻辑执行
-        /// 1.已经打开的UI会直接返回实例,
-        /// 2.缓存的UI则返回缓存的,
-        /// 3.未加载的UI执行加载
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        T GetUIInstance<T>() where T : BaseUIPage => GetUIInstance(typeof(T)) as T;
-
         bool AlreadyShowd(Type uiType) {
             return minstances.ContainsKey(uiType);
         }
 
-        bool AlreadyShowed<T>() where T : BaseUIPage => minstances.ContainsKey(typeof(T));
-
-        public bool Show<T>(Action callback = default) where T : BaseUIPage {
-            return Show(typeof(T), callback);
+        public bool Show<T>() where T : BaseUIPage {
+            return Show(typeof(T));
         }
 
-        public bool Show(Type uiType, Action callback = default) {
+        public bool Show(Type uiType) {
             if (AlreadyShowd(uiType)) {
                 return false;
             }
             var ui = GetUIInstance(uiType);
             ui.transform.SetAsLastSibling();
-            if (!m_canvas.IsPanelLayer(ui.UILayer)) {
-                return true;
-            }
-            StartCoroutine(ShowProcess(ui, callback));
+            StartCoroutine(ShowProcess(ui));
             return true;
         }
 
-        private IEnumerator ShowProcess(BaseUIPage ui, Action callback) {
+        private IEnumerator ShowProcess(BaseUIPage ui) {
+            Debug.Assert(ui != null);
+            Debug.Log($"UIManager.ShowProcess({ui.name})");
             // 处理panel逻辑
             if (activedPanel != null) {
                 panelStack.Push(activedPanel.GetType());
-                yield return activedPanel.Close();
+                yield return JustCloseUI(activedPanel);
             }
+            yield return JustActiveUI(ui);
+        }
+
+        IEnumerator JustActiveUI(BaseUIPage ui) {
+            Debug.Assert(ui != null);
+            Debug.Log("----------------JustActiveUI");
+            if (m_canvas.IsPanelLayer(ui.UILayer)) {
+                activedPanel = ui;
+                Debug.Log($"UIManager.SetActivePanel({activedPanel.name})");
+            }
+
+            minstances.Add(ui.GetType(), ui);
             yield return ui.Show();
-            callback?.Invoke();
         }
 
         /// <summary>
         /// 关闭UI,从打开的实例中移除
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void TryClose<T>(Action callback = default) where T : BaseUIPage {
+        public void TryClose<T>() where T : BaseUIPage {
             var uiType = typeof(T);
+            Close(uiType);
+        }
+
+        public void Close(Type uiType) {
             if (minstances.TryGetValue(uiType, out var ui)) {
-                ui.Close(callback);
+                StartCoroutine(ProcessClose(ui));
             } else {
                 Debug.LogWarning($"No such UI {uiType} Opened");
             }
         }
 
-        void OnUIHide(BaseUIPage ui) {
-            // 移除实例引用
-            if (ui == activedPanel || activedPanel == null) {
-                activedPanel = null;
-                if (panelStack.Count > 0) {
-                    var stackUIType = panelStack.Pop();
-                    Show(stackUIType);
-                }
-            }
-            Debug.Log("UIManager On UIDeactive");
+        IEnumerator ProcessClose(BaseUIPage ui) {
+            Debug.Assert(ui != null);
+            yield return JustCloseUI(ui);   // 关旧
+            yield return PopStackPanel();   // 开新
+        }
+
+        IEnumerator JustCloseUI(BaseUIPage ui) {
+            Debug.Log("----------------JustCloseUI");
+            Debug.Assert(ui != null);
             var type = ui.GetType();
             if (minstances.ContainsKey(type)) {
-                Debug.Log("移除打开的实例引用");
                 minstances.Remove(type);
             }
-
+            if (activedPanel == ui) {
+                activedPanel = null;
+            }
+            yield return ui.Close();
             if (ui.AutoDestroyOnHide) {
-                Debug.Log($"删除UI{ui.name}");
                 Destroy(ui.gameObject);
             } else {
-                Debug.Log($"缓存UI{ui.name}");
-                cachedUI[type] = ui;
+                cachedUI[ui.GetType()] = ui;
             }
         }
 
-#if UNITY_EDITOR
-
-#endif
+        IEnumerator PopStackPanel() {
+            Debug.Log("----------------PopPanelStack");
+            if (panelStack.Count > 0) {
+                var uiType = panelStack.Pop();
+                var ui = GetUIInstance(uiType);
+                yield return JustActiveUI(ui);
+            }
+        }
     }
 }

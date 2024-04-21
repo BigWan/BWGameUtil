@@ -80,60 +80,63 @@ namespace BW.GameCode.UI
             yield break;
         }
 
-        public Coroutine Show(Action callback = default) {
+        public Coroutine Show(bool sendEvent = true) {
             Debug.Log($"UI <{this.name}> is Showing");
-
             IsShow = true;
             if (Process != null) {
                 StopCoroutine(Process);
                 Process = null;
             }
-            Process = ProgressShow(callback);
+            Process = ProgressShow(sendEvent);
             return StartCoroutine(Process);
         }
 
-        private IEnumerator ProgressShow(Action onShowedCallback = default) {
-            Debug.Log($"<{this.name}> is ShowProcess");
+        private IEnumerator ProgressShow(bool sendEvent) {
+            
             SetUIVisible(true);
             OnActive(); // 先执行页面初始化逻辑
-            Event_OnActive?.Invoke();
+            if (sendEvent) {
+                Event_OnActive?.Invoke();
+            }
             yield return DoPlayShowAnimation();
             SetUIInteractable(true);
             OnShow();
-            Event_OnShow?.Invoke();
-            onShowedCallback?.Invoke();
-            Debug.Log($"<{this.name}> is Active");
+            if (sendEvent) {
+                Event_OnShow?.Invoke();
+            }
         }
 
         /// <summary>
         /// close
         /// </summary>
         /// <param name="deactiveCallback"> UI完全关闭后的回调</param>
-        public Coroutine Close(Action callback = default) {
+        public Coroutine Close(bool raiseEvent = false) {
             Debug.Log($"UI <{this.name}> is Closing");
             if (Process != null) {
                 StopCoroutine(Process);
                 Process = null;
             }
-            Process = ProgressClose(callback);
-
-            return  StartCoroutine(Process);
+            Process = ProgressClose(raiseEvent);
+            return StartCoroutine(Process);
         }
 
-        public IEnumerator ProgressClose(Action onHideCallback = default) {
-            Debug.Log($"<{this.name}> is Close");
+        IEnumerator ProgressClose(bool raiseEvent) {
+            
             SetUIInteractable(false);
             OnDeactive();
-            Event_OnDeactive?.Invoke();
+            if (raiseEvent) {
+                Event_OnDeactive?.Invoke();
+            }
             // 先播放动画后设置
             yield return DoPlayHideAnimation();
 
             SetUIVisible(false);
             IsShow = false;
             OnHide();
-            Event_OnHide?.Invoke();
-            onHideCallback?.Invoke();
-            Debug.Log($"{name} Is Deactive");
+            if (raiseEvent) {
+                Event_OnHide?.Invoke();
+            }
+            //onHideCallback?.Invoke();
         }
 
         public override bool IsActive() => base.IsActive() && m_body.alpha > 0;

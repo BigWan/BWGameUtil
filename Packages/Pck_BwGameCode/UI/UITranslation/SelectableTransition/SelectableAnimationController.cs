@@ -6,7 +6,7 @@ namespace BW.GameCode.UI
 {
     [RequireComponent(typeof(Selectable))]
     [DisallowMultipleComponent]
-    public class SelectableAnimationController : MonoBehaviour,
+    public class SelectableAnimationController : UIBehaviour,
         IPointerEnterHandler, IPointerExitHandler,
         IPointerDownHandler, IPointerUpHandler,
         ISelectHandler, IDeselectHandler
@@ -27,7 +27,7 @@ namespace BW.GameCode.UI
         [SerializeField] SelectableState debugState;
 
         void Update() {
-            debugState = currentSelectionState;
+            debugState = CurrentSelectionState;
         }
 
 #endif
@@ -35,22 +35,28 @@ namespace BW.GameCode.UI
         bool isPointerDown;
         bool hasSelection;
 
-        private void Start() {
-            DoStateTransition(currentSelectionState, true);
+
+
+        protected override void Start() {
+            DoStateTransition(CurrentSelectionState, true);
         }
 
-        void OnEnable() {
+        protected override void OnEnable() {
             isPointerDown = false;
-            DoStateTransition(currentSelectionState, true);
+            DoStateTransition(CurrentSelectionState, true);
         }
 
-        void OnDisable() {
+        protected override void OnCanvasGroupChanged() {
+            DoStateTransition(CurrentSelectionState, false);
+        }
+
+        protected override void OnDisable() {
             isPointerInside = false;
             isPointerDown = false;
             hasSelection = false;
         }
 
-        void OnValidate() {
+        protected override void OnValidate() {
             if (m_selectable == null) {
                 m_selectable = GetComponent<Selectable>();
             }
@@ -71,7 +77,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        protected SelectableState currentSelectionState {
+        protected SelectableState CurrentSelectionState {
             get {
                 if (!m_selectable.IsInteractable())
                     return SelectableState.Disabled;
@@ -114,7 +120,7 @@ namespace BW.GameCode.UI
             if (!m_selectable.IsActive() || !m_selectable.IsInteractable())
                 return;
 
-            DoStateTransition(currentSelectionState, false);
+            DoStateTransition(CurrentSelectionState, false);
         }
 
         public void OnPointerEnter(PointerEventData eventData) {

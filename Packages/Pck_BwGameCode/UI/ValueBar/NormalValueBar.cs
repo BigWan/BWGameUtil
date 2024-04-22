@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 namespace BW.GameCode.UI
 {
     [DisallowMultipleComponent]
-    public class NormalValueBar : UIBehaviour
+    public class NormalValueBar : MonoBehaviour
     {
         [System.Serializable]
         public class NormalValueBarEvent : UnityEvent<float>
@@ -33,7 +33,7 @@ namespace BW.GameCode.UI
             }
         }
 
-        protected override void Awake() {
+        protected  void Awake() {
             m_anim.Init();
             tween.SetCallback(x => m_anim.Process = x);
         }

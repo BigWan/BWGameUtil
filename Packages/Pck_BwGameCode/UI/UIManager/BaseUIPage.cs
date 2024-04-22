@@ -172,7 +172,8 @@ namespace BW.GameCode.UI
 
         [ContextMenu("改名")]
         void ChangeREsName() {
-            UnityEditor.Selection.gameObjects.First().name = this.GetType().Name;
+            var obj = UnityEditor.Selection.gameObjects.First();
+                obj.name = this.GetType().Name;
         }
 
 #endif

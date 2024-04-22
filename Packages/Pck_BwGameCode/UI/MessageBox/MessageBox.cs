@@ -20,11 +20,6 @@ namespace BW.GameCode.UI
     /// </summary>
     public class MessageBox : MonoBehaviour
     {
-        static string msgboxWindowPrefab = "";
-        static string msgboxCanvasObject = "";
-
-        public static MessageBox Instance { get; private set; }
-
         [SerializeField] MessageBoxDialog m_dialogPrefab;
         [SerializeField] Transform m_dialogParent;
 
@@ -53,14 +48,10 @@ namespace BW.GameCode.UI
             }
         }
 
-   
-
         public void Show(string title, string content, MessageBoxButton btnType = MessageBoxButton.Yes,
             MessageBoxClickDelegate callback = default) {
-            var dialog = Instance.CreateDialog();
+            var dialog = CreateDialog();
             dialog.Show(content, title, btnType, callback);
-            
         }
-
     }
 }

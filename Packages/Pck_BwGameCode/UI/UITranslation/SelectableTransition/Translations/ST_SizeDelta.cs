@@ -14,16 +14,14 @@
         [SerializeField] RectTransform m_expandPart = default;
         [SerializeField] STValue_V2 m_value;
         [SerializeField] float m_animTime = 0.15f;
-        SimpleTween<Vector2> tween = new SimpleTween<Vector2>();
+        SimpleTween_V2 tween = new SimpleTween_V2();
 
         void InitTween() {
             tween.SetCallback((x) => {
                 if (m_expandPart != null) {
                     m_expandPart.sizeDelta = x;
                 }
-            })
-            .SetDuration(m_animTime)
-            .SetLerp(Vector2.Lerp);
+            });
         }
 
         private void Awake() {
@@ -43,7 +41,7 @@
             if (instant) {
                 m_expandPart.sizeDelta = value;
             } else {
-                tween.SetStartAndEnd(m_expandPart.sizeDelta, value);
+                tween.SetStartAndEnd(m_expandPart.sizeDelta, value).SetDuration(m_animTime);
                 tween.StartTween(this);
             }
         }

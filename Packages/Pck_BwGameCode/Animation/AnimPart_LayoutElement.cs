@@ -28,12 +28,6 @@
             }
         }
 
-        public override void Init() {
-            if (m_layoutElement == null) {
-                m_layoutElement = GetComponent<LayoutElement>();
-            }
-            base.Init();
-        }
 
         protected override void SetAnimationState(float process) {
             switch (m_drivenValue) {

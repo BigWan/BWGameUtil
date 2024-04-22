@@ -14,10 +14,7 @@
             }
         }
 
-        public override void Init() {
-            Debug.Assert(m_cg != null);
-            base.Init();
-        }
+
 
         public override float Duration => m_data != null ? m_data.Duration : 0f;
 

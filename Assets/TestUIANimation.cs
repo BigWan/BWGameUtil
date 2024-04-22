@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using BW.GameCode.Animation;
-using UnityEngine.UI;
+
+using System.Collections.Generic;
 using System.Linq;
+
+using UnityEngine;
+using UnityEngine.UI;
 
 public class TestUIANimation : MonoBehaviour
 {

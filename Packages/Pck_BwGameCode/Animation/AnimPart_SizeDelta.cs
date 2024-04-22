@@ -7,7 +7,14 @@
         [SerializeField] AnimPartData_Vector2 m_data;
         [SerializeField] MotionType m_motionType = MotionType.Width | MotionType.Height;
         public override float Duration => m_data.Duration;
-        RectTransform Rect;
+        [SerializeField]RectTransform m_rect;
+
+        private void OnValidate() {
+            if (m_rect == null) {
+            m_rect = this.transform as RectTransform;
+
+            }
+        }
         [System.Serializable]
         [System.Flags]
         protected enum MotionType
@@ -17,22 +24,19 @@
             Height
 
         }
-        public override void Init() {
-            Rect = this.transform as RectTransform;
-            base.Init();
-        }
+
 
         protected override void SetAnimationState(float process) {
 
             var sizeDelta = m_data.GetValue(process);
             if (!m_motionType.HasFlag(MotionType.Width)) {
-                sizeDelta.x = Rect.sizeDelta.x;
+                sizeDelta.x = m_rect.sizeDelta.x;
             }
             if (!m_motionType.HasFlag(MotionType.Height)) {
-                sizeDelta.y = Rect.sizeDelta.y;
+                sizeDelta.y = m_rect.sizeDelta.y;
             }
 
-            Rect.sizeDelta = sizeDelta;
+            m_rect.sizeDelta = sizeDelta;
         }
     }
 

@@ -15,10 +15,7 @@
             }
         }
 
-        public override void Init() {
-            Debug.Assert(m_graphic != null);
-            base.Init();
-        }
+
 
         protected override void SetAnimationState(float process) {
             var c = m_graphic.color;

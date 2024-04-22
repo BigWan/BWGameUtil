@@ -12,7 +12,7 @@ namespace BW.GameCode.UI
         //[SerializeField] Vector2 m_sizeOn;
         [SerializeField] float m_animTime = 0.15f;
 
-        SimpleTween<Vector2> tween = new SimpleTween<Vector2>();
+        SimpleTween_V2 tween = new SimpleTween_V2();
 
         protected override void Awake() {
             tween.SetCallback(x => {
@@ -30,7 +30,7 @@ namespace BW.GameCode.UI
         }
 
         void DOSize(Vector2 size) {
-            tween.SetStartAndEnd(m_expandPart.sizeDelta, size).StartTween(this);
+            tween.SetStartAndEnd(m_expandPart.sizeDelta, size).SetDuration(m_animTime).StartTween(this);
         }
     }
 }

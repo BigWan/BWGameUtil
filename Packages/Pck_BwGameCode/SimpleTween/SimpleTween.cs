@@ -7,7 +7,25 @@ namespace BW.GameCode.Foundation
 {
     public delegate T EaseFunc<T>(T a, T b, float t);
 
-    public class SimpleTween<T> where T:struct
+    public class SimpleTween_Float : SimpleTween<float>
+    {
+        public SimpleTween_Float() : base(Mathf.Lerp) {
+        }
+    }
+
+    public class SimpleTween_V2 : SimpleTween<Vector2>
+    {
+        public SimpleTween_V2() : base(Vector2.Lerp) {
+        }
+    }
+
+    public class SimpleTween_V3 : SimpleTween<Vector3>
+    {
+        public SimpleTween_V3() : base(Vector3.Lerp) {
+        }
+    }
+
+    public class SimpleTween<T> where T : struct
     {
         IEnumerator tweenInstance;
 
@@ -20,6 +38,10 @@ namespace BW.GameCode.Foundation
         public T EndValue { get; set; } = default(T);
 
         EaseFunc<T> mLerpFunc;
+
+        public SimpleTween(EaseFunc<T> lerp) {
+            this.mLerpFunc = lerp;
+        }
 
         public SimpleTween<T> SetLerp(EaseFunc<T> lerp) {
             mLerpFunc = lerp;
@@ -65,7 +87,7 @@ namespace BW.GameCode.Foundation
         }
 
         void TweenValueAndRaiseEvent(float progress) {
-            Debug.Assert(mLerpFunc != null,this.Host.transform);
+            Debug.Assert(mLerpFunc != null, this.Host.transform);
             var value = mLerpFunc(StartValue, EndValue, progress);
             OnValueChanged?.Invoke(value);
         }

@@ -21,8 +21,7 @@
 
         [SerializeField] float m_animTime = 0.25f;
 
-        SimpleTween<float> runner = new SimpleTween<float>();
-
+        SimpleTween_Float runner = new SimpleTween_Float();
 
         private void Awake() {
             runner.SetCallback((x) => {
@@ -30,8 +29,8 @@
                     m_scalePart.localScale = Vector3.one * x;
                 }
             })
-            .SetDuration(m_animTime)
-            .SetLerp(Mathf.Lerp);
+
+            ;
         }
 
         internal override void DoStateTransition(SelectableState state, bool instant) {
@@ -45,7 +44,9 @@
             if (instant) {
                 m_scalePart.localScale = value * Vector3.one;
             } else {
-                runner.SetStartAndEnd(m_scalePart.localScale.x, value).StartTween(this);
+                runner.SetStartAndEnd(m_scalePart.localScale.x, value)
+                    .SetDuration(m_animTime)
+                    .StartTween(this);
             }
         }
 

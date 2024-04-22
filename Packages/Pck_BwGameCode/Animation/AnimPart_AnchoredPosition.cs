@@ -15,27 +15,27 @@
 
         [SerializeField] AnimPartData_Vector2 m_data;
         [SerializeField] MotionType m_type = MotionType.X | MotionType.Y;
-        RectTransform Rect;
+        [SerializeField] RectTransform m_Rect;
         public override float Duration => m_data != null ? m_data.Duration : 0f;
 
-        public override void Init() {
-            Rect = this.transform as RectTransform;
-            base.Init();
-            Debug.Assert(m_data != null);
-            Debug.Assert(m_data.Duration > 0);
+        private void OnValidate() {
+            if (m_Rect == null) {
+                m_Rect = this.transform as RectTransform;
+            }
         }
+
 
         protected override void SetAnimationState(float process) {
             var pos = Vector2.Lerp(m_data.StartValue, m_data.EndValue, process);
             if (!m_type.HasFlag(MotionType.X)) {
-                pos.x = Rect.anchoredPosition.x;
+                pos.x = m_Rect.anchoredPosition.x;
             }
             if (!m_type.HasFlag(MotionType.Y)) {
-                pos.y = Rect.anchoredPosition.y;
+                pos.y = m_Rect.anchoredPosition.y;
             }
             //Debug.Log($"{this.transform.name} . AnchorPos = {pos},startValue={m_data.StartValue},endValue = {m_data.EndValue},process ={process}",this.transform);
-            Debug.Assert(Rect != null, transform);
-            Rect.anchoredPosition = pos;
+            Debug.Assert(m_Rect != null, transform);
+            m_Rect.anchoredPosition = pos;
         }
     }
 }

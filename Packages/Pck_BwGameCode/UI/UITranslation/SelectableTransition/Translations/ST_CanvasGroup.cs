@@ -15,7 +15,7 @@ namespace BW.GameCode.UI
         [SerializeField] STValue_Float m_value;
         [SerializeField] float m_animTime = 0.15f;
 
-        SimpleTween<float> runner = new SimpleTween<float>();
+        SimpleTween_Float runner = new SimpleTween_Float();
 
         private void Awake() {
             runner.SetCallback((x) => {
@@ -23,7 +23,7 @@ namespace BW.GameCode.UI
                     m_canvasGroup.alpha = x;
                 }
             })
-            .SetDuration(m_animTime)
+            
             .SetLerp(Mathf.Lerp);
         }
 
@@ -41,7 +41,8 @@ namespace BW.GameCode.UI
             if (instant) {
                 m_canvasGroup.alpha = value;
             } else {
-                runner.SetStartAndEnd(m_canvasGroup.alpha, value).StartTween(this);
+                runner.SetStartAndEnd(m_canvasGroup.alpha, value).SetDuration(m_animTime)
+                    .StartTween(this);
             }
         }
     }

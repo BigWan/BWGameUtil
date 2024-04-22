@@ -12,9 +12,7 @@
 
         public override float Duration => m_data != null ? m_data.Duration : 0f;
 
-        public override void Init() {
-            base.Init();
-        }
+
 
         protected override void SetAnimationState(float process) {
             UpdatePosition(m_data.GetValue(process));

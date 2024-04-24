@@ -27,7 +27,7 @@ namespace BW.GameCode.UI
         /// <summary>
         /// UI激活
         /// </summary>
-        public event Action Event_BeforeShow;
+        public event Action Event_OnActived;
         /// <summary>
         /// UI 显示完成
         /// </summary>
@@ -88,9 +88,9 @@ namespace BW.GameCode.UI
         }
 
         private IEnumerator ProgressShow() {
-            BeforeShow(); // 先执行页面初始化逻辑
-            Event_BeforeShow?.Invoke();
             SetUIVisible(true);
+            OnActived(); // 先执行页面初始化逻辑
+            Event_OnActived?.Invoke();
             yield return DoPlayShowAnimation();
             SetUIInteractable(true);
             OnShow();
@@ -147,7 +147,7 @@ namespace BW.GameCode.UI
         /// 界面激活,每次打开都会触发这个函数
         /// 在动画播放前执行
         /// </summary>
-        protected virtual void BeforeShow() {
+        protected virtual void OnActived() {
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace BW.GameCode.UI
     public sealed class ToggleTranslation_DoAlpha : ToggleTranslation
     {
         [SerializeField] Graphic m_targetGraphic;
-        [SerializeField] ToggleTranslationData_Float m_value;
+        [SerializeField] ToggleTranslationData_Float m_value = new ToggleTranslationData_Float(0,1);
         [SerializeField] float m_duration = 0.2f;
 
         protected override void DOTranslation(bool isOn) {

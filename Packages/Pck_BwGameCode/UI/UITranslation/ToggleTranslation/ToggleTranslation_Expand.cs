@@ -1,44 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace BW.GameCode.UI
 {
     using BW.GameCode.Foundation;
-
-    using System;
-
-    public class ToggleTranslation_LayoutElement : ToggleTranslation
-    {
-        [SerializeField] LayoutElement m_element = default;
-        [SerializeField] ToggleTranslationData_Float m_value;
-        [SerializeField] bool m_ver;
-        [SerializeField] bool m_hor;
-
-        SimpleTween_Float tween = new SimpleTween_Float();
-
-        protected override void Awake() {
-            tween.SetCallback(UpdateElement);
-        }
-
-        private void UpdateElement(float obj) {
-            throw new NotImplementedException();
-        }
-
-        protected override void DOTranslation(bool isOn) {
-            if (m_value != null && m_element != null) {
-                DOSize(m_value.GetValue(isOn));
-            }
-        }
-
-        private void DOSize(float v) {
-        }
-
-        private void OnValidate() {
-            if (m_element == null) {
-                m_element = GetComponent<LayoutElement>();
-            }
-        }
-    }
 
     public sealed class ToggleTranslation_Expand : ToggleTranslation
     {

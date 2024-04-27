@@ -16,7 +16,7 @@
     public class ST_Scale : SelectableTransition
     {
         [SerializeField] Transform m_scalePart = default;
-        [SerializeField] STValue_Float m_value;
+        [SerializeField] STValue_Float m_value = STValue_Float.DEFAULT_SCALE_VALUE;
         //[SerializeField] float m_selectScale = 1.1f;
 
         [SerializeField] float m_animTime = 0.25f;

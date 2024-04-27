@@ -35,8 +35,6 @@ namespace BW.GameCode.UI
         bool isPointerDown;
         bool hasSelection;
 
-
-
         protected override void Start() {
             DoStateTransition(CurrentSelectionState, true);
         }
@@ -63,7 +61,9 @@ namespace BW.GameCode.UI
             if (m_selectable != null) {
                 m_selectable.transition = Selectable.Transition.None;
             }
-            m_animations = GetComponents<SelectableTransition>();
+            if (m_animations == null) {
+                m_animations = GetComponents<SelectableTransition>();
+            }
         }
 
         private void DoStateTransition(SelectableState currentSelectionState, bool instant) {

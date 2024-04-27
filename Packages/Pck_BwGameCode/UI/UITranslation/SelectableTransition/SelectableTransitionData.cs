@@ -42,6 +42,15 @@ namespace BW.GameCode.UI
             SelectedValue =1
         };
 
+        public static STValue_Float DEFAULT_SCALE_VALUE = new STValue_Float()
+        {
+            DisableValue = 1,
+            HighlightedValue = 1.1F,
+            NormalValue = 1F,
+            PressedValue = 0.95F,
+            SelectedValue = 1F
+        };
+
         public STValue_Float() {
         }
     }

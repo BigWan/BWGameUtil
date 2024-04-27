@@ -32,12 +32,20 @@
 
         public AnimtionLoopType LoopType { get => m_loopType; set { m_loopType = value; } }
 
+
+        bool isInited = false;
+
+        private void Awake() {
+            InitAnimations();
+        }
+
         [ContextMenu("Init Animations")]
         public void InitAnimations() {
-            if (m_anims != null) {
+            if (m_anims != null && !isInited) {
                 foreach (var a in m_anims) {
                     a.Init();
                 }
+                isInited = true;
             }
         }
 

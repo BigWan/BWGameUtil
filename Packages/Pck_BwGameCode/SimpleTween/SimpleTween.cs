@@ -29,7 +29,7 @@ namespace BW.GameCode.Foundation
     {
         IEnumerator tweenInstance;
 
-        public event Action<T> OnValueChanged;
+         Action<T> OnValueChanged;
 
         public MonoBehaviour Host { get; private set; }
         public float Duration { get; private set; } = 1f;
@@ -54,8 +54,15 @@ namespace BW.GameCode.Foundation
         }
 
         public SimpleTween<T> SetStartAndEnd(T start, T end) {
-            StartValue = start;
-            EndValue = end;
+            return SetStart(start).SetEnd(end);
+        }
+
+        public SimpleTween<T> SetStart(T value) {
+            StartValue = value;
+            return this;
+        }
+        public SimpleTween<T> SetEnd(T value) {
+            EndValue = value;
             return this;
         }
 
@@ -65,7 +72,7 @@ namespace BW.GameCode.Foundation
         }
 
         public SimpleTween<T> SetCallback(Action<T> callback) {
-            OnValueChanged += callback;
+            OnValueChanged = callback;
             return this;
         }
 

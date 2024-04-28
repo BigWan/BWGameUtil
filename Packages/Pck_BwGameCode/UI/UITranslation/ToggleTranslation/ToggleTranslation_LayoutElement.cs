@@ -29,7 +29,7 @@ namespace BW.GameCode.UI
         }
 
         protected override void OnValueChanged(bool isOn) {
-            Debug.Log($"{isOn}", transform);
+    
             if (m_value != null && m_element != null) {
                 if (m_translateType == TranslateType.Ver) {
                     tween.SetStartAndEnd(m_element.preferredHeight, m_value.GetValue(isOn));

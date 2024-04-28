@@ -10,8 +10,8 @@ namespace BW.GameCode.UI
     {
         public enum TranslateType
         {
+            Hor,
             Ver,
-            Hor
         }
 
         [SerializeField] LayoutElement m_element = default;

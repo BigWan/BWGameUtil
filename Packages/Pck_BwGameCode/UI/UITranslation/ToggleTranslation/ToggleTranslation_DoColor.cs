@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 namespace BW.GameCode.UI
 {
+    [RequireComponent(typeof(Graphic))]
     public sealed class ToggleTranslation_DoColor : ToggleTranslation
     {
         [SerializeField] Graphic m_targetGraphic;

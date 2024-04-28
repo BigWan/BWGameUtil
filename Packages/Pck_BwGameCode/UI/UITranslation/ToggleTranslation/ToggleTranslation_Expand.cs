@@ -4,6 +4,7 @@ namespace BW.GameCode.UI
 {
     using BW.GameCode.Foundation;
 
+    [RequireComponent(typeof(RectTransform))]
     public sealed class ToggleTranslation_Expand : ToggleTranslation
     {
         [SerializeField] RectTransform m_expandPart = default;
@@ -13,6 +14,12 @@ namespace BW.GameCode.UI
         [SerializeField] float m_animTime = 0.15f;
 
         SimpleTween_V2 tween = new SimpleTween_V2();
+
+        private void OnValidate() {
+            if (m_expandPart == null) {
+                m_expandPart = GetComponent<RectTransform>();
+            }
+        }
 
         protected override void Awake() {
             tween.SetCallback(x => {

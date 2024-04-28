@@ -5,6 +5,7 @@ namespace BW.GameCode.UI
 {
     using BW.GameCode.Foundation;
 
+    [RequireComponent(typeof(LayoutElement))]
     public class ToggleTranslation_LayoutElement : ToggleTranslation
     {
         public enum TranslateType
@@ -20,21 +21,27 @@ namespace BW.GameCode.UI
         SimpleTween_Float tween = new SimpleTween_Float();
 
         protected override void Awake() {
-            tween.SetCallback(UpdateElement);
         }
 
-        private void UpdateElementWidth(float process) {
-            if (m_translateType == TranslateType.Hor) {
-                m_element.preferredWidth = process;
-            }
-            if (m_translateType == TranslateType.Ver) {
-                m_element.preferredHeight = process;
-            }
+        private void UpdateElementWidth(float value) {
+            m_element.preferredWidth = value;
+        }
+
+        private void UpdateElementHeight(float value) {
+            m_element.preferredHeight = value;
         }
 
         protected override void DOTranslation(bool isOn) {
             if (m_value != null && m_element != null) {
-                tween.SetStartAndEnd(m_value.GetValue(isOn));
+                if (m_translateType == TranslateType.Ver) {
+                    tween.SetStartAndEnd(m_element.preferredWidth, m_value.GetValue(isOn));
+                    tween.SetCallback(UpdateElementWidth);
+                }
+                if (m_translateType == TranslateType.Hor) {
+                    tween.SetStartAndEnd(m_element.preferredHeight, m_value.GetValue(isOn));
+                    tween.SetCallback(UpdateElementHeight);
+                }
+                tween.StartTween(this);
             }
         }
 

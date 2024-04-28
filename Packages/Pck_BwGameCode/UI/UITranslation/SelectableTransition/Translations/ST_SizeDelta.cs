@@ -9,6 +9,7 @@
     /// <summary>
     /// Recttransform.SizeDelta
     /// </summary>
+    [RequireComponent(typeof(RectTransform))]
     public class ST_SizeDelta : SelectableTransition
     {
         [SerializeField] RectTransform m_expandPart = default;

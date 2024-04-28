@@ -9,6 +9,7 @@ namespace BW.GameCode.UI
     /// <summary>
     /// 高亮一个Cg
     /// </summary>
+    [RequireComponent(typeof(CanvasGroup))]
     public class ST_CanvasGroup : SelectableTransition
     {
         [SerializeField] CanvasGroup m_canvasGroup = default;

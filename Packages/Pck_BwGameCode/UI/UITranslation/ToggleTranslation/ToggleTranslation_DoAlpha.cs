@@ -11,7 +11,7 @@ namespace BW.GameCode.UI
         [SerializeField] ToggleTranslationData_Float m_value = new ToggleTranslationData_Float(0,1);
         [SerializeField] float m_duration = 0.2f;
 
-        protected override void DOTranslation(bool isOn) {
+        protected override void OnValueChanged(bool isOn) {
             if(m_targetGraphic!=null && m_value != null) {
                 m_targetGraphic.CrossFadeAlpha(m_value.GetValue(isOn), m_duration, false);
             }

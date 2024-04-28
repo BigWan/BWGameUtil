@@ -14,7 +14,7 @@ namespace BW.GameCode.UI
         //    m_targetGraphic.CrossFadeColor(isOn ? m_colorOn : m_colorOff, m_duration, false, false);
         //}
 
-        protected override void DOTranslation(bool isOn) {
+        protected override void OnValueChanged(bool isOn) {
             if (m_targetGraphic != null && m_value != null) {
                 m_targetGraphic.CrossFadeColor(m_value.GetValue(isOn), m_duration, false, false);
             }

@@ -11,13 +11,14 @@ namespace BW.GameCode.UI
         [SerializeField] ToggleData_Sprite m_spriteGroup;
 
 
-        private void OnValidate() {
-            if(m_image == null) {
+        protected override void OnValidate() {
+            base.OnValidate();
+            if (m_image == null) {
                 m_image = GetComponent<Image>();
             }
         }
 
-        protected override void DOTranslation(bool isOn) {
+        protected override void OnValueChanged(bool isOn) {
             if (m_image != null) {
                 m_image.sprite = m_spriteGroup.GetValue(isOn);
             }

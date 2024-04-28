@@ -3,7 +3,7 @@ using UnityEngine.UI;
 namespace BW.GameCode.UI
 {
 
-
+    [RequireComponent(typeof(Toggle))]
     public abstract class ToggleTranslation : MonoBehaviour
     {
         [SerializeField] Toggle m_target;
@@ -14,7 +14,7 @@ namespace BW.GameCode.UI
                 m_target = GetComponent<Toggle>();
             }
             if (m_target != null) {
-                m_target.onValueChanged.AddListener(DOTranslation);
+                m_target.onValueChanged.AddListener(OnValueChanged);
             }
         }
 
@@ -22,15 +22,19 @@ namespace BW.GameCode.UI
 
         private void OnEnable() {
             if (m_target != null) {
-                DOTranslation(m_target.isOn);
+                OnValueChanged(m_target.isOn);
             }
         }
 
-        protected abstract void DOTranslation(bool isOn);
+        //void OnValueChanged2(bool isOn) {
+        //    Debug.Log($"Toggle 's value is {isOn}");
+        //    OnValueChanged(isOn);
+        //}
+        protected abstract void OnValueChanged(bool isOn);
 
       
 
-        private void OnValidate() {
+        protected virtual void OnValidate() {
             if (m_target == null) {
                 m_target = GetComponent<Toggle>();
             }

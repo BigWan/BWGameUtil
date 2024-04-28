@@ -15,7 +15,8 @@ namespace BW.GameCode.UI
 
         SimpleTween_V2 tween = new SimpleTween_V2();
 
-        private void OnValidate() {
+        protected override void OnValidate() {
+            base.OnValidate();
             if (m_expandPart == null) {
                 m_expandPart = GetComponent<RectTransform>();
             }
@@ -30,7 +31,7 @@ namespace BW.GameCode.UI
             base.Awake();
         }
 
-        protected override void DOTranslation(bool isOn) {
+        protected override void OnValueChanged(bool isOn) {
             if (m_value != null && m_expandPart != null) {
                 DOSize(m_value.GetValue(isOn));
             }

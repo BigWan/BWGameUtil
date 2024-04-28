@@ -18,7 +18,7 @@ namespace BW.GameCode.UI
                 ;
         }
 
-        protected override void DOTranslation(bool isOn) {
+        protected override void OnValueChanged(bool isOn) {
             m_tween.SetStartAndEnd(m_scalePart.localScale.x, m_value.GetValue(isOn)).SetDuration(m_animTime)
                 .StartTween(this);
         }

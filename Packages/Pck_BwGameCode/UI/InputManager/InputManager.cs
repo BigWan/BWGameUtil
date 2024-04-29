@@ -6,6 +6,27 @@ using UnityEngine;
 
 namespace BW.GameCode.UI
 {
+    public struct InputBoxArgument
+    {
+        public string Title;
+        public string Content;
+        /// <summary>
+        /// 输入框是否可以取消
+        /// </summary>
+        public bool cancelAble;
+        public InputContentLimit ContentType;
+        public int CharacterLimit;
+        public Predicate<string> Checker;
+
+        public InputBoxArgument(string title, string text, bool cancel, InputContentLimit conentLimit, int charLimit = 30, Predicate<string> inputCheck = default) {
+            this.Title = title;
+            this.Content = text;
+            cancelAble = cancel;
+            ContentType = conentLimit;
+            CharacterLimit = charLimit;
+            Checker = inputCheck;
+        }
+    }
     /// <summary>
     /// 输入框
     /// </summary>
@@ -39,9 +60,11 @@ namespace BW.GameCode.UI
             }
         }
 
-        public InputWindow Show(string title,string text , Action<InputResult> callback) {
+        public InputWindow Show(InputBoxArgument args, Action<InputResult> callback) {
             var dialog = CreateDialog();
-            dialog.Show(title,text, callback);
+            dialog.Title = args.Title;
+            dialog.Content = args.Content;
+            dialog.Show( callback);
             return dialog;
         }
     }

@@ -20,7 +20,12 @@ namespace BW.GameCode.UI
         public string Text { get; set; }
     }
 
-   
+    public enum InputContentLimit
+    {
+        None,
+        Interger,
+        Common,
+    }
 
     public delegate bool InputValueDelegate(string value);
 
@@ -33,52 +38,50 @@ namespace BW.GameCode.UI
         public abstract string InputValue { get; }
 
         protected InputValueDelegate checkFunc;
-        Coroutine handler;
+        IEnumerator handler;
         /// <summary>
         /// 内容类型
         /// </summary>
-        protected abstract ContentType ContentType { get; set; }
+        public abstract ContentType ContentType { get; set; }
         /// <summary>
         /// 标题
         /// </summary>
-        protected abstract string Title { get; set; }
+        public abstract string Title { get; set; }
         /// <summary>
         /// 说明文本
         /// </summary>
-        protected abstract string Content { get; set; }
+        public abstract string Content { get; set; }
 
         /// <summary>
         /// 字数限制
         /// </summary>
-        protected abstract int CharacterLimit { get; set; }
+        public abstract int CharacterLimit { get; set; }
         /// <summary>
         /// 占位符
         /// </summary>
-        protected abstract string PlaceHolder { get; set; }
+        public abstract string PlaceHolder { get; set; }
 
         protected bool CheckValueValidate() {
             return checkFunc?.Invoke(InputValue) ?? false;
         }
 
         protected void OnValueChanged(string curValue) {
-
         }
 
         public void SetCancelButtonActive(bool active) {
             //m_cancelButton.gameObject.SetActive(active);
         }
 
-        public void Show(string title,string text, Action<InputResult> callback) {
+        public void Show( Action<InputResult> callback) {
+            Result = null;
             if (handler != null) {
                 StopCoroutine(handler);
-            }
-            handler = StartCoroutine(Process(title,text ,callback));
+            }            
+            handler = Process(callback);
+            StartCoroutine(handler);
         }
 
-        protected IEnumerator Process(string title, string text, Action<InputResult> callback) {
-            Title = title;
-            Content = text;
-            Result = null;
+        protected IEnumerator Process(Action<InputResult> callback) {
             SetBodyVisible(true);
             yield return FadeInProcess();
             SetBodyInteractable(true);

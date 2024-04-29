@@ -38,6 +38,11 @@ namespace BW.GameCode.UI
             tween.SetCallback(x => m_anim.Process = x);
         }
 
+        [ContextMenu("set full")]
+        void Set1() {
+            Value = 1;
+        }
+
         void OnBarChanged(float value) {
             m_onChanged.Invoke(m_value);
             if (m_anim != null) {
@@ -46,6 +51,7 @@ namespace BW.GameCode.UI
                     .StartTween(this);
             }
         }
+
 
 
     }

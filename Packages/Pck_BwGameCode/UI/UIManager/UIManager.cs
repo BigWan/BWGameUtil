@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using UnityEngine;
 namespace BW.GameCode.UI
@@ -37,6 +38,16 @@ namespace BW.GameCode.UI
                 result += item.Name + "\n";
             }
             return result;
+        }
+
+        public void CloseAll() {
+            panelStack.Clear();
+            var actived = minstances.Values.ToArray();
+            if (actived != null) {
+                for (int i = 0; i < actived.Length; i++) {
+                    StartCoroutine(JustCloseUI(actived[i]));
+                }
+            }
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ namespace BW.GameCode.Animation
         public T EndValue;
         public float Duration = 1f;
 
-        protected AnimPartData(T startValue, T endValue, float duration) {
+        protected AnimPartData(T startValue, T endValue, float duration=0.25f) {
             StartValue = startValue;
             EndValue = endValue;
             Duration = duration;

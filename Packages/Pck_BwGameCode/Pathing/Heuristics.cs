@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-namespace Bw.BwGameCode.Pathing
+namespace BW.GameCode.Pathing
 {
 
     /// <summary>

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bw.BwGameCode.Pathing
+namespace BW.GameCode.Pathing
 {
 
     public static class Vector3Ext

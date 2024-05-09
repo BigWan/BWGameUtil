@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Bw.BwGameCode.Pathing
+namespace BW.GameCode.Pathing
 {
 
     /// <summary>

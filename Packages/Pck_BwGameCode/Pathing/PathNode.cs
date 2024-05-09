@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace Bw.BwGameCode.Pathing
+namespace BW.GameCode.Pathing
 {
     /// <summary>
     /// 寻路的结点

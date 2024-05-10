@@ -19,7 +19,7 @@ namespace BW.GameCode.UI
         SimpleTween_Float runner = new SimpleTween_Float();
 
         private void Awake() {
-            runner.SetCallback((x) => {
+            runner.SetUpdateCall((x) => {
                 if (m_canvasGroup != null) {
                     m_canvasGroup.alpha = x;
                 }

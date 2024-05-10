@@ -35,7 +35,7 @@ namespace BW.GameCode.UI
 
         protected  void Awake() {
             m_anim.Init();
-            tween.SetCallback(x => m_anim.Process = x);
+            tween.SetUpdateCall(x => m_anim.Process = x);
         }
 
         [ContextMenu("set full")]

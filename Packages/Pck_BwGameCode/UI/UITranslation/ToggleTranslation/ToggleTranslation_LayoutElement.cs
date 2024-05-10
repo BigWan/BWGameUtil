@@ -33,11 +33,11 @@ namespace BW.GameCode.UI
             if (m_value != null && m_element != null) {
                 if (m_translateType == TranslateType.Ver) {
                     tween.SetStartAndEnd(m_element.preferredHeight, m_value.GetValue(isOn));
-                    tween.SetCallback(UpdateElementHeight);
+                    tween.SetUpdateCall(UpdateElementHeight);
                 }
                 if (m_translateType == TranslateType.Hor) {
                     tween.SetStartAndEnd(m_element.preferredWidth, m_value.GetValue(isOn));
-                    tween.SetCallback(UpdateElementWidth);
+                    tween.SetUpdateCall(UpdateElementWidth);
                 }
                 tween.SetDuration(m_duration);
                 tween.StartTween(this);

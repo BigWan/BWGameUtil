@@ -23,7 +23,7 @@ namespace BW.GameCode.UI
         }
 
         protected override void Awake() {
-            tween.SetCallback(x => {
+            tween.SetUpdateCall(x => {
                 if (m_expandPart != null) {
                     m_expandPart.sizeDelta = x;
                 }

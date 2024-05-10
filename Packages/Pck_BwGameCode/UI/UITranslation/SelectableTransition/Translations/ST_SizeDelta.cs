@@ -18,7 +18,7 @@
         SimpleTween_V2 tween = new SimpleTween_V2();
 
         void InitTween() {
-            tween.SetCallback((x) => {
+            tween.SetUpdateCall((x) => {
                 if (m_expandPart != null) {
                     m_expandPart.sizeDelta = x;
                 }

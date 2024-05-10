@@ -29,7 +29,7 @@ namespace BW.GameCode.Foundation
     {
         IEnumerator tweenInstance;
 
-         Action<T> OnValueChanged;
+         Action<T> OnValueUpdated;
 
         public MonoBehaviour Host { get; private set; }
         public float Duration { get; private set; } = 1f;
@@ -38,7 +38,7 @@ namespace BW.GameCode.Foundation
         public T EndValue { get; set; } = default(T);
 
         EaseFunc<T> mLerpFunc;
-
+        Action OnDone;
         public SimpleTween(EaseFunc<T> lerp) {
             this.mLerpFunc = lerp;
         }
@@ -71,8 +71,13 @@ namespace BW.GameCode.Foundation
             return this;
         }
 
-        public SimpleTween<T> SetCallback(Action<T> callback) {
-            OnValueChanged = callback;
+        public SimpleTween<T> SetUpdateCall(Action<T> callback) {
+            OnValueUpdated = callback;
+            return this;
+        }
+
+        public SimpleTween<T> SetDoneCall(Action callback) {
+            OnDone = callback;
             return this;
         }
 
@@ -96,7 +101,7 @@ namespace BW.GameCode.Foundation
         void TweenValueAndRaiseEvent(float progress) {
             Debug.Assert(mLerpFunc != null, this.Host.transform);
             var value = mLerpFunc(StartValue, EndValue, progress);
-            OnValueChanged?.Invoke(value);
+            OnValueUpdated?.Invoke(value);
         }
 
         IEnumerator SpawnIEnumerator() {
@@ -109,6 +114,7 @@ namespace BW.GameCode.Foundation
             }
 
             TweenValueAndRaiseEvent(1f);
+            OnDone?.Invoke();
         }
     }
 }

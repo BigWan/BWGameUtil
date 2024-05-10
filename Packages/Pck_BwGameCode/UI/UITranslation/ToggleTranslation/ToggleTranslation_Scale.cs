@@ -14,7 +14,7 @@ namespace BW.GameCode.UI
 
         protected override void Awake() {
             base.Awake();
-            m_tween.SetCallback(x => { if (m_scalePart != null) { m_scalePart.localScale = Vector3.one * x; } })
+            m_tween.SetUpdateCall(x => { if (m_scalePart != null) { m_scalePart.localScale = Vector3.one * x; } })
                 ;
         }
 

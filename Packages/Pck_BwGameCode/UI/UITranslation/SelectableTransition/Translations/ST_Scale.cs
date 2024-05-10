@@ -24,7 +24,7 @@
         SimpleTween_Float runner = new SimpleTween_Float();
 
         private void Awake() {
-            runner.SetCallback((x) => {
+            runner.SetUpdateCall((x) => {
                 if (m_scalePart != null) {
                     m_scalePart.localScale = Vector3.one * x;
                 }

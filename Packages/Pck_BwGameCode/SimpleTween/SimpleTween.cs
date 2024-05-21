@@ -92,7 +92,7 @@ namespace BW.GameCode.Foundation
         }
 
         public void StopTween() {
-            if (tweenInstance != null) {
+            if (tweenInstance != null && Host!=null) {
                 Host.StopCoroutine(tweenInstance);
                 tweenInstance = null;
             }

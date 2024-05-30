@@ -4,7 +4,6 @@ using BW.GameCode.Foundation;
 
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace BW.GameCode.UI
 {
@@ -19,9 +18,8 @@ namespace BW.GameCode.UI
         [SerializeField] NormalValueBarEvent m_onChanged;
         [SerializeField] AnimPart m_anim;
         SimpleTween_Float tween = new SimpleTween_Float();
-        public NormalValueBarEvent OnChanged => m_onChanged;
 
-        
+        public NormalValueBarEvent OnChanged => m_onChanged;
 
         public float Value {
             get {
@@ -33,8 +31,10 @@ namespace BW.GameCode.UI
             }
         }
 
-        protected  void Awake() {
-            m_anim.Init();
+        protected void Awake() {
+            if (m_anim != null) {
+                m_anim.Init();
+            }
             tween.SetUpdateCall(x => m_anim.Process = x);
         }
 
@@ -51,8 +51,5 @@ namespace BW.GameCode.UI
                     .StartTween(this);
             }
         }
-
-
-
     }
 }

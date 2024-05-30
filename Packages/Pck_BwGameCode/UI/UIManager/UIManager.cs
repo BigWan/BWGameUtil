@@ -83,7 +83,8 @@ namespace BW.GameCode.UI
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        BaseUIPage GetUIInstance(Type uiType) {
+        T GetUIInstance<T>() where T:BaseUIPage{
+            var uiType = typeof(T);
             if (cachedUI.TryGetValue(uiType, out BaseUIPage result)) {
                 cachedUI[uiType] = null; // 从缓存中取出实例
                 if (result == null) {
@@ -91,25 +92,23 @@ namespace BW.GameCode.UI
                 }
             }
             if (result != null) {
-                return result;
+                return result as T;
             }
             // 啥都不在,重新实例化一个新的UI
-            return InstantiateUI(uiType);
+            return InstantiateUI<T>();
         }
 
-        bool AlreadyShowd(Type uiType) {
-            return minstances.ContainsKey(uiType);
+        bool AlreadyShowd<T>() where T:BaseUIPage {
+            return minstances.ContainsKey(typeof(T));
         }
 
         public bool Show<T>() where T : BaseUIPage {
-            return Show(typeof(T));
-        }
-
-        public bool Show(Type uiType) {
-            if (AlreadyShowd(uiType)) {
+            var uiType = typeof(T);
+       
+            if (AlreadyShowd<T>()) {
                 return false;
             }
-            var ui = GetUIInstance(uiType);
+            var ui = GetUIInstance<T>();
             ui.transform.SetAsLastSibling();
             StartCoroutine(ShowProcess(ui));
             return true;
@@ -181,11 +180,17 @@ namespace BW.GameCode.UI
 
         IEnumerator PopStackPanel() {
             Debug.Log("----------------PopPanelStack");
-            if (panelStack.Count > 0) {
-                var uiType = panelStack.Pop();
-                var ui = GetUIInstance(uiType);
-                yield return JustActiveUI(ui);
+            if (panelStack.Count <= 0) {
+                yield break;
             }
+            var uiType = panelStack.Pop();
+            if (cachedUI.TryGetValue(uiType, out BaseUIPage result)) {
+                cachedUI[uiType] = null; // 从缓存中取出实例
+                if (result == null) {
+                    cachedUI.Remove(uiType);
+                }
+            }
+            yield return JustActiveUI(result);
         }
     }
 }

@@ -83,35 +83,37 @@ namespace BW.GameCode.UI
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T GetUIInstance<T>() where T:BaseUIPage{
+        T GetUIInstance<T>() where T : BaseUIPage {
             var uiType = typeof(T);
+
+            var ui = GetUIInstance(uiType);
+            return ui as T;
+        }
+
+        BaseUIPage GetUIInstance(Type uiType) {
             if (cachedUI.TryGetValue(uiType, out BaseUIPage result)) {
                 cachedUI[uiType] = null; // 从缓存中取出实例
                 if (result == null) {
                     cachedUI.Remove(uiType);
                 }
             }
-            if (result != null) {
-                return result as T;
+            if (result == null) {
+                result = InstantiateUI(uiType);
             }
-            // 啥都不在,重新实例化一个新的UI
-            return InstantiateUI<T>();
+            return result;
         }
 
-        bool AlreadyShowd<T>() where T:BaseUIPage {
-            return minstances.ContainsKey(typeof(T));
-        }
-
-        public bool Show<T>() where T : BaseUIPage {
+        public T Show<T>() where T : BaseUIPage {
+            // already showed
             var uiType = typeof(T);
-       
-            if (AlreadyShowd<T>()) {
-                return false;
+            if (minstances.ContainsKey(uiType)) {
+                return minstances[uiType] as T;
             }
+            // not instance
             var ui = GetUIInstance<T>();
             ui.transform.SetAsLastSibling();
             StartCoroutine(ShowProcess(ui));
-            return true;
+            return ui;
         }
 
         private IEnumerator ShowProcess(BaseUIPage ui) {
@@ -184,13 +186,8 @@ namespace BW.GameCode.UI
                 yield break;
             }
             var uiType = panelStack.Pop();
-            if (cachedUI.TryGetValue(uiType, out BaseUIPage result)) {
-                cachedUI[uiType] = null; // 从缓存中取出实例
-                if (result == null) {
-                    cachedUI.Remove(uiType);
-                }
-            }
-            yield return JustActiveUI(result);
+            var ui = GetUIInstance(uiType);
+            yield return JustActiveUI(ui);
         }
     }
 }

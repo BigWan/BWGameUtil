@@ -102,7 +102,7 @@ namespace BW.GameCode.UI
             return minstances.ContainsKey(typeof(T));
         }
 
-        public bool Show<T>() where T : BaseUIPage {
+        public T Show<T>() where T : BaseUIPage {
             var uiType = typeof(T);
        
             if (AlreadyShowd<T>()) {
@@ -111,7 +111,7 @@ namespace BW.GameCode.UI
             var ui = GetUIInstance<T>();
             ui.transform.SetAsLastSibling();
             StartCoroutine(ShowProcess(ui));
-            return true;
+            return ui;
         }
 
         private IEnumerator ShowProcess(BaseUIPage ui) {

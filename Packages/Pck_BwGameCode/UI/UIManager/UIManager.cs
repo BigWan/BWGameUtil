@@ -103,8 +103,16 @@ namespace BW.GameCode.UI
             return result;
         }
 
+<<<<<<< HEAD
         public T Show<T>() where T : BaseUIPage {
             // already showed
+=======
+        bool AlreadyShowd<T>() where T:BaseUIPage {
+            return minstances.ContainsKey(typeof(T));
+        }
+
+        public T Show<T>() where T : BaseUIPage {
+>>>>>>> 8536a8f6132ab2e9ecbfaaa729c23650c21e706b
             var uiType = typeof(T);
             if (minstances.ContainsKey(uiType)) {
                 return minstances[uiType] as T;

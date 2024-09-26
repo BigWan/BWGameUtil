@@ -1,8 +1,8 @@
 ﻿namespace BW.GameCode.UI
 {
-#if UNITY_EDITOR
-    using UnityEditor;
-#endif
+//#if UNITY_EDITOR
+//    using UnityEditor;
+//#endif
 
     using BW.GameCode.Foundation;
 
@@ -56,33 +56,33 @@
             }
         }
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 
-        void SetAll(int value) {
-            m_value.Reset(value);
-        }
+//        void SetAll(int value) {
+//            m_value.Reset(value);
+//        }
 
-#endif
+//#endif
     }
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 
-    [CustomEditor(typeof(ST_Scale))]
-    internal class ST_ScaleEditor : Editor
-    {
-        ST_Scale prop;
+//    [CustomEditor(typeof(ST_Scale))]
+//    internal class ST_ScaleEditor : Editor
+//    {
+//        ST_Scale prop;
 
-        private void OnEnable() {
-            prop = target as ST_Scale;
-        }
+//        private void OnEnable() {
+//            prop = target as ST_Scale;
+//        }
 
-        public override void OnInspectorGUI() {
-            base.OnInspectorGUI();
+//        public override void OnInspectorGUI() {
+//            base.OnInspectorGUI();
 
-            if (GUILayout.Button("全部设置为1")) {
-            }
-        }
-    }
+//            if (GUILayout.Button("全部设置为1")) {
+//            }
+//        }
+//    }
 
-#endif
+//#endif
 }

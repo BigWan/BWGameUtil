@@ -1,12 +1,13 @@
 ﻿using System;
 
-namespace BW.GameCode.Ease {
+namespace BW.GameCode.Foundation
+{
 
     /// <summary>
     /// EasyFunction
     /// In Function he Out Function 关于点(0.5,0.5)对称
     /// </summary>
-    public static class Ease {
+    public static class EaseFunctions {
 
         private const double pi = 3.14159265358979;
 

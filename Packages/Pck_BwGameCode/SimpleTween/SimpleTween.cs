@@ -34,7 +34,7 @@ namespace BW.GameCode.Foundation
         public MonoBehaviour Host { get; private set; }
         public float Duration { get; private set; } = 1f;
         public bool IgnoreTimeScale { get; private set; } = false;
-        public T StartValue { get; set; } = default(T);
+        public T StartValue { get; set; } = default;
         public T EndValue { get; set; } = default(T);
 
         EaseFunc<T> mLerpFunc;

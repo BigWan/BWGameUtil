@@ -48,12 +48,12 @@ namespace BW.GameCode.UI
         IEnumerator Process;
 
         protected sealed override void Awake() {
-            OnInit();
+            OnAwakeInit();
             SetUIVisible(false);
             SetUIInteractable(false);
         }
 
-        protected virtual void OnInit() {
+        protected virtual void OnAwakeInit() {
         }
 
         protected void SetUIVisible(bool value) {

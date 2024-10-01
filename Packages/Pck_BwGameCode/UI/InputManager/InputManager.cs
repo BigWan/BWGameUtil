@@ -65,6 +65,19 @@ namespace BW.GameCode.UI
             dialog.Title = args.Title;
             dialog.Content = args.Content;
             dialog.Show( callback);
+            switch (args.ContentType) {               
+                case InputContentLimit.Interger:
+                    dialog.ContentType = TMPro.TMP_InputField.ContentType.IntegerNumber;
+                    break;
+                case InputContentLimit.Common :
+                    dialog.ContentType = TMPro.TMP_InputField.ContentType.Standard;
+                    break;
+                default:
+                    dialog.ContentType = TMPro.TMP_InputField.ContentType.Standard;
+                    break;
+            }
+           
+
             return dialog;
         }
     }

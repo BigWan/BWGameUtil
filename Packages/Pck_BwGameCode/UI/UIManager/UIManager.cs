@@ -108,7 +108,10 @@ namespace BW.GameCode.UI
             // already showed
             var uiType = typeof(T);
             if (minstances.ContainsKey(uiType)) {
-                return minstances[uiType] as T;
+                var instance = minstances[uiType] as T;
+                if(instance.IsShow == false) {
+                    StartCoroutine(ShowProcess(instance));
+                }
             }
             // not instance
             var ui = GetUIInstance<T>();

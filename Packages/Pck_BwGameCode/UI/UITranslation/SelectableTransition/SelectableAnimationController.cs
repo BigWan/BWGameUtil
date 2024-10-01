@@ -45,7 +45,9 @@ namespace BW.GameCode.UI
         }
 
         protected override void OnCanvasGroupChanged() {
-            DoStateTransition(CurrentSelectionState, false);
+            if (gameObject.activeSelf) {
+                DoStateTransition(CurrentSelectionState, false);
+            }
         }
 
         protected override void OnDisable() {

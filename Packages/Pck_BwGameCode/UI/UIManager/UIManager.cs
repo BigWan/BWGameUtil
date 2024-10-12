@@ -40,6 +40,10 @@ namespace BW.GameCode.UI
             return result;
         }
 
+        public bool IsUIActived<T>() where T : BaseUIPage {
+            return minstances.ContainsKey(typeof(T));
+        }
+
         public void CloseAll() {
             panelStack.Clear();
             var actived = minstances.Values.ToArray();
@@ -106,8 +110,8 @@ namespace BW.GameCode.UI
 
         public T Show<T>() where T : BaseUIPage {
             // already showed
-            var uiType = typeof(T);
-            if (minstances.ContainsKey(uiType)) {
+            if (IsUIActived<T>()) {
+                var uiType = typeof(T);
                 var instance = minstances[uiType] as T;
                 if(instance.IsShow == false) {
                     StartCoroutine(ShowProcess(instance));
@@ -175,13 +179,16 @@ namespace BW.GameCode.UI
             Debug.Log("----------------JustCloseUI");
             Debug.Assert(ui != null);
             var type = ui.GetType();
-            if (minstances.ContainsKey(type)) {
-                minstances.Remove(type);
-            }
+            //if (minstances.ContainsKey(type)) {
+            //    minstances.Remove(type);
+            //}
             if (activedPanel == ui) {
                 activedPanel = null;
             }
             yield return ui.Close();
+            if (minstances.ContainsKey(type)) {
+                minstances.Remove(type);
+            }
             if (ui.AutoDestroyOnHide) {
                 Destroy(ui.gameObject);
             } else {

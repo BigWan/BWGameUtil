@@ -186,6 +186,7 @@ namespace BW.GameCode.UI
                 activedPanel = null;
             }
             yield return ui.Close();
+            // 在完全关闭后才会移除示例，不在这期间再次调用Show方法的话会因找不到对象而二次实例化。这就不是我想要的了/20204-10-12
             if (minstances.ContainsKey(type)) {
                 minstances.Remove(type);
             }

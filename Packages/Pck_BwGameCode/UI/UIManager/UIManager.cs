@@ -112,12 +112,17 @@ namespace BW.GameCode.UI
                 if(instance.IsShow == false) {
                     StartCoroutine(ShowProcess(instance));
                 }
+                return instance;
+            } else {
+                // not instance
+                var ui = GetUIInstance<T>();
+                ui.transform.SetAsLastSibling();
+                minstances.Add(ui.GetType(), ui);
+                StartCoroutine(ShowProcess(ui));
+                return ui;
             }
-            // not instance
-            var ui = GetUIInstance<T>();
-            ui.transform.SetAsLastSibling();
-            StartCoroutine(ShowProcess(ui));
-            return ui;
+            
+            
         }
 
         private IEnumerator ShowProcess(BaseUIPage ui) {
@@ -139,7 +144,7 @@ namespace BW.GameCode.UI
                 Debug.Log($"UIManager.SetActivePanel({activedPanel.name})");
             }
 
-            minstances.Add(ui.GetType(), ui);
+            //minstances.Add(ui.GetType(), ui);
             yield return ui.Show();
         }
 
